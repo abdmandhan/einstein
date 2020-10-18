@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Dashboard from './components/DashboardComponent';
+import Users from './components/UsersComponent';
 
 Vue.use(VueRouter);
 
@@ -16,7 +17,7 @@ const router = new VueRouter({
         {
             path: '/vue/users',
             name: 'users',
-            component: Dashboard
+            component: Users
         },
         {
             path: '/vue/courses',

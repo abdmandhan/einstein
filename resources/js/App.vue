@@ -86,7 +86,7 @@
 <script>
 export default {
   mounted() {
-    axios.get("http://einstein.test/api/app").then((response) => {
+    axios.get(`${this.$baseUrl}/api/app`).then((response) => {
       this.auth.name = response.data.auth.name;
       this.items = response.data.menu;
       this.appName = response.data.app_name;

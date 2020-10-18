@@ -11,6 +11,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
 //auth id
 Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
+Vue.prototype.$baseUrl = document.querySelector("meta[name='base-url']").getAttribute('content');
 
 new Vue({
     router,
