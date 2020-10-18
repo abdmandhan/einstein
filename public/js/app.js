@@ -2288,6 +2288,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editItem: function editItem(item) {
+      this.message = "";
+      this.errors = [];
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;

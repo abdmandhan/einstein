@@ -60,7 +60,7 @@ class UserController extends Controller
             'id'        => 'nullable',
             'name'      => 'required',
             'email'     => ['required',  Rule::unique('users')->ignore($request->input('id')), 'email'],
-            'password'  => ['required']
+            'password'  => [Rule::requiredIf(!$request->input('id'))]
         ]);
 
         if (isset($data['id'])) {

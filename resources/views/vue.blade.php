@@ -21,6 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <meta name="user-id" content="{{ Auth::user()->id }}">
     <meta name="base-url" content="{{ URL::to('/') }}">
+    <link rel="icon" href="https://cdn.vuetifyjs.com/images/logos/v-alt.svg">
 </head>
 
 <body>
