@@ -2243,12 +2243,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       loading: true,
       dialog: false,
       dialogDelete: false,
+      options: [],
       headers: [],
       users: [],
       errors: [],
@@ -2258,13 +2293,19 @@ __webpack_require__.r(__webpack_exports__);
         id: "",
         name: "",
         email: "",
-        password: ""
+        password: "",
+        phone: "",
+        address: "",
+        role: ""
       },
       defaultItem: {
         id: "",
         name: "",
         email: "",
-        password: ""
+        password: "",
+        phone: "",
+        address: "",
+        role: ""
       }
     };
   },
@@ -2288,6 +2329,10 @@ __webpack_require__.r(__webpack_exports__);
     initialize: function initialize() {
       var _this = this;
 
+      axios.get("".concat(this.$baseUrl, "/api/options")).then(function (response) {
+        _this.options = response.data;
+        console.log("OPTIONS", _this.options);
+      });
       axios.get("".concat(this.$baseUrl, "/api/user")).then(function (response) {
         _this.users = response.data.data.data;
         _this.headers = response.data.data.header;
@@ -2305,9 +2350,8 @@ __webpack_require__.r(__webpack_exports__);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
-    deleteItemConfirm: function deleteItemConfirm() {
-      this.users.splice(this.editedIndex, 1);
-      this.closeDelete();
+    deleteItemConfirm: function deleteItemConfirm() {// this.users.splice(this.editedIndex, 1);
+      // this.closeDelete();
     },
     close: function close() {
       var _this2 = this;
@@ -2332,6 +2376,7 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this4 = this;
 
+      console.log("EDITED ITEM", this.editedItem);
       axios.post("".concat(this.$baseUrl, "/api/user"), this.editedItem).then(function (response) {
         _this4.initialize();
 
@@ -38980,6 +39025,57 @@ var render = function() {
                                         "v-col",
                                         { attrs: { cols: "12" } },
                                         [
+                                          _c("v-textarea", {
+                                            attrs: {
+                                              label: "Address",
+                                              "error-messages":
+                                                _vm.errors.address
+                                            },
+                                            model: {
+                                              value: _vm.editedItem.address,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedItem,
+                                                  "address",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "editedItem.address"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Phone",
+                                              "error-messages": _vm.errors.phone
+                                            },
+                                            model: {
+                                              value: _vm.editedItem.phone,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedItem,
+                                                  "phone",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "editedItem.phone"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
                                           _c("v-text-field", {
                                             attrs: {
                                               label: "Email",
@@ -38996,6 +39092,35 @@ var render = function() {
                                                 )
                                               },
                                               expression: "editedItem.email"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-select", {
+                                            attrs: {
+                                              "item-text": "name",
+                                              "item-value": "name",
+                                              "error-count": "2",
+                                              items: _vm.options.roles,
+                                              label: "Role",
+                                              "error-messages": _vm.errors.role
+                                            },
+                                            model: {
+                                              value: _vm.editedItem.role,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedItem,
+                                                  "role",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "editedItem.role"
                                             }
                                           })
                                         ],
@@ -39148,20 +39273,20 @@ var render = function() {
                   }
                 },
                 [_vm._v(" mdi-pencil ")]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-icon",
-                {
-                  attrs: { small: "" },
-                  on: {
-                    click: function($event) {
-                      return _vm.deleteItem(item)
-                    }
-                  }
-                },
-                [_vm._v(" mdi-delete ")]
               )
+            ]
+          }
+        },
+        {
+          key: "item.role",
+          fn: function(ref) {
+            var item = ref.item
+            return [
+              item.role
+                ? _c("v-chip", { attrs: { color: "primary" } }, [
+                    _vm._v("\n      " + _vm._s(item.role) + "\n    ")
+                  ])
+                : _vm._e()
             ]
           }
         },

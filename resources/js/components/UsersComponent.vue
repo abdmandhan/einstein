@@ -31,11 +31,28 @@
                       disabled
                     ></v-text-field>
                   </v-col>
+
                   <v-col cols="12">
                     <v-text-field
                       v-model="editedItem.name"
                       label="Name"
                       :error-messages="errors.name"
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-textarea
+                      v-model="editedItem.address"
+                      label="Address"
+                      :error-messages="errors.address"
+                    ></v-textarea>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="editedItem.phone"
+                      label="Phone"
+                      :error-messages="errors.phone"
                     ></v-text-field>
                   </v-col>
 
@@ -46,6 +63,18 @@
                       error-count="2"
                       :error-messages="errors.email"
                     ></v-text-field>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-select
+                      item-text="name"
+                      item-value="name"
+                      error-count="2"
+                      v-model="editedItem.role"
+                      :items="options.roles"
+                      label="Role"
+                      :error-messages="errors.role"
+                    ></v-select>
                   </v-col>
 
                   <v-col cols="12">
@@ -89,7 +118,12 @@
     </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <!-- <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon> -->
+    </template>
+    <template v-slot:[`item.role`]="{ item }">
+      <v-chip color="primary" v-if="item.role">
+        {{ item.role }}
+      </v-chip>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -104,6 +138,8 @@ export default {
     dialog: false,
     dialogDelete: false,
 
+    options: [],
+
     headers: [],
     users: [],
     errors: [],
@@ -115,12 +151,18 @@ export default {
       name: "",
       email: "",
       password: "",
+      phone: "",
+      address: "",
+      role: "",
     },
     defaultItem: {
       id: "",
       name: "",
       email: "",
       password: "",
+      phone: "",
+      address: "",
+      role: "",
     },
   }),
 
@@ -145,6 +187,11 @@ export default {
 
   methods: {
     initialize() {
+      axios.get(`${this.$baseUrl}/api/options`).then((response) => {
+        this.options = response.data;
+        console.log("OPTIONS", this.options);
+      });
+
       axios.get(`${this.$baseUrl}/api/user`).then((response) => {
         this.users = response.data.data.data;
         this.headers = response.data.data.header;
@@ -167,8 +214,8 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.users.splice(this.editedIndex, 1);
-      this.closeDelete();
+      // this.users.splice(this.editedIndex, 1);
+      // this.closeDelete();
     },
 
     close() {
@@ -190,6 +237,7 @@ export default {
     },
 
     save() {
+      console.log("EDITED ITEM", this.editedItem);
       axios
         .post(`${this.$baseUrl}/api/user`, this.editedItem)
         .then((response) => {

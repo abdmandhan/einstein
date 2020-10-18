@@ -15,7 +15,10 @@ class CreateTryOutQuestionsTable extends Migration
     {
         Schema::create('try_out_questions', function (Blueprint $table) {
             $table->id();
+            $table->integer('try_out_id');
+            $table->text('question');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

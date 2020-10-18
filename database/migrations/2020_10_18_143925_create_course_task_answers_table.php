@@ -15,7 +15,11 @@ class CreateCourseTaskAnswersTable extends Migration
     {
         Schema::create('course_task_answers', function (Blueprint $table) {
             $table->id();
+            $table->integer('course_task_question_id');
+            $table->text('answer');
+            $table->boolean('is_true');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

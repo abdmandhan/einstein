@@ -15,7 +15,10 @@ class CreateUserTeachersTable extends Migration
     {
         Schema::create('user_teachers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->foreignId('position_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

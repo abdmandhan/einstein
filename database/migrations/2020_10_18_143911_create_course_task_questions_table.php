@@ -15,7 +15,10 @@ class CreateCourseTaskQuestionsTable extends Migration
     {
         Schema::create('course_task_questions', function (Blueprint $table) {
             $table->id();
+            $table->integer('course_task_id');
+            $table->text('question');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

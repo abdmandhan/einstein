@@ -15,7 +15,11 @@ class CreateTryOutAnswersTable extends Migration
     {
         Schema::create('try_out_answers', function (Blueprint $table) {
             $table->id();
+            $table->integer('try_out_question_id');
+            $table->text('answer');
+            $table->boolean('is_true');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

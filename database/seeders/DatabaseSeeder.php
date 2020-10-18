@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Grade;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,5 +43,19 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create()->each(function ($user) {
             $user->assignRole('student');
         });
+
+        //grades
+        $data = [
+            ['name' => 'VII'],
+            ['name' => 'VIII'],
+            ['name' => 'IX'],
+        ];
+
+        Grade::insert($data);
+
+        //course
+        $this->call([
+            CourseSeeder::class
+        ]);
     }
 }

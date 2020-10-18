@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([], function () {
     Route::get('app', [AppController::class, 'index']);
+    Route::get('options', [AppController::class, 'options']);
 
     Route::resource('user', UserController::class);
 

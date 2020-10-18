@@ -15,7 +15,11 @@ class CreateCourseStudentsTable extends Migration
     {
         Schema::create('course_students', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->integer('course_id');
+            $table->boolean('is_complete');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

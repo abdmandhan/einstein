@@ -16,7 +16,14 @@ class UserController extends Controller
     public function index()
     {
         return $this->success([
-            'data'      => User::all(),
+            'data'      => User::all([
+                'id',
+                'name',
+                'address',
+                'phone',
+                'email',
+                'created_at'
+            ]),
             'header'    => [
                 [
                     'text'  => 'ID',
@@ -29,6 +36,18 @@ class UserController extends Controller
                 [
                     'text'  => 'Email',
                     'value' => 'email'
+                ],
+                [
+                    'text'  => 'Phone',
+                    'value' => 'phone'
+                ],
+                [
+                    'text'  => 'Address',
+                    'value' => 'address'
+                ],
+                [
+                    'text'  => 'Role',
+                    'value' => 'role',
                 ],
                 [
                     'text'  => 'Actions',
@@ -56,18 +75,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $data = collect($request->validate([
             'id'        => 'nullable',
             'name'      => 'required',
             'email'     => ['required',  Rule::unique('users')->ignore($request->input('id')), 'email'],
-            'password'  => [Rule::requiredIf(!$request->input('id'))]
-        ]);
+            'password'  => [Rule::requiredIf(!$request->input('id'))],
+            'address'   => 'required',
+            'phone'     => 'required',
+            'role'      => 'required'
+        ]));
 
         if (isset($data['id'])) {
-            User::find($data['id'])->update($data);
+            $user = User::find($data['id'])->update($data->except('role')->toArray());
+            $user = User::find($data['id']);
         } else {
-            User::create($data);
+            $user = User::create($data->except('role')->toArray());
         }
+
+        $user->syncRoles($data->get('role'));
 
         return $this->success();
     }
@@ -104,15 +129,6 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $data = $request->validate([
-            'name'      => 'required',
-            'email'     => ['required', 'unique:users', 'email'],
-            'password'  => ['required',]
-        ]);
-
-        User::create($data);
-
-        return $this->success();
     }
 
     /**

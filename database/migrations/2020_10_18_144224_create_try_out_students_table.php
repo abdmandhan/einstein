@@ -15,6 +15,10 @@ class CreateTryOutStudentsTable extends Migration
     {
         Schema::create('try_out_students', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->integer('try_out_id');
+            $table->integer('score');
+            $table->time('time');
             $table->timestamps();
         });
     }

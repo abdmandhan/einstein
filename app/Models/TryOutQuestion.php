@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class TryOutQuestion extends Model
+
+class TryOutQuestion extends BaseModel
 {
-    use HasFactory;
 }

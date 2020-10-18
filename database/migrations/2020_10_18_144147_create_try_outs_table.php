@@ -15,7 +15,13 @@ class CreateTryOutsTable extends Migration
     {
         Schema::create('try_outs', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('difficulty_id');
+            $table->date('date_start');
+            $table->date('date_end');
+            $table->time('time');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

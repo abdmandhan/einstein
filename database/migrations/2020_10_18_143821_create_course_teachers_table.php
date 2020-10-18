@@ -15,7 +15,10 @@ class CreateCourseTeachersTable extends Migration
     {
         Schema::create('course_teachers', function (Blueprint $table) {
             $table->id();
+            $table->integer('course_id');
+            $table->integer('teacher_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

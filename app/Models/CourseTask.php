@@ -2,10 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class CourseTask extends Model
+class CourseTask extends BaseModel
 {
-    use HasFactory;
+    public function course_task_question()
+    {
+        return $this->hasMany(CourseTaskQuestion::class, 'course_task_id');
+    }
+
+    public function difficulty()
+    {
+        return $this->belongsTo(Difficulty::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
