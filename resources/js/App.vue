@@ -11,7 +11,13 @@
           <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
         </v-list-item-avatar>
 
-        <v-list-item-title>{{ auth.name }}</v-list-item-title>
+        <v-list-item-title>
+          {{ auth.name }}
+
+          <div>
+            {{ auth.role }}
+          </div>
+        </v-list-item-title>
 
         <v-btn icon @click.stop="mini = !mini">
           <v-icon>mdi-chevron-left</v-icon>
@@ -88,6 +94,7 @@ export default {
   mounted() {
     axios.get(`${this.$baseUrl}/api/app`).then((response) => {
       this.auth.name = response.data.auth.name;
+      this.auth.role = response.data.auth.roles[0].name;
       this.items = response.data.menu;
       this.appName = response.data.app_name;
     });
@@ -96,6 +103,7 @@ export default {
     return {
       auth: {
         name: "",
+        role: "",
       },
       appName: "",
       drawer: true,

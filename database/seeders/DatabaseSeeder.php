@@ -15,12 +15,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        $this->call([
+            RoleSeeder::class
+        ]);
+
+        $user = User::create([
             'name'      => 'Abdurrahman Ramadhan',
             'email'     => 'abdmandhan@gmail.com',
             'password'  => '12341234'
         ]);
+        $user->assignRole('admin');
 
-        User::factory(10)->create();
+        $user = User::create([
+            'name'      => 'Teacher 1',
+            'email'     => 'teacher@gmail.com',
+            'password'  => '12341234'
+        ]);
+        $user->assignRole('teacher');
+
+        $user = User::create([
+            'name'      => 'Student1',
+            'email'     => 'student@gmail.com',
+            'password'  => '12341234'
+        ]);
+        $user->assignRole('student');
+
+        User::factory(10)->create()->each(function ($user) {
+            $user->assignRole('student');
+        });
     }
 }

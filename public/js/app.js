@@ -2078,12 +2078,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var _this = this;
 
     axios.get("".concat(this.$baseUrl, "/api/app")).then(function (response) {
       _this.auth.name = response.data.auth.name;
+      _this.auth.role = response.data.auth.roles[0].name;
       _this.items = response.data.menu;
       _this.appName = response.data.app_name;
     });
@@ -2091,7 +2098,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       auth: {
-        name: ""
+        name: "",
+        role: ""
       },
       appName: "",
       drawer: true,
@@ -2288,8 +2296,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editItem: function editItem(item) {
-      this.message = "";
-      this.errors = [];
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
@@ -2306,6 +2312,8 @@ __webpack_require__.r(__webpack_exports__);
     close: function close() {
       var _this2 = this;
 
+      this.message = "";
+      this.errors = [];
       this.dialog = false;
       this.$nextTick(function () {
         _this2.editedItem = Object.assign({}, _this2.defaultItem);
@@ -2324,8 +2332,6 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this4 = this;
 
-      this.message = "";
-      this.errors = [];
       axios.post("".concat(this.$baseUrl, "/api/user"), this.editedItem).then(function (response) {
         _this4.initialize();
 
@@ -38635,7 +38641,12 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("v-list-item-title", [_vm._v(_vm._s(_vm.auth.name))]),
+              _c("v-list-item-title", [
+                _vm._v("\n        " + _vm._s(_vm.auth.name) + "\n\n        "),
+                _c("div", [
+                  _vm._v("\n          " + _vm._s(_vm.auth.role) + "\n        ")
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "v-btn",
@@ -38859,7 +38870,6 @@ var render = function() {
                   _c(
                     "v-dialog",
                     {
-                      attrs: { "max-width": "500px" },
                       scopedSlots: _vm._u([
                         {
                           key: "activator",

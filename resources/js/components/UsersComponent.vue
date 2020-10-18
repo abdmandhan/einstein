@@ -9,7 +9,7 @@
       <v-toolbar flat>
         <v-toolbar-title>Users</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="500px">
+        <v-dialog v-model="dialog">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
               New User
@@ -155,9 +155,6 @@ export default {
     },
 
     editItem(item) {
-      this.message = "";
-      this.errors = [];
-
       this.editedIndex = this.users.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
@@ -175,6 +172,8 @@ export default {
     },
 
     close() {
+      this.message = "";
+      this.errors = [];
       this.dialog = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
@@ -191,9 +190,6 @@ export default {
     },
 
     save() {
-      this.message = "";
-      this.errors = [];
-
       axios
         .post(`${this.$baseUrl}/api/user`, this.editedItem)
         .then((response) => {

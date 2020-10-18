@@ -1,9 +1,8 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,14 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([], function () {
-    Route::get('app', function (Request $request) {
-        $menu = config('menu');
-        return response()->json([
-            'auth'          => $request->user(),
-            'menu'          => $menu,
-            'app_name'      => config('app.name')
-        ]);
-    });
+    Route::get('app', [AppController::class, 'index']);
 
     Route::resource('user', UserController::class);
 

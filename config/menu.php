@@ -4,27 +4,31 @@ return [
     [
         'title'     => 'Dashboard',
         'icon'      => 'mdi-home-city',
-        'name'      => 'dashboard'
+        'name'      => 'dashboard',
+        'roles'     => ['admin']
     ],
 
     //admin
     [
-        'title'     => 'Users',
+        'title'     => 'Users Management',
         'icon'      => 'mdi-account',
         'name'      => 'users',
+        'roles'     => ['admin', 'teacher']
     ],
 
     //teacher
     [
-        'title'     => 'Courses',
+        'title'     => 'Courses Management',
         'icon'      => 'mdi-account-group-outline',
         'name'      => 'courses',
+        'roles'     => ['admin', 'teacher']
     ],
 
     [
-        'title'     => 'Course Tasks',
+        'title'     => 'Course Tasks Management',
         'icon'      => 'mdi-account-group-outline',
         'name'      => 'coursetasks',
+        'roles'     => ['admin', 'teacher']
     ],
 
 ];
