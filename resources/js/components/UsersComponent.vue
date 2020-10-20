@@ -200,6 +200,7 @@ export default {
       val || this.closeDelete();
     },
     selectedUser(val) {
+      this.loading = true;
       this.initialize();
     },
   },
