@@ -67,8 +67,11 @@
         </template>
 
         <v-list>
-          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
+          <!-- <v-list-item v-for="n in 5" :key="n" @click="() => {}">
             <v-list-item-title>Option {{ n }}</v-list-item-title>
+          </v-list-item> -->
+          <v-list-item @click="logout">
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -110,6 +113,13 @@ export default {
       items: [],
       mini: false,
     };
+  },
+  methods: {
+    logout() {
+      axios.post(`${this.$baseUrl}/logout`).then((result) => {
+        window.location.href = this.$baseUrl;
+      });
+    },
   },
 };
 </script>

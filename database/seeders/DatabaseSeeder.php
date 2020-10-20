@@ -28,14 +28,14 @@ class DatabaseSeeder extends Seeder
 
         $user = User::create([
             'name'      => 'Teacher 1',
-            'email'     => 'teacher@gmail.com',
+            'email'     => 'teacher@example.com',
             'password'  => '12341234'
         ]);
         $user->assignRole('teacher');
 
         $user = User::create([
             'name'      => 'Student1',
-            'email'     => 'student@gmail.com',
+            'email'     => 'student@example.com',
             'password'  => '12341234'
         ]);
         $user->assignRole('student');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::group([], function () {
     Route::get('options', [AppController::class, 'options']);
 
     Route::resource('user', UserController::class);
+    Route::resource('course', CourseController::class);
 
     Route::get('table/{model}', TableController::class);
 });

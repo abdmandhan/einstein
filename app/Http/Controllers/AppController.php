@@ -16,10 +16,12 @@ class AppController extends Controller
 
     public function index(Request $request)
     {
-        $menu = collect(config('menu'));
-        $menu = $menu->map(function ($item, $key) {
-            return in_array(Auth::user()->getRoleNames()[0], $item['roles']) ? $item : null;
-        });
+        $menuConfig = config('menu');
+
+        $menu = [];
+        foreach ($menuConfig as $key => $value) {
+            if (in_array(Auth::user()->getRoleNames()[0], $value['roles'])) $menu[] = $value;
+        }
 
         return response()->json([
             'auth'          => $request->user(),

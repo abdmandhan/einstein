@@ -13,17 +13,30 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->success([
-            'data'      => User::all([
+        if ($request->r) {
+            $data = User::role($request->r)->get([
                 'id',
                 'name',
                 'address',
                 'phone',
                 'email',
                 'created_at'
-            ]),
+            ]);
+        } else {
+            $data = User::all([
+                'id',
+                'name',
+                'address',
+                'phone',
+                'email',
+                'created_at'
+            ]);
+        }
+
+        return $this->success([
+            'data'      => $data,
             'header'    => [
                 [
                     'text'  => 'ID',
