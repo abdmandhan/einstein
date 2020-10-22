@@ -1,5 +1,10 @@
 <template>
-  <v-data-table :headers="headers" :items="items" class="elevation-1">
+  <v-data-table
+    :headers="headers"
+    :items="items"
+    class="elevation-1"
+    :loading="loading"
+  >
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>{{ nameTable }}</v-toolbar-title>
@@ -18,10 +23,13 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="6" v-for="(header, i) in headers" :key="i">
                     <v-text-field
-                      v-model="editedItem.name"
-                      label="Name"
+                      v-if="header.value != 'actions'"
+                      v-model="form.data[header.value]"
+                      :label="header.text"
+                      v-bind:disabled="header.disabled"
+                      :error-messages="errors[header.value]"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -70,27 +78,27 @@ export default {
     nameTable: {
       default: "",
     },
-    headers: {
-      default: [],
+    dataParent: {
+      default: {},
     },
-    dataTable: {
-      type: Array,
-      default: () => [],
+    relationKey: {
+      default: "",
+    },
+    api: {
+      default: {},
     },
   },
   data: () => ({
+    loading: true,
+    form: {
+      data: [],
+    },
+    errors: [],
+    headers: [],
     dialog: false,
     dialogDelete: false,
     items: [],
     editedIndex: -1,
-    editedItem: {
-      id: "",
-      name: "",
-    },
-    defaultItem: {
-      id: "",
-      name: "",
-    },
   }),
 
   computed: {
@@ -115,30 +123,37 @@ export default {
 
   methods: {
     initialize() {
-      this.items = this.dataTable;
+      axios.get(`${this.api}/${this.dataParent.id}`).then((response) => {
+        this.items = response.data.data.data;
+        this.headers = response.data.data.header;
+        this.loading = false;
+      });
     },
 
     editItem(item) {
       this.editedIndex = this.items.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.form.data = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
       this.editedIndex = this.items.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.form.data = Object.assign({}, item);
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.items.splice(this.editedIndex, 1);
+      axios.delete(`${this.api}/${this.form.data.id}`).then((result) => {
+        this.initialize();
+      });
+
       this.closeDelete();
     },
 
     close() {
       this.dialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.form.data = {};
         this.editedIndex = -1;
       });
     },
@@ -146,18 +161,27 @@ export default {
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
+        this.form.data = {};
         this.editedIndex = -1;
       });
     },
 
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
-      } else {
-        this.items.push(this.editedItem);
-      }
-      this.close();
+      axios
+        .post(`${this.api}`, {
+          ...this.form.data,
+          [this.relationKey]: this.dataParent.id,
+        })
+        .then((response) => {
+          this.initialize();
+          this.close();
+          console.log("Response", response);
+        })
+        .catch((error) => {
+          this.message = error.response.data.message;
+          this.errors = error.response.data.errors;
+          console.log("ERROR", error.response, this.message, this.errors);
+        });
     },
   },
 };

@@ -97,18 +97,22 @@
                     <v-tab-item>
                       <v-card flat>
                         <table-component
+                          :key="Math.random()"
                           nameTable="Course Content"
-                          :headers="headersContent"
-                          :dataTable="editedItem.course_content"
+                          :dataParent="editedItem"
+                          :relationKey="relationKey"
+                          :api="api.course_content"
                         />
                       </v-card>
                     </v-tab-item>
                     <v-tab-item>
                       <v-card flat>
                         <table-component
+                          :key="Math.random()"
                           nameTable="Course Task"
-                          :headers="headersTask"
-                          :dataTable="editedItem.course_task"
+                          :dataParent="editedItem"
+                          :relationKey="relationKey"
+                          :api="api.course_task"
                         />
                       </v-card>
                     </v-tab-item>
@@ -162,11 +166,6 @@
 export default {
   data: () => ({
     tab: null,
-    items: [
-      { tab: "Course Content", content: "Tab 1 Content" },
-      { tab: "Two", content: "Tab 2 Content" },
-      { tab: "Three", content: "Tab 3 Content" },
-    ],
 
     loading: true,
     dialog: false,
@@ -175,8 +174,8 @@ export default {
     options: [],
 
     headers: [],
-    headersContent: [],
-    headersTask: [],
+    relationKey: "",
+    api: {},
     users: [],
     errors: [],
     message: "",
@@ -231,9 +230,9 @@ export default {
 
       axios.get(`${this.$baseUrl}/api/course`).then((response) => {
         this.users = response.data.data.data;
-        this.headers = response.data.data.header.course;
-        this.headersContent = response.data.data.header.course_content;
-        this.headersTask = response.data.data.header.course_task;
+        this.headers = response.data.data.header;
+        this.relationKey = response.data.data.relation_key;
+        this.api = response.data.data.api;
         this.loading = false;
       });
     },

@@ -15,10 +15,7 @@ class CourseController extends Controller
     public function index()
     {
         return $this->success([
-            'data'      => Course::with([
-                'course_content',
-                'course_task'
-            ])->get([
+            'data'          => Course::all([
                 'id',
                 'course_type_id',
                 'name',
@@ -30,83 +27,41 @@ class CourseController extends Controller
                 'course_type_name',
                 'grade_name'
             ]),
-            'header'    => [
-                'course'    => [
-                    [
-                        'text'  => 'ID',
-                        'value' => 'id'
-                    ],
-                    [
-                        'text'  => 'Name',
-                        'value' => 'name'
-                    ],
-                    [
-                        'text'  => 'Course Type',
-                        'value' => 'course_type_name'
-                    ],
-                    [
-                        'text'  => 'Premium',
-                        'value' => 'is_premium'
-                    ],
-                    [
-                        'text'  => 'Price',
-                        'value' => 'price'
-                    ],
-                    [
-                        'text'  => 'Grade',
-                        'value' => 'grade_name'
-                    ],
-                    [
-                        'text'  => 'Actions',
-                        'value' => 'actions'
-                    ],
+            'header'        => [
+                [
+                    'text'  => 'ID',
+                    'value' => 'id'
                 ],
-                'course_content'    => [
-                    [
-                        'text'  => 'ID',
-                        'value' => 'id'
-                    ],
-                    [
-                        'text'  => 'Name',
-                        'value' => 'name'
-                    ],
-                    [
-                        'text'  => 'Description',
-                        'value' => 'desc'
-                    ],
-                    [
-                        'text'  => 'Content',
-                        'value' => 'content'
-                    ],
-                    [
-                        'text'  => 'File',
-                        'value' => 'file'
-                    ],
-                    [
-                        'text'  => 'Image',
-                        'value' => 'image'
-                    ],
-
-                    [
-                        'text'  => 'Actions',
-                        'value' => 'actions'
-                    ],
+                [
+                    'text'  => 'Name',
+                    'value' => 'name'
                 ],
-                'course_task'    => [
-                    [
-                        'text'  => 'ID',
-                        'value' => 'id'
-                    ],
-                    [
-                        'text'  => 'Name',
-                        'value' => 'name'
-                    ],
-                    [
-                        'text'  => 'Actions',
-                        'value' => 'actions'
-                    ],
-                ]
+                [
+                    'text'  => 'Course Type',
+                    'value' => 'course_type_name'
+                ],
+                [
+                    'text'  => 'Premium',
+                    'value' => 'is_premium'
+                ],
+                [
+                    'text'  => 'Price',
+                    'value' => 'price'
+                ],
+                [
+                    'text'  => 'Grade',
+                    'value' => 'grade_name'
+                ],
+                [
+                    'text'  => 'Actions',
+                    'value' => 'actions'
+                ],
 
+            ],
+            'relation_key'   => 'course_id',
+            'api'           => [
+                'course_content'    => route('course-content.index'),
+                'course_task'       => route('course-task.index'),
             ]
         ]);
     }
@@ -192,5 +147,10 @@ class CourseController extends Controller
         Course::find($id)->delete();
 
         return $this->success();
+    }
+
+    public function createCourseContent(Request $request)
+    {
+        de($request->input());
     }
 }

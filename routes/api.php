@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\CourseContentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseTaskController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,9 @@ Route::group([], function () {
 
     Route::resource('user', UserController::class);
     Route::resource('course', CourseController::class);
+    Route::resource('course-content', CourseContentController::class);
+    Route::resource('course-task', CourseTaskController::class);
+    // Route::post('course-content', [CourseController::class, 'createCourseContent']);
 
     Route::get('table/{model}', TableController::class);
 });

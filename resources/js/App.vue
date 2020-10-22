@@ -1,11 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      app
-      v-model="drawer"
-      :mini-variant.sync="mini"
-      permanent
-    >
+    <v-navigation-drawer app v-model="drawer">
       <v-list-item class="px-2">
         <v-list-item-avatar>
           <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
@@ -18,10 +13,6 @@
             {{ auth.role }}
           </div>
         </v-list-item-title>
-
-        <v-btn icon @click.stop="mini = !mini">
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
       </v-list-item>
 
       <v-divider></v-divider>
@@ -45,7 +36,7 @@
     </v-navigation-drawer>
 
     <v-app-bar color="deep-purple accent-4" dense dark app>
-      <v-app-bar-nav-icon @click="mini = !mini"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>{{ appName }}</v-toolbar-title>
 
@@ -109,7 +100,7 @@ export default {
         role: "",
       },
       appName: "",
-      drawer: true,
+      drawer: null,
       items: [],
       mini: false,
     };
