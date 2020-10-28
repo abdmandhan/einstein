@@ -16,7 +16,7 @@
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn text :to="{ name: 'profile' }">Profile</v-btn>
-        <v-btn text>Logout</v-btn>
+        <v-btn text @click="logout">Logout</v-btn>
       </v-container>
     </v-app-bar>
 
@@ -44,11 +44,10 @@ export default {
       },
     ],
   }),
-  computed: {
-    routeName() {
-      this.links.forEach((element) => {
-        console.log("ROUTENAME", this.$route.name, element.name, element.title);
-        return this.$route.name === element.name ? element.title : "asdasd";
+  methods: {
+    logout() {
+      axios.post(`${this.$baseUrl}/logout`).then((result) => {
+        window.location.href = this.$baseUrl;
       });
     },
   },

@@ -8,6 +8,7 @@ use App\Http\Controllers\CourseTypeController;
 use App\Http\Controllers\DifficultyController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\TransactionStatusController;
 use App\Http\Controllers\UserController;
@@ -28,6 +29,7 @@ Route::group([], function () {
     Route::get('app', [AppController::class, 'index']);
     Route::get('options', [AppController::class, 'options']);
 
+    //admin
     Route::resource('user', UserController::class)->only(['index', 'store', 'destroy']);
     Route::resource('course', CourseController::class)->only(['index', 'store', 'destroy']);
     Route::resource('course-content', CourseContentController::class)->only(['index', 'store', 'destroy', 'show']);
@@ -38,5 +40,6 @@ Route::group([], function () {
     Route::resource('position', PositionController::class)->only(['index', 'store', 'destroy']);
     Route::resource('transaction-status', TransactionStatusController::class)->only(['index', 'store', 'destroy']);
 
-    Route::get('table/{model}', TableController::class);
+    //student
+    Route::resource('student', StudentController::class);
 });

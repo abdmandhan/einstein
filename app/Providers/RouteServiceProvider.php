@@ -48,12 +48,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
 
             Route::prefix('vue')
-                ->middleware(['web', 'auth'])
+                ->middleware(['web', 'auth', 'role:admin|teacher'])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/vue.php'));
 
             Route::prefix('student')
-                ->middleware(['web', 'auth'])
+                ->middleware(['web', 'auth', 'role:student'])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/student.php'));
         });

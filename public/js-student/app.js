@@ -2036,13 +2036,12 @@ __webpack_require__.r(__webpack_exports__);
       }]
     };
   },
-  computed: {
-    routeName: function routeName() {
+  methods: {
+    logout: function logout() {
       var _this = this;
 
-      this.links.forEach(function (element) {
-        console.log("ROUTENAME", _this.$route.name, element.name, element.title);
-        return _this.$route.name === element.name ? element.title : "asdasd";
+      axios.post("".concat(this.$baseUrl, "/logout")).then(function (result) {
+        window.location.href = _this.$baseUrl;
       });
     }
   }
@@ -2167,6 +2166,196 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log(this.$userId);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js-student/components/ProfileComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js-student/components/ProfileComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      user: {
+        id: "",
+        name: "",
+        email: "",
+        address: "",
+        phone: ""
+      },
+      cPassword: {
+        old_password: "",
+        new_password: "",
+        new_password_confirmation: ""
+      },
+      errors: [],
+      loading: true,
+      message: ""
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("".concat(this.$baseUrl, "/api/student")).then(function (result) {
+      _this.user = result.data.data.data;
+      _this.loading = false;
+    });
+  },
+  methods: {
+    save: function save() {
+      var _this2 = this;
+
+      axios.post("".concat(this.$baseUrl, "/api/student"), this.user).then(function (result) {
+        _this2.errors = [];
+        _this2.message = "Success save profile";
+      })["catch"](function (err) {
+        _this2.message = "";
+        _this2.errors = err.response.data.errors;
+      });
+    },
+    changePassword: function changePassword() {
+      var _this3 = this;
+
+      axios.put("".concat(this.$baseUrl, "/api/student/").concat(this.user.id), this.cPassword).then(function (result) {
+        console.log("RESULSTEDF", result);
+        _this3.errors = [];
+        _this3.message = "Success change password";
+      })["catch"](function (err) {
+        _this3.message = "";
+        _this3.errors = err.response.data.errors;
+        console.log("ERRORS", _this3.errors);
+      });
+    }
   }
 });
 
@@ -38469,7 +38658,9 @@ var render = function() {
                 _vm._v("Profile")
               ]),
               _vm._v(" "),
-              _c("v-btn", { attrs: { text: "" } }, [_vm._v("Logout")])
+              _c("v-btn", { attrs: { text: "" }, on: { click: _vm.logout } }, [
+                _vm._v("Logout")
+              ])
             ],
             2
           )
@@ -38742,6 +38933,12 @@ var render = function() {
         "v-sheet",
         { attrs: { rounded: "lg" } },
         [
+          _vm.message
+            ? _c("v-alert", { attrs: { type: "success" } }, [
+                _vm._v("\n      " + _vm._s(_vm.message) + "\n    ")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "v-tabs",
             { attrs: { vertical: "" } },
@@ -38752,7 +38949,7 @@ var render = function() {
                   _c("v-icon", { attrs: { left: "" } }, [
                     _vm._v(" mdi-account ")
                   ]),
-                  _vm._v("\n        Option 1\n      ")
+                  _vm._v("\n        Profile\n      ")
                 ],
                 1
               ),
@@ -38761,18 +38958,7 @@ var render = function() {
                 "v-tab",
                 [
                   _c("v-icon", { attrs: { left: "" } }, [_vm._v(" mdi-lock ")]),
-                  _vm._v("\n        Option 2\n      ")
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-tab",
-                [
-                  _c("v-icon", { attrs: { left: "" } }, [
-                    _vm._v(" mdi-access-point ")
-                  ]),
-                  _vm._v("\n        Option 3\n      ")
+                  _vm._v("\n        Change Password\n      ")
                 ],
                 1
               ),
@@ -38782,27 +38968,159 @@ var render = function() {
                 [
                   _c(
                     "v-card",
-                    { attrs: { flat: "" } },
+                    { attrs: { flat: "", loading: _vm.loading } },
                     [
-                      _c("v-card-text", [
-                        _c("p", [
-                          _vm._v(
-                            "\n              Sed aliquam ultrices mauris. Donec posuere vulputate arcu. Morbi\n              ac felis. Etiam feugiat lorem non metus. Sed a libero.\n            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "\n              Nam ipsum risus, rutrum vitae, vestibulum eu, molestie vel,\n              lacus. Aenean tellus metus, bibendum sed, posuere ac, mattis\n              non, nunc. Aliquam lobortis. Aliquam lobortis. Suspendisse non\n              nisl sit amet velit hendrerit rutrum.\n            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "mb-0" }, [
-                          _vm._v(
-                            "\n              Phasellus dolor. Fusce neque. Fusce fermentum odio nec arcu.\n              Pellentesque libero tortor, tincidunt et, tincidunt eget, semper\n              nec, quam. Phasellus blandit leo ut odio.\n            "
-                          )
-                        ])
-                      ])
+                      _c(
+                        "v-card-text",
+                        [
+                          _vm.loading
+                            ? _c("span", [_vm._v("Loading..")])
+                            : _c(
+                                "v-container",
+                                [
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              dense: "",
+                                              label: "ID",
+                                              "error-messages": _vm.errors.id,
+                                              disabled: ""
+                                            },
+                                            model: {
+                                              value: _vm.user.id,
+                                              callback: function($$v) {
+                                                _vm.$set(_vm.user, "id", $$v)
+                                              },
+                                              expression: "user.id"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              dense: "",
+                                              label: "Email",
+                                              "error-count": "2",
+                                              "error-messages": _vm.errors.email
+                                            },
+                                            model: {
+                                              value: _vm.user.email,
+                                              callback: function($$v) {
+                                                _vm.$set(_vm.user, "email", $$v)
+                                              },
+                                              expression: "user.email"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              dense: "",
+                                              label: "Name",
+                                              "error-messages": _vm.errors.name
+                                            },
+                                            model: {
+                                              value: _vm.user.name,
+                                              callback: function($$v) {
+                                                _vm.$set(_vm.user, "name", $$v)
+                                              },
+                                              expression: "user.name"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-textarea", {
+                                            attrs: {
+                                              label: "Address",
+                                              "error-messages":
+                                                _vm.errors.address
+                                            },
+                                            model: {
+                                              value: _vm.user.address,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.user,
+                                                  "address",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "user.address"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              dense: "",
+                                              type: "number",
+                                              label: "Phone",
+                                              "error-messages": _vm.errors.phone
+                                            },
+                                            model: {
+                                              value: _vm.user.phone,
+                                              callback: function($$v) {
+                                                _vm.$set(_vm.user, "phone", $$v)
+                                              },
+                                              expression: "user.phone"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c(
+                                        "v-btn",
+                                        {
+                                          attrs: { color: "primary" },
+                                          on: { click: _vm.save }
+                                        },
+                                        [_vm._v(" Save ")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                        ],
+                        1
+                      )
                     ],
                     1
                   )
@@ -38817,64 +39135,129 @@ var render = function() {
                     "v-card",
                     { attrs: { flat: "" } },
                     [
-                      _c("v-card-text", [
-                        _c("p", [
-                          _vm._v(
-                            "\n              Morbi nec metus. Suspendisse faucibus, nunc et pellentesque\n              egestas, lacus ante convallis tellus, vitae iaculis lacus elit\n              id tortor. Sed mollis, eros et ultrices tempus, mauris ipsum\n              aliquam libero, non adipiscing dolor urna a orci. Curabitur\n              ligula sapien, tincidunt non, euismod vitae, posuere imperdiet,\n              leo. Nunc sed turpis.\n            "
+                      _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-container",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          dense: "",
+                                          label: "Old Password",
+                                          type: "password",
+                                          "error-messages":
+                                            _vm.errors.old_password
+                                        },
+                                        model: {
+                                          value: _vm.cPassword.old_password,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.cPassword,
+                                              "old_password",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "cPassword.old_password"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          dense: "",
+                                          label: "New Password",
+                                          type: "password",
+                                          "error-messages":
+                                            _vm.errors.new_password
+                                        },
+                                        model: {
+                                          value: _vm.cPassword.new_password,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.cPassword,
+                                              "new_password",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "cPassword.new_password"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          dense: "",
+                                          label: "Confirmation New Password",
+                                          type: "password",
+                                          "error-messages":
+                                            _vm.errors.new_password_confirmation
+                                        },
+                                        model: {
+                                          value:
+                                            _vm.cPassword
+                                              .new_password_confirmation,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.cPassword,
+                                              "new_password_confirmation",
+                                              $$v
+                                            )
+                                          },
+                                          expression:
+                                            "cPassword.new_password_confirmation"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-btn",
+                                    {
+                                      attrs: { color: "primary" },
+                                      on: { click: _vm.changePassword }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                  Change Password\n                "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
                           )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "\n              Suspendisse feugiat. Suspendisse faucibus, nunc et pellentesque\n              egestas, lacus ante convallis tellus, vitae iaculis lacus elit\n              id tortor. Proin viverra, ligula sit amet ultrices semper,\n              ligula arcu tristique sapien, a accumsan nisi mauris ac eros. In\n              hac habitasse platea dictumst. Fusce ac felis sit amet ligula\n              pharetra condimentum.\n            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "\n              Sed consequat, leo eget bibendum sodales, augue velit cursus\n              nunc, quis gravida magna mi a libero. Nam commodo suscipit quam.\n              In consectetuer turpis ut velit. Sed cursus turpis vitae tortor.\n              Aliquam eu nunc.\n            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "\n              Etiam ut purus mattis mauris sodales aliquam. Ut varius\n              tincidunt libero. Aenean viverra rhoncus pede. Duis leo. Fusce\n              fermentum odio nec arcu.\n            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "mb-0" }, [
-                          _vm._v(
-                            "\n              Donec venenatis vulputate lorem. Aenean viverra rhoncus pede. In\n              dui magna, posuere eget, vestibulum et, tempor auctor, justo.\n              Fusce commodo aliquam arcu. Suspendisse enim turpis, dictum sed,\n              iaculis a, condimentum nec, nisi.\n            "
-                          )
-                        ])
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-tab-item",
-                [
-                  _c(
-                    "v-card",
-                    { attrs: { flat: "" } },
-                    [
-                      _c("v-card-text", [
-                        _c("p", [
-                          _vm._v(
-                            "\n              Fusce a quam. Phasellus nec sem in justo pellentesque facilisis.\n              Nam eget dui. Proin viverra, ligula sit amet ultrices semper,\n              ligula arcu tristique sapien, a accumsan nisi mauris ac eros. In\n              dui magna, posuere eget, vestibulum et, tempor auctor, justo.\n            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "mb-0" }, [
-                          _vm._v(
-                            "\n              Cras sagittis. Phasellus nec sem in justo pellentesque\n              facilisis. Proin sapien ipsum, porta a, auctor quis, euismod ut,\n              mi. Donec quam felis, ultricies nec, pellentesque eu, pretium\n              quis, sem. Nam at tortor in tellus interdum sagittis.\n            "
-                          )
-                        ])
-                      ])
+                        ],
+                        1
+                      )
                     ],
                     1
                   )
@@ -98170,15 +98553,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProfileComponent_vue_vue_type_template_id_3f1003a6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileComponent.vue?vue&type=template&id=3f1003a6& */ "./resources/js-student/components/ProfileComponent.vue?vue&type=template&id=3f1003a6&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ProfileComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfileComponent.vue?vue&type=script&lang=js& */ "./resources/js-student/components/ProfileComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProfileComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ProfileComponent_vue_vue_type_template_id_3f1003a6___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ProfileComponent_vue_vue_type_template_id_3f1003a6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -98192,6 +98577,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js-student/components/ProfileComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js-student/components/ProfileComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js-student/components/ProfileComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js-student/components/ProfileComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

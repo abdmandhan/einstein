@@ -26,7 +26,7 @@ class HomeController extends Controller
     {
         foreach (Auth::user()->getRoleNames() as $key => $value) {
             if ($value == 'student') {
-                return redirect('student/dashbaord');
+                return redirect('student/dashboard');
             }
         }
 
