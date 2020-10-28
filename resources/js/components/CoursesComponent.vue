@@ -87,7 +87,7 @@
                     ></v-select>
                   </v-col>
                 </v-row>
-                <v-card>
+                <v-card v-if="!(editedIndex === -1)">
                   <v-tabs v-model="tab" background-color="primary" dark>
                     <v-tab> Course Content </v-tab>
                     <v-tab> Course Task </v-tab>
@@ -257,7 +257,6 @@ export default {
         });
 
       this.closeDelete();
-      // this.users.splice(this.editedIndex, 1);
     },
 
     close() {
@@ -292,9 +291,6 @@ export default {
           this.errors = error.response.data.errors;
           console.log("ERROR", error.response, this.message, this.errors);
         });
-    },
-    duplicateContent() {
-      console.log("DUPLICATE");
     },
   },
 };

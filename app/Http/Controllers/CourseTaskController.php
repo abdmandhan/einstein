@@ -15,6 +15,34 @@ class CourseTaskController extends Controller
     public function index()
     {
         //
+        return $this->success([
+            'data'      => [],
+            'header'    => [
+                [
+                    'text'  => 'ID',
+                    'value' => 'id',
+                    'disabled'  => true,
+                ],
+                [
+                    'text'  => 'Name',
+                    'value' => 'name'
+                ],
+                [
+                    'text'  => 'Difficulty',
+                    'value' => 'difficulty_id'
+                ],
+                [
+                    'text'  => 'Time',
+                    'value' => 'time'
+                ],
+
+                [
+                    'text'  => 'Actions',
+                    'value' => 'actions'
+                ],
+
+            ]
+        ]);
     }
 
     /**

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <v-col cols="12" sm="6" class="mb-5">
       <p>Select User</p>
 
@@ -147,7 +147,7 @@
         <v-btn color="primary" @click="initialize"> Reset </v-btn>
       </template>
     </v-data-table>
-  </v-container>
+  </div>
 </template>
 
 <script>

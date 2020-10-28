@@ -2,6 +2,11 @@
 
 return [
     [
+        'header'    => 'Menu',
+        'roles'     => ['admin']
+    ],
+
+    [
         'title'     => 'Dashboard',
         'icon'      => 'mdi-view-dashboard',
         'name'      => 'dashboard',
@@ -25,13 +30,6 @@ return [
     ],
 
     [
-        'title'     => 'Course Type',
-        'icon'      => 'mdi-book',
-        'name'      => 'coursetypes',
-        'roles'     => ['admin', 'teacher']
-    ],
-
-    [
         'title'     => 'Transaction',
         'icon'      => 'mdi-cart',
         'name'      => 'transactions',
@@ -42,6 +40,19 @@ return [
         'title'     => 'Try Out',
         'icon'      => 'mdi-clipboard-outline',
         'name'      => 'tryouts',
+        'roles'     => ['admin', 'teacher']
+    ],
+
+    [
+        'header'    => 'Content Management',
+        'roles'     => ['admin']
+    ],
+
+
+    [
+        'title'     => 'Course Type',
+        'icon'      => 'mdi-book',
+        'name'      => 'coursetypes',
         'roles'     => ['admin', 'teacher']
     ],
 
@@ -72,5 +83,7 @@ return [
         'name'      => 'transactionstatuses',
         'roles'     => ['admin']
     ],
+
+
 
 ];

@@ -74,6 +74,9 @@
 
 <script>
 export default {
+  mounted() {
+    console.log("ITEM", this.api);
+  },
   props: {
     nameTable: {
       default: "",

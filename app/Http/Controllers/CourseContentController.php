@@ -14,8 +14,42 @@ class CourseContentController extends Controller
      */
     public function index()
     {
-        //
+        return $this->success([
+            'data'      => [],
+            'header'    => [
+                [
+                    'text'  => 'ID',
+                    'value' => 'id',
+                    'disabled'  => true,
+                ],
+                [
+                    'text'  => 'Name',
+                    'value' => 'name'
+                ],
+                [
+                    'text'  => 'Description',
+                    'value' => 'desc'
+                ],
+                [
+                    'text'  => 'Content',
+                    'value' => 'content'
+                ],
+                [
+                    'text'  => 'File',
+                    'value' => 'file'
+                ],
+                [
+                    'text'  => 'Image',
+                    'value' => 'image'
+                ],
 
+                [
+                    'text'  => 'Actions',
+                    'value' => 'actions'
+                ],
+
+            ]
+        ]);
     }
 
     /**

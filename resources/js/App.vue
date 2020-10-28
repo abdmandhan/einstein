@@ -8,7 +8,6 @@
 
         <v-list-item-title>
           {{ auth.name }}
-
           <div>
             {{ auth.role }}
           </div>
@@ -18,20 +17,19 @@
       <v-divider></v-divider>
 
       <v-list dense>
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-          :to="{ name: item.name }"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+        <div v-for="item in items" :key="item.title">
+          <v-subheader v-if="item.header">{{ item.header }}</v-subheader>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item link :to="{ name: item.name }" v-else>
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </div>
       </v-list>
     </v-navigation-drawer>
 
@@ -58,9 +56,6 @@
         </template>
 
         <v-list>
-          <!-- <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item> -->
           <v-list-item @click="logout">
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
@@ -68,18 +63,13 @@
       </v-menu>
     </v-app-bar>
 
-    <!-- Sizes your content based upon application components -->
     <v-main>
-      <!-- Provides the application the proper gutter -->
       <v-container fluid>
         <router-view></router-view>
       </v-container>
     </v-main>
 
-    <v-footer app>
-      <!-- -->
-      &copy; Abdurrahman Ramadhan 2020
-    </v-footer>
+    <v-footer app> &copy; Abdurrahman Ramadhan 2020 </v-footer>
   </v-app>
 </template>
 
@@ -95,6 +85,10 @@ export default {
   },
   data() {
     return {
+      admins: [
+        ["Management", "mdi-account-multiple-outline"],
+        ["Settings", "mdi-cog-outline"],
+      ],
       auth: {
         name: "",
         role: "",

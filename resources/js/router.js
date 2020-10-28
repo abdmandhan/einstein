@@ -4,6 +4,11 @@ import VueRouter from 'vue-router';
 import Dashboard from './components/DashboardComponent';
 import Users from './components/UsersComponent';
 import Courses from './components/CoursesComponent';
+import CourseTypes from './components/CourseTypesComponent';
+import Grades from './components/GradesComponent';
+import Difficulties from './components/DifficultiesComponent';
+import Positions from './components/PositionsComponent';
+import TransactionStatuses from './components/TransactionStatusesComponent';
 
 Vue.use(VueRouter);
 
@@ -28,7 +33,7 @@ const router = new VueRouter({
         {
             path: '/vue/coursetypes',
             name: 'coursetypes',
-            component: Dashboard
+            component: CourseTypes
         },
         {
             path: '/vue/transactions',
@@ -43,24 +48,25 @@ const router = new VueRouter({
         {
             path: '/vue/grades',
             name: 'grades',
-            component: Dashboard
+            component: Grades
         },
         {
             path: '/vue/difficulties',
             name: 'difficulties',
-            component: Dashboard
+            component: Difficulties
         },
 
         {
             path: '/vue/positions',
             name: 'positions',
-            component: Dashboard
+            component: Positions
         },
         {
             path: '/vue/transactionstatuses',
             name: 'transactionstatuses',
-            component: Dashboard
+            component: TransactionStatuses
         },
+
     ]
 })
 

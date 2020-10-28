@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/vue/dashboard';
+    public const HOME = '/home';
 
     /**
      * The controller namespace for the application.
@@ -51,6 +51,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware(['web', 'auth'])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/vue.php'));
+
+            Route::prefix('student')
+                ->middleware(['web', 'auth'])
+                ->namespace($this->namespace)
+                ->group(base_path('routes/student.php'));
         });
     }
 

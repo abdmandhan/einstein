@@ -148,9 +148,4 @@ class CourseController extends Controller
 
         return $this->success();
     }
-
-    public function createCourseContent(Request $request)
-    {
-        de($request->input());
-    }
 }
