@@ -17,6 +17,7 @@ class CreateCoursesTable extends Migration
             $table->id();
             $table->integer('course_type_id');
             $table->string('name');
+            $table->longText('desc');
             $table->boolean('is_premium');
             $table->integer('price')->nullable();
             $table->foreignId('grade_id');

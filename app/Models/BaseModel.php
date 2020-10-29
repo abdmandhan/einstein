@@ -11,4 +11,9 @@ class BaseModel extends Model
     use SoftDeletes, HasFactory;
 
     protected $guarded = [];
+
+    protected $hidden = [
+        'updated_at',
+        'deleted_at'
+    ];
 }

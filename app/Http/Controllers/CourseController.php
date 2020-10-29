@@ -19,6 +19,7 @@ class CourseController extends Controller
                 'id',
                 'course_type_id',
                 'name',
+                'desc',
                 'is_premium',
                 'price',
                 'grade_id',
@@ -35,6 +36,10 @@ class CourseController extends Controller
                 [
                     'text'  => 'Name',
                     'value' => 'name'
+                ],
+                [
+                    'text'  => 'Description',
+                    'value' => 'desc'
                 ],
                 [
                     'text'  => 'Course Type',

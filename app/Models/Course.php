@@ -38,4 +38,9 @@ class Course extends BaseModel
     {
         return $this->belongsTo(CourseType::class, 'course_type_id');
     }
+
+    public function course_teacher()
+    {
+        return $this->hasMany(CourseTeacher::class, 'course_id');
+    }
 }

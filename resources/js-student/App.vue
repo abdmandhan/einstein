@@ -35,8 +35,8 @@ export default {
         name: "dashboard",
       },
       {
-        title: "My Course",
-        name: "my-course",
+        title: "Course",
+        name: "course",
       },
       {
         title: "Try Out",

@@ -44,6 +44,10 @@ class DatabaseSeeder extends Seeder
             $user->assignRole('student');
         });
 
+        User::factory(50)->create()->each(function ($user) {
+            $user->assignRole('teacher');
+        });
+
         //grades
         $data = [
             ['name' => 'VII'],

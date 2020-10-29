@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import Dashboard from './components/DashboardComponent';
 import Profile from './components/ProfileComponent';
+import Course from './components/CourseComponent';
 
 Vue.use(VueRouter);
 
@@ -20,15 +21,23 @@ const router = new VueRouter({
             component: Dashboard
         },
         {
-            path: '/student/my-course',
-            name: 'my-course',
-            component: Dashboard
+            path: '/student/course',
+            name: 'course',
+            component: Course
         },
         {
             path: '/student/tryout',
             name: 'tryout',
             component: Dashboard
         },
+        {
+            path: "*",
+            redirect: "/404"
+        },
+        {
+            path: "/404",
+            name: "404",
+        }
     ]
 })
 

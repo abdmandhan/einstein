@@ -66,6 +66,14 @@ const router = new VueRouter({
             name: 'transactionstatuses',
             component: TransactionStatuses
         },
+        {
+            path: "*",
+            redirect: "/404"
+        },
+        {
+            path: "/404",
+            name: "404",
+        }
 
     ]
 })

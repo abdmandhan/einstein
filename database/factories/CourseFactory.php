@@ -27,6 +27,7 @@ class CourseFactory extends Factory
 
         return [
             'name'              => $this->faker->name,
+            'desc'              => $this->faker->paragraph(),
             'is_premium'        => $is_premium,
             'price'             => $is_premium ? $this->faker->numberBetween(100, 1000) * 1000 : null,
             'course_type_id'    => CourseType::all()->random()->id,
