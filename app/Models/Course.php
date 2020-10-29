@@ -8,6 +8,9 @@ class Course extends BaseModel
     //     'course_type_name',
     //     'grade_name'
     // ];
+    protected $casts = [
+        'is_premium'    => 'boolean'
+    ];
 
     public function getCourseTypeNameAttribute()
     {
