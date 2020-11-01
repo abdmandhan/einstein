@@ -44,6 +44,6 @@ Route::group([], function () {
     //student
     Route::resource('student', StudentController::class);
     Route::group(['prefix' => 's'], function () {
-        Route::get('course', [StudentCourseController::class, 'index']);
+        Route::resource('course', StudentCourseController::class);
     });
 });

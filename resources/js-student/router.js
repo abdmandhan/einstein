@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Dashboard from './components/DashboardComponent';
 import Profile from './components/ProfileComponent';
 import Course from './components/CourseComponent';
+import CourseJoin from './components/CourseJoinComponent';
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,11 @@ const router = new VueRouter({
             path: '/student/course',
             name: 'course',
             component: Course
+        },
+        {
+            path: '/student/course/:id',
+            name: 'course-join',
+            component: CourseJoin
         },
         {
             path: '/student/tryout',

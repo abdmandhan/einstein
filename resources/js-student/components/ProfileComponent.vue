@@ -20,7 +20,7 @@
               <span v-if="loading">Loading..</span>
               <v-container v-else>
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="6">
                     <v-text-field
                       dense
                       v-model="user.id"
@@ -30,7 +30,17 @@
                     ></v-text-field>
                   </v-col>
 
-                  <v-col cols="12">
+                  <v-col cols="6">
+                    <v-text-field
+                      dense
+                      v-model="user.user_student.grade.name"
+                      label="Grade"
+                      :error-messages="errors.id"
+                      disabled
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col cols="6">
                     <v-text-field
                       dense
                       v-model="user.email"
@@ -40,12 +50,22 @@
                     ></v-text-field>
                   </v-col>
 
-                  <v-col cols="12">
+                  <v-col cols="6">
                     <v-text-field
                       dense
                       v-model="user.name"
                       label="Name"
                       :error-messages="errors.name"
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col cols="6">
+                    <v-text-field
+                      dense
+                      v-model="user.phone"
+                      type="number"
+                      label="Phone"
+                      :error-messages="errors.phone"
                     ></v-text-field>
                   </v-col>
 
@@ -55,16 +75,6 @@
                       label="Address"
                       :error-messages="errors.address"
                     ></v-textarea>
-                  </v-col>
-
-                  <v-col cols="12">
-                    <v-text-field
-                      dense
-                      v-model="user.phone"
-                      type="number"
-                      label="Phone"
-                      :error-messages="errors.phone"
-                    ></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row>

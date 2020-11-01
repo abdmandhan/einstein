@@ -30,6 +30,6 @@ class HomeController extends Controller
             }
         }
 
-        return redirect('vue/dashbaord');
+        return redirect('vue/dashboard');
     }
 }

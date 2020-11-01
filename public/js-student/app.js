@@ -2115,6 +2115,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2166,6 +2171,208 @@ __webpack_require__.r(__webpack_exports__);
       _this.courses = result.data.data.data;
       _this.loading = false;
     })["catch"](function (err) {});
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js-student/components/CourseJoinComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js-student/components/CourseJoinComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      course: {},
+      loading: true,
+      btnLoading: false,
+      errors: [],
+      transaction: {
+        course_id: this.$route.params.id,
+        image: {},
+        account_no: "",
+        account_name: ""
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("".concat(this.$baseUrl, "/api/s/course/").concat(this.$route.params.id)).then(function (result) {
+      _this.course = result.data.data.data;
+      _this.loading = false;
+      console.log("result", _this.course);
+    })["catch"](function (err) {});
+  },
+  methods: {
+    buy: function buy() {
+      var _this2 = this;
+
+      this.btnLoading = true;
+      axios.post("".concat(this.$baseUrl, "/api/s/course"), this.transaction).then(function (result) {
+        console.log("RESULT", result);
+        _this2.btnLoading = false;
+        _this2.errors = [];
+      })["catch"](function (err) {
+        _this2.errors = err.response.data.errors;
+        _this2.btnLoading = false;
+      });
+    }
   }
 });
 
@@ -2302,6 +2509,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -38860,7 +39077,7 @@ var render = function() {
             "v-chip",
             {
               staticClass: "ma-2",
-              attrs: { color: "success", "text-color": "white", v: "" }
+              attrs: { color: "success", "text-color": "white" }
             },
             [
               _vm._v("\n    Free\n    "),
@@ -38874,9 +39091,16 @@ var render = function() {
       _c(
         "v-card-actions",
         [
-          _c("v-btn", { attrs: { color: "primary lighten-2" } }, [
-            _vm._v(" Join this Course ")
-          ]),
+          _c(
+            "v-btn",
+            {
+              attrs: {
+                color: "primary lighten-2",
+                to: { name: "course-join", params: { id: _vm.course.id } }
+              }
+            },
+            [_vm._v("\n      Join this Course\n    ")]
+          ),
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
@@ -38994,6 +39218,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
+    { staticClass: "d-flex flex-wrap" },
     [
       _c(
         "v-row",
@@ -39002,7 +39227,7 @@ var render = function() {
             return _vm.loading
               ? _c(
                   "v-col",
-                  { key: i, attrs: { cols: "3" } },
+                  { key: i, attrs: { cols: "4" } },
                   [
                     _c("v-skeleton-loader", {
                       attrs: { type: "article, actions" }
@@ -39016,13 +39241,461 @@ var render = function() {
           _vm._l(_vm.courses, function(course, i) {
             return _c(
               "v-col",
-              { key: i, attrs: { cols: "3" } },
+              { key: i, attrs: { cols: "4" } },
               [_c("course-card-component", { attrs: { course: course } })],
               1
             )
           })
         ],
         2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js-student/components/CourseJoinComponent.vue?vue&type=template&id=c18f7d62&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js-student/components/CourseJoinComponent.vue?vue&type=template&id=c18f7d62& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-container",
+        [
+          _vm.loading
+            ? _c(
+                "v-row",
+                _vm._l(2, function(a, i) {
+                  return _c(
+                    "v-col",
+                    { key: i, attrs: { cols: "6" } },
+                    [
+                      _c("v-skeleton-loader", {
+                        attrs: { type: "article, actions" }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                1
+              )
+            : _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6" } },
+                    [
+                      _c(
+                        "v-card",
+                        { staticClass: "mx-auto" },
+                        [
+                          _c(
+                            "v-card-subtitle",
+                            { staticClass: "d-flex justify-space-between" },
+                            [
+                              _c("span", [_vm._v("Course Detail")]),
+                              _vm._v(" "),
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _vm.course.is_premium
+                                ? _c(
+                                    "span",
+                                    [
+                                      _c(
+                                        "v-chip",
+                                        {
+                                          attrs: {
+                                            color: "orange",
+                                            "text-color": "white"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                Premium\n                "
+                                          ),
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { right: "" } },
+                                            [_vm._v(" mdi-star ")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                : _c(
+                                    "span",
+                                    [
+                                      _c(
+                                        "v-chip",
+                                        {
+                                          attrs: {
+                                            color: "success",
+                                            "text-color": "white"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                Free\n                "
+                                          ),
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { right: "" } },
+                                            [_vm._v(" mdi-shield-check ")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c("v-simple-table", {
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "default",
+                                    fn: function() {
+                                      return [
+                                        _c("tbody", [
+                                          _c("tr", [
+                                            _c("td", [_vm._v("Course Type")]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                "\n                      " +
+                                                  _vm._s(
+                                                    _vm.course.course_type.name
+                                                  ) +
+                                                  "\n                    "
+                                              )
+                                            ])
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("tr", [
+                                            _c("td", [_vm._v("Course Grade")]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(_vm.course.grade.name)
+                                              )
+                                            ])
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("tr", [
+                                            _c("td", [_vm._v("Course Name")]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(_vm.course.name))
+                                            ])
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("tr", [
+                                            _c("td", [
+                                              _vm._v("Course Description")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(_vm.course.desc))
+                                            ])
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("tr", [
+                                            _c("td", [_vm._v("Price")]),
+                                            _vm._v(" "),
+                                            _vm.course.is_premium
+                                              ? _c("td", [
+                                                  _vm._v(
+                                                    _vm._s(_vm.course.price)
+                                                  )
+                                                ])
+                                              : _c("td", [_vm._v("FREE")])
+                                          ])
+                                        ])
+                                      ]
+                                    },
+                                    proxy: true
+                                  }
+                                ])
+                              }),
+                              _vm._v(" "),
+                              _c("v-divider"),
+                              _vm._v("\n            Teacher\n            "),
+                              _c("v-simple-table", {
+                                scopedSlots: _vm._u([
+                                  {
+                                    key: "default",
+                                    fn: function() {
+                                      return [
+                                        _c("thead", [
+                                          _c("tr", [
+                                            _c("th", [_vm._v("Name")]),
+                                            _vm._v(" "),
+                                            _c("th", [_vm._v("Email")]),
+                                            _vm._v(" "),
+                                            _c("th", [_vm._v("Phone")])
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "tbody",
+                                          _vm._l(
+                                            _vm.course.course_teacher,
+                                            function(teacher, i) {
+                                              return _c("tr", { key: i }, [
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                      " +
+                                                      _vm._s(
+                                                        teacher.teacher.name
+                                                      ) +
+                                                      "\n                    "
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                      " +
+                                                      _vm._s(
+                                                        teacher.teacher.email
+                                                      ) +
+                                                      "\n                    "
+                                                  )
+                                                ]),
+                                                _vm._v(" "),
+                                                _c("td", [
+                                                  _vm._v(
+                                                    "\n                      " +
+                                                      _vm._s(
+                                                        teacher.teacher.phone
+                                                      ) +
+                                                      "\n                    "
+                                                  )
+                                                ])
+                                              ])
+                                            }
+                                          ),
+                                          0
+                                        )
+                                      ]
+                                    },
+                                    proxy: true
+                                  }
+                                ])
+                              }),
+                              _vm._v(" "),
+                              _c("v-divider"),
+                              _vm._v(
+                                "\n            Course Content\n            "
+                              ),
+                              _c(
+                                "v-row",
+                                { attrs: { justify: "center" } },
+                                [
+                                  _c(
+                                    "v-expansion-panels",
+                                    { attrs: { accordion: "" } },
+                                    _vm._l(_vm.course.course_content, function(
+                                      content,
+                                      i
+                                    ) {
+                                      return _c(
+                                        "v-expansion-panel",
+                                        { key: i },
+                                        [
+                                          _c("v-expansion-panel-header", [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(content.name) +
+                                                "\n                  "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("v-expansion-panel-content", [
+                                            _c("h5", [
+                                              _vm._v(_vm._s(content.desc))
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("h6", [
+                                              _vm._v(_vm._s(content.content))
+                                            ])
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    }),
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "6" } },
+                    [
+                      _c(
+                        "v-card",
+                        { staticClass: "mx-auto" },
+                        [
+                          _c("v-card-subtitle", [_vm._v("Payment")]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
+                              _c(
+                                "v-row",
+                                [
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "12" } },
+                                    [
+                                      _c("v-file-input", {
+                                        attrs: {
+                                          dense: "",
+                                          label: "Bukti Transfer",
+                                          "error-messages": _vm.errors.image,
+                                          accept: "image/*"
+                                        },
+                                        model: {
+                                          value: _vm.transaction.image,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.transaction,
+                                              "image",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "transaction.image"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "6" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          dense: "",
+                                          label: "Bank Account Name",
+                                          "error-messages":
+                                            _vm.errors.account_name
+                                        },
+                                        model: {
+                                          value: _vm.transaction.account_name,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.transaction,
+                                              "account_name",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "transaction.account_name"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "v-col",
+                                    { attrs: { cols: "6" } },
+                                    [
+                                      _c("v-text-field", {
+                                        attrs: {
+                                          dense: "",
+                                          label: "Bank Account Number",
+                                          "error-messages":
+                                            _vm.errors.account_no
+                                        },
+                                        model: {
+                                          value: _vm.transaction.account_no,
+                                          callback: function($$v) {
+                                            _vm.$set(
+                                              _vm.transaction,
+                                              "account_no",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "transaction.account_no"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-actions",
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    color: "primary",
+                                    loading: _vm.btnLoading
+                                  },
+                                  on: { click: _vm.buy }
+                                },
+                                [_vm._v("\n              Buy\n            ")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+        ],
+        1
       )
     ],
     1
@@ -39338,7 +40011,7 @@ var render = function() {
                                     [
                                       _c(
                                         "v-col",
-                                        { attrs: { cols: "12" } },
+                                        { attrs: { cols: "6" } },
                                         [
                                           _c("v-text-field", {
                                             attrs: {
@@ -39361,7 +40034,37 @@ var render = function() {
                                       _vm._v(" "),
                                       _c(
                                         "v-col",
-                                        { attrs: { cols: "12" } },
+                                        { attrs: { cols: "6" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              dense: "",
+                                              label: "Grade",
+                                              "error-messages": _vm.errors.id,
+                                              disabled: ""
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.user.user_student.grade
+                                                  .name,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.user.user_student.grade,
+                                                  "name",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "user.user_student.grade.name"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "6" } },
                                         [
                                           _c("v-text-field", {
                                             attrs: {
@@ -39384,7 +40087,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c(
                                         "v-col",
-                                        { attrs: { cols: "12" } },
+                                        { attrs: { cols: "6" } },
                                         [
                                           _c("v-text-field", {
                                             attrs: {
@@ -39398,6 +40101,29 @@ var render = function() {
                                                 _vm.$set(_vm.user, "name", $$v)
                                               },
                                               expression: "user.name"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "6" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              dense: "",
+                                              type: "number",
+                                              label: "Phone",
+                                              "error-messages": _vm.errors.phone
+                                            },
+                                            model: {
+                                              value: _vm.user.phone,
+                                              callback: function($$v) {
+                                                _vm.$set(_vm.user, "phone", $$v)
+                                              },
+                                              expression: "user.phone"
                                             }
                                           })
                                         ],
@@ -39424,29 +40150,6 @@ var render = function() {
                                                 )
                                               },
                                               expression: "user.address"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "v-col",
-                                        { attrs: { cols: "12" } },
-                                        [
-                                          _c("v-text-field", {
-                                            attrs: {
-                                              dense: "",
-                                              type: "number",
-                                              label: "Phone",
-                                              "error-messages": _vm.errors.phone
-                                            },
-                                            model: {
-                                              value: _vm.user.phone,
-                                              callback: function($$v) {
-                                                _vm.$set(_vm.user, "phone", $$v)
-                                              },
-                                              expression: "user.phone"
                                             }
                                           })
                                         ],
@@ -98674,6 +99377,7 @@ var map = {
 	"./App.vue": "./resources/js-student/App.vue",
 	"./components/CourseCardComponent.vue": "./resources/js-student/components/CourseCardComponent.vue",
 	"./components/CourseComponent.vue": "./resources/js-student/components/CourseComponent.vue",
+	"./components/CourseJoinComponent.vue": "./resources/js-student/components/CourseJoinComponent.vue",
 	"./components/DashboardComponent.vue": "./resources/js-student/components/DashboardComponent.vue",
 	"./components/ProfileComponent.vue": "./resources/js-student/components/ProfileComponent.vue"
 };
@@ -98969,6 +99673,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js-student/components/CourseJoinComponent.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js-student/components/CourseJoinComponent.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CourseJoinComponent_vue_vue_type_template_id_c18f7d62___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CourseJoinComponent.vue?vue&type=template&id=c18f7d62& */ "./resources/js-student/components/CourseJoinComponent.vue?vue&type=template&id=c18f7d62&");
+/* harmony import */ var _CourseJoinComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CourseJoinComponent.vue?vue&type=script&lang=js& */ "./resources/js-student/components/CourseJoinComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CourseJoinComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CourseJoinComponent_vue_vue_type_template_id_c18f7d62___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CourseJoinComponent_vue_vue_type_template_id_c18f7d62___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js-student/components/CourseJoinComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js-student/components/CourseJoinComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js-student/components/CourseJoinComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CourseJoinComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CourseJoinComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js-student/components/CourseJoinComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CourseJoinComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js-student/components/CourseJoinComponent.vue?vue&type=template&id=c18f7d62&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js-student/components/CourseJoinComponent.vue?vue&type=template&id=c18f7d62& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CourseJoinComponent_vue_vue_type_template_id_c18f7d62___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CourseJoinComponent.vue?vue&type=template&id=c18f7d62& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js-student/components/CourseJoinComponent.vue?vue&type=template&id=c18f7d62&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CourseJoinComponent_vue_vue_type_template_id_c18f7d62___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CourseJoinComponent_vue_vue_type_template_id_c18f7d62___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js-student/components/DashboardComponent.vue":
 /*!****************************************************************!*\
   !*** ./resources/js-student/components/DashboardComponent.vue ***!
@@ -99122,6 +99895,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_DashboardComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/DashboardComponent */ "./resources/js-student/components/DashboardComponent.vue");
 /* harmony import */ var _components_ProfileComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ProfileComponent */ "./resources/js-student/components/ProfileComponent.vue");
 /* harmony import */ var _components_CourseComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/CourseComponent */ "./resources/js-student/components/CourseComponent.vue");
+/* harmony import */ var _components_CourseJoinComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/CourseJoinComponent */ "./resources/js-student/components/CourseJoinComponent.vue");
+
 
 
 
@@ -99142,6 +99917,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/student/course',
     name: 'course',
     component: _components_CourseComponent__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, {
+    path: '/student/course/:id',
+    name: 'course-join',
+    component: _components_CourseJoinComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
     path: '/student/tryout',
     name: 'tryout',

@@ -16,7 +16,7 @@ class CreateUserStudentsTable extends Migration
         Schema::create('user_students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('position_id');
+            $table->foreignId('grade_id');
             $table->timestamps();
             $table->softDeletes();
         });

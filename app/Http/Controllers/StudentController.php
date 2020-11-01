@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Rules\Password;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class StudentController extends Controller
     {
         //
         return $this->success([
-            'data'      => Auth::user(),
+            'data'      => User::with('user_student.grade')->find(Auth::id()),
         ]);
     }
 

@@ -1,10 +1,10 @@
 <template>
-  <v-container>
+  <v-container class="d-flex flex-wrap">
     <v-row>
-      <v-col v-if="loading" cols="3" v-for="(a, i) in 12" :key="i">
+      <v-col v-if="loading" v-for="(a, i) in 12" :key="i" cols="4">
         <v-skeleton-loader type="article, actions"></v-skeleton-loader>
       </v-col>
-      <v-col cols="3" v-for="(course, i) in courses" :key="i">
+      <v-col v-for="(course, i) in courses" :key="i" cols="4">
         <course-card-component :course="course" />
       </v-col>
     </v-row>

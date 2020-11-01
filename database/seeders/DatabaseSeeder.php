@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Grade;
 use App\Models\User;
+use App\Models\UserStudent;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -39,9 +40,18 @@ class DatabaseSeeder extends Seeder
             'password'  => '12341234'
         ]);
         $user->assignRole('student');
+        UserStudent::create([
+            'user_id'   => $user->id,
+            'grade_id'  => random_int(1, 3)
+        ]);
+
 
         User::factory(10)->create()->each(function ($user) {
             $user->assignRole('student');
+            UserStudent::create([
+                'user_id'   => $user->id,
+                'grade_id'  => random_int(1, 3)
+            ]);
         });
 
         User::factory(50)->create()->each(function ($user) {

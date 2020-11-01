@@ -13,12 +13,17 @@
       </v-chip>
       <span class="ma-4"> Rp {{ course.price }} </span>
     </div>
-    <v-chip class="ma-2" color="success" text-color="white" v v-else>
+    <v-chip class="ma-2" color="success" text-color="white" v-else>
       Free
       <v-icon right> mdi-shield-check </v-icon>
     </v-chip>
     <v-card-actions>
-      <v-btn color="primary lighten-2"> Join this Course </v-btn>
+      <v-btn
+        color="primary lighten-2"
+        :to="{ name: 'course-join', params: { id: course.id } }"
+      >
+        Join this Course
+      </v-btn>
 
       <v-spacer></v-spacer>
 

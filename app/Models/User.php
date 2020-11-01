@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return isset($this->getRoleNames()[0]) ? $this->getRoleNames()[0] : null;
     }
+
+    public function user_student()
+    {
+        return $this->hasOne(UserStudent::class, 'user_id');
+    }
 }
