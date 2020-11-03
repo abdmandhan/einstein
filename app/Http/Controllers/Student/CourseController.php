@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseStudent;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -30,23 +33,37 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $course = Course::find($request->input('course_id'));
+        $course = Course::where('id', $request->input('course_id'))->first();
+
+        de([$course, $request->post('course_id'), $request->all()]);
 
         if ($course->is_premium) {
-            $data = $request->validate([
+            $data = (object) $request->validate([
                 'course_id'     => ['required'],
                 'image'         => ['required'],
                 'account_name'  => ['required'],
                 'account_no'    => ['required']
             ]);
         } else {
-            $data = $request->validate([
+            $data = (object) $request->validate([
                 'course_id'     => ['required'],
-                'image'         => ['nullable', 'mimes:jpeg,jpg,png,gif', 'max:100000'],
-                'account_name'  => ['string', 'nullable'],
-                'account_no'    => ['string', 'nullable']
             ]);
         }
+
+        de((Course::find($data->course_id))->price);
+
+        CourseStudent::create([
+            'user_id'       => Auth::id(),
+            'course_id'     => $data->course_id,
+        ]);
+
+        Transaction::create([
+            'user_id'               => Auth::id(),
+            'course_id'             => $data->course_id,
+            'transaction_status_id' => 1,
+            'transaction_date'      => now(),
+            'amount'                => Course::find($data->course_id)->price
+        ]);
 
 
         de($data);

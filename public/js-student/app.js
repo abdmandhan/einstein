@@ -2335,6 +2335,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2364,7 +2370,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.btnLoading = true;
-      axios.post("".concat(this.$baseUrl, "/api/s/course"), this.transaction).then(function (result) {
+      axios.post("".concat(this.$baseUrl, "/api/s/course"), this.transaction, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (result) {
         console.log("RESULT", result);
         _this2.btnLoading = false;
         _this2.errors = [];
@@ -2372,6 +2382,11 @@ __webpack_require__.r(__webpack_exports__);
         _this2.errors = err.response.data.errors;
         _this2.btnLoading = false;
       });
+    }
+  },
+  watch: {
+    "transaction.image": function transactionImage(newVal, oldVal) {
+      console.log("IMAGE", newVal, oldVal);
     }
   }
 });
@@ -39307,10 +39322,10 @@ var render = function() {
                     [
                       _c(
                         "v-card",
-                        { staticClass: "mx-auto" },
+                        { staticClass: "mb-5" },
                         [
                           _c(
-                            "v-card-subtitle",
+                            "v-card-title",
                             { staticClass: "d-flex justify-space-between" },
                             [
                               _c("span", [_vm._v("Course Detail")]),
@@ -39443,11 +39458,25 @@ var render = function() {
                                     proxy: true
                                   }
                                 ])
-                              }),
-                              _vm._v(" "),
-                              _c("v-divider"),
-                              _vm._v("\n            Teacher\n            "),
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        { staticClass: "mb-5" },
+                        [
+                          _c("v-card-title", [_vm._v(" Teacher ")]),
+                          _vm._v(" "),
+                          _c(
+                            "v-card-text",
+                            [
                               _c("v-simple-table", {
+                                attrs: { dense: "" },
                                 scopedSlots: _vm._u([
                                   {
                                     key: "default",
@@ -39508,53 +39537,7 @@ var render = function() {
                                     proxy: true
                                   }
                                 ])
-                              }),
-                              _vm._v(" "),
-                              _c("v-divider"),
-                              _vm._v(
-                                "\n            Course Content\n            "
-                              ),
-                              _c(
-                                "v-row",
-                                { attrs: { justify: "center" } },
-                                [
-                                  _c(
-                                    "v-expansion-panels",
-                                    { attrs: { accordion: "" } },
-                                    _vm._l(_vm.course.course_content, function(
-                                      content,
-                                      i
-                                    ) {
-                                      return _c(
-                                        "v-expansion-panel",
-                                        { key: i },
-                                        [
-                                          _c("v-expansion-panel-header", [
-                                            _vm._v(
-                                              "\n                    " +
-                                                _vm._s(content.name) +
-                                                "\n                  "
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("v-expansion-panel-content", [
-                                            _c("h5", [
-                                              _vm._v(_vm._s(content.desc))
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("h6", [
-                                              _vm._v(_vm._s(content.content))
-                                            ])
-                                          ])
-                                        ],
-                                        1
-                                      )
-                                    }),
-                                    1
-                                  )
-                                ],
-                                1
-                              )
+                              })
                             ],
                             1
                           )
@@ -39575,98 +39558,104 @@ var render = function() {
                         [
                           _c("v-card-subtitle", [_vm._v("Payment")]),
                           _vm._v(" "),
-                          _c(
-                            "v-card-text",
-                            [
-                              _c(
-                                "v-row",
+                          _vm.course.is_premium
+                            ? _c(
+                                "v-card-text",
                                 [
                                   _c(
-                                    "v-col",
-                                    { attrs: { cols: "12" } },
+                                    "v-row",
                                     [
-                                      _c("v-file-input", {
-                                        attrs: {
-                                          dense: "",
-                                          label: "Bukti Transfer",
-                                          "error-messages": _vm.errors.image,
-                                          accept: "image/*"
-                                        },
-                                        model: {
-                                          value: _vm.transaction.image,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.transaction,
-                                              "image",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "transaction.image"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "6" } },
-                                    [
-                                      _c("v-text-field", {
-                                        attrs: {
-                                          dense: "",
-                                          label: "Bank Account Name",
-                                          "error-messages":
-                                            _vm.errors.account_name
-                                        },
-                                        model: {
-                                          value: _vm.transaction.account_name,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.transaction,
-                                              "account_name",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "transaction.account_name"
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-col",
-                                    { attrs: { cols: "6" } },
-                                    [
-                                      _c("v-text-field", {
-                                        attrs: {
-                                          dense: "",
-                                          label: "Bank Account Number",
-                                          "error-messages":
-                                            _vm.errors.account_no
-                                        },
-                                        model: {
-                                          value: _vm.transaction.account_no,
-                                          callback: function($$v) {
-                                            _vm.$set(
-                                              _vm.transaction,
-                                              "account_no",
-                                              $$v
-                                            )
-                                          },
-                                          expression: "transaction.account_no"
-                                        }
-                                      })
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c("v-file-input", {
+                                            attrs: {
+                                              dense: "",
+                                              label: "Bukti Transfer",
+                                              "error-messages":
+                                                _vm.errors.image,
+                                              accept: "image/*"
+                                            },
+                                            model: {
+                                              value: _vm.transaction.image,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.transaction,
+                                                  "image",
+                                                  $$v
+                                                )
+                                              },
+                                              expression: "transaction.image"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "6" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              dense: "",
+                                              label: "Bank Account Name",
+                                              "error-messages":
+                                                _vm.errors.account_name
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.transaction.account_name,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.transaction,
+                                                  "account_name",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "transaction.account_name"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        { attrs: { cols: "6" } },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              dense: "",
+                                              label: "Bank Account Number",
+                                              "error-messages":
+                                                _vm.errors.account_no
+                                            },
+                                            model: {
+                                              value: _vm.transaction.account_no,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.transaction,
+                                                  "account_no",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "transaction.account_no"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
                                     ],
                                     1
                                   )
                                 ],
                                 1
                               )
-                            ],
-                            1
-                          ),
+                            : _vm._e(),
                           _vm._v(" "),
                           _c(
                             "v-card-actions",

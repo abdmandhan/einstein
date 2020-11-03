@@ -8,8 +8,8 @@
       </v-row>
       <v-row v-else>
         <v-col cols="6">
-          <v-card class="mx-auto">
-            <v-card-subtitle class="d-flex justify-space-between">
+          <v-card class="mb-5">
+            <v-card-title class="d-flex justify-space-between">
               <span>Course Detail</span>
               <v-spacer></v-spacer>
               <span v-if="course.is_premium">
@@ -24,7 +24,7 @@
                   <v-icon right> mdi-shield-check </v-icon>
                 </v-chip>
               </span>
-            </v-card-subtitle>
+            </v-card-title>
             <v-card-text>
               <v-simple-table>
                 <template v-slot:default>
@@ -55,10 +55,13 @@
                   </tbody>
                 </template>
               </v-simple-table>
+            </v-card-text>
+          </v-card>
 
-              <v-divider></v-divider>
-              Teacher
-              <v-simple-table>
+          <v-card class="mb-5">
+            <v-card-title> Teacher </v-card-title>
+            <v-card-text>
+              <v-simple-table dense>
                 <template v-slot:default>
                   <thead>
                     <tr>
@@ -82,9 +85,12 @@
                   </tbody>
                 </template>
               </v-simple-table>
+            </v-card-text>
+          </v-card>
 
-              <v-divider></v-divider>
-              Course Content
+          <!-- <v-card class="mb-5">
+            <v-card-title> Course Content </v-card-title>
+            <v-card-text>
               <v-row justify="center">
                 <v-expansion-panels accordion>
                   <v-expansion-panel
@@ -102,12 +108,12 @@
                 </v-expansion-panels>
               </v-row>
             </v-card-text>
-          </v-card>
+          </v-card> -->
         </v-col>
         <v-col cols="6">
           <v-card class="mx-auto">
             <v-card-subtitle>Payment</v-card-subtitle>
-            <v-card-text>
+            <v-card-text v-if="course.is_premium">
               <v-row>
                 <v-col cols="12">
                   <v-file-input
@@ -178,7 +184,11 @@ export default {
     buy() {
       this.btnLoading = true;
       axios
-        .post(`${this.$baseUrl}/api/s/course`, this.transaction)
+        .post(`${this.$baseUrl}/api/s/course`, this.transaction, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((result) => {
           console.log("RESULT", result);
           this.btnLoading = false;
@@ -188,6 +198,11 @@ export default {
           this.errors = err.response.data.errors;
           this.btnLoading = false;
         });
+    },
+  },
+  watch: {
+    "transaction.image": function (newVal, oldVal) {
+      console.log("IMAGE", newVal, oldVal);
     },
   },
 };

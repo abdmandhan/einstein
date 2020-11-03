@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Grade;
+use App\Models\TransactionStatus;
 use App\Models\User;
 use App\Models\UserStudent;
 use Illuminate\Database\Seeder;
@@ -71,5 +72,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CourseSeeder::class
         ]);
+
+        //transaction status
+        $transaction_status = [
+            ['name'  => 'PENDING'],
+            ['name'  => 'FINISH'],
+            ['name'  => 'REJECT'],
+        ];
+
+        TransactionStatus::insert($transaction_status);
     }
 }
