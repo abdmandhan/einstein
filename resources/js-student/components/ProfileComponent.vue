@@ -13,6 +13,14 @@
           <v-icon left> mdi-lock </v-icon>
           Change Password
         </v-tab>
+        <v-tab>
+          <v-icon left> mdi-book-check </v-icon>
+          Your Courses
+        </v-tab>
+        <v-tab>
+          <v-icon left> mdi-cart </v-icon>
+          Your Transaction
+        </v-tab>
 
         <v-tab-item>
           <v-card flat :loading="loading">
@@ -126,6 +134,24 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text>
+              <v-container class="d-flex flex-wrap">
+                <v-row>
+                  <v-col v-if="loading" v-for="(a, i) in 12" :key="i" cols="4">
+                    <v-skeleton-loader
+                      type="article, actions"
+                    ></v-skeleton-loader>
+                  </v-col>
+                  <v-col v-for="(course, i) in courses" :key="i" cols="4">
+                    <course-card-component :course="course" />
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
       </v-tabs>
     </v-sheet>
   </v-container>
@@ -149,10 +175,13 @@ export default {
     errors: [],
     loading: true,
     message: "",
+    courses: [],
   }),
   mounted() {
     axios.get(`${this.$baseUrl}/api/student`).then((result) => {
-      this.user = result.data.data.data;
+      this.user = result.data.data.user;
+      this.courses = result.data.data.courses;
+      console.log("courses", this.courses);
       this.loading = false;
     });
   },

@@ -9,14 +9,16 @@ use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
     //
     public function index()
     {
+        $ownedCourse = Auth::user()->course()->pluck('course_id');
         return $this->success([
-            'data'      => Course::with(['course_type', 'grade', 'course_teacher.teacher'])->get()
+            'data'      => Course::whereNotIn('id', $ownedCourse)->with(['course_type', 'grade', 'course_teacher.teacher'])->get()
         ]);
     }
 
@@ -33,9 +35,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $course = Course::where('id', $request->input('course_id'))->first();
-
-        de([$course, $request->post('course_id'), $request->all()]);
+        $course = Course::where('id', $request->input('course_id'))->firstOrFail();
 
         if ($course->is_premium) {
             $data = (object) $request->validate([
@@ -50,23 +50,32 @@ class CourseController extends Controller
             ]);
         }
 
-        de((Course::find($data->course_id))->price);
+        $path = null;
 
-        CourseStudent::create([
-            'user_id'       => Auth::id(),
-            'course_id'     => $data->course_id,
-        ]);
+        if ($request->file('image')) {
+            $path = 'storage/' . $request->file('image')->store('transaction', 'public');
+        }
 
-        Transaction::create([
-            'user_id'               => Auth::id(),
-            'course_id'             => $data->course_id,
-            'transaction_status_id' => 1,
-            'transaction_date'      => now(),
-            'amount'                => Course::find($data->course_id)->price
-        ]);
+        DB::transaction(function () use ($data, $path) {
+            CourseStudent::create([
+                'user_id'       => Auth::id(),
+                'course_id'     => $data->course_id,
+            ]);
+
+            Transaction::create([
+                'user_id'               => Auth::id(),
+                'course_id'             => $data->course_id,
+                'transaction_status_id' => 1,
+                'transaction_date'      => now(),
+                'amount'                => Course::find($data->course_id)->price ?? null,
+                'image'                 => $path,
+                'account_no'            => $data->account_no ?? null,
+                'account_name'          => $data->account_name ?? null,
+            ]);
+        });
 
 
-        de($data);
+        return $this->success();
     }
 
     /**

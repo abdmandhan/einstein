@@ -183,13 +183,23 @@ export default {
   methods: {
     buy() {
       this.btnLoading = true;
+      let formData = new FormData();
+
+      for (const key in this.transaction) {
+        formData.append(key, this.transaction[key]);
+      }
+
+      console.log("formData", formData);
+
       axios
-        .post(`${this.$baseUrl}/api/s/course`, this.transaction, {
+        .post(`${this.$baseUrl}/api/s/course`, formData, {
           headers: {
+            Accept: "application/json",
             "Content-Type": "multipart/form-data",
           },
         })
         .then((result) => {
+          window.location.href = this.$baseUrl + "/student/course";
           console.log("RESULT", result);
           this.btnLoading = false;
           this.errors = [];

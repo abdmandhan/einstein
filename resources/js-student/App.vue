@@ -39,6 +39,10 @@ export default {
         name: "course",
       },
       {
+        title: "Teacher",
+        name: "teacher",
+      },
+      {
         title: "Try Out",
         name: "tryout",
       },

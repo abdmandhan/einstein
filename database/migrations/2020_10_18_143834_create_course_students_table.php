@@ -20,6 +20,8 @@ class CreateCourseStudentsTable extends Migration
             $table->boolean('is_complete')->default(0);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['user_id', 'course_id']);
         });
     }
 

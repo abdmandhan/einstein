@@ -9,6 +9,7 @@ use App\Http\Controllers\DifficultyController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\Student\CourseController as StudentCourseController;
+use App\Http\Controllers\Student\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\TransactionStatusController;
@@ -45,5 +46,6 @@ Route::group([], function () {
     Route::resource('student', StudentController::class);
     Route::group(['prefix' => 's'], function () {
         Route::resource('course', StudentCourseController::class);
+        Route::resource('teacher', TeacherController::class);
     });
 });

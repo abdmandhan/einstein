@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Student;
 
-use App\Models\Course;
-use App\Models\User;
-use App\Rules\Password;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+use App\Models\User;
 
-class StudentController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +16,8 @@ class StudentController extends Controller
     public function index()
     {
         //
-        $ownedCourses = Auth::user()->course()->pluck('course_id');
-        $courses = Course::whereIn('id', $ownedCourses)->with(['course_type', 'grade', 'course_teacher.teacher'])->get();
         return $this->success([
-            'user'      => User::with('user_student.grade')->find(Auth::id()),
-            'courses'   => $courses
+            'teachers'  => User::role('teacher')->get()
         ]);
     }
 
@@ -45,16 +39,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name'          => ['required'],
-            'email'         => ['required',  Rule::unique('users')->ignore(Auth::id()), 'email'],
-            'address'       => ['required'],
-            'phone'         => ['required', 'numeric'],
-        ]);
-
-        Auth::user()->update($data);
-
-        return $this->success();
+        //
     }
 
     /**
@@ -86,17 +71,9 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
-        $data = (object) $request->validate([
-            'old_password'  => ['required', new Password],
-            'new_password'  => ['required', 'confirmed'],
-        ]);
-
-        Auth::user()->update(['password' => $data->new_password]);
-
-        return $this->success();
     }
 
     /**
