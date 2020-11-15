@@ -9,6 +9,7 @@ import Grades from './components/GradesComponent';
 import Difficulties from './components/DifficultiesComponent';
 import Positions from './components/PositionsComponent';
 import TransactionStatuses from './components/TransactionStatusesComponent';
+import Transaction from './components/TransactionComponent';
 
 Vue.use(VueRouter);
 
@@ -38,7 +39,7 @@ const router = new VueRouter({
         {
             path: '/vue/transactions',
             name: 'transactions',
-            component: Dashboard
+            component: Transaction
         },
         {
             path: '/vue/tryouts',

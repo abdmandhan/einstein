@@ -12,6 +12,7 @@ use App\Http\Controllers\Student\CourseController as StudentCourseController;
 use App\Http\Controllers\Student\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionStatusController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ Route::group([], function () {
     Route::resource('user', UserController::class)->only(['index', 'store', 'destroy']);
     Route::resource('course', CourseController::class)->only(['index', 'store', 'destroy']);
     Route::resource('course-content', CourseContentController::class)->only(['index', 'store', 'destroy', 'show']);
+    Route::resource('transaction', TransactionController::class)->only(['index', 'store', 'destroy', 'show']);
     Route::resource('course-task', CourseTaskController::class)->only(['index', 'store', 'destroy', 'show']);
     Route::resource('course-type', CourseTypeController::class)->only(['index', 'store', 'destroy']);
     Route::resource('grade', GradeController::class)->only(['index', 'store', 'destroy']);
