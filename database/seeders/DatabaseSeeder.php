@@ -79,9 +79,9 @@ class DatabaseSeeder extends Seeder
 
         //transaction status
         $transaction_status = [
-            ['name'  => 'PENDING'],
-            ['name'  => 'FINISH'],
-            ['name'  => 'REJECT'],
+            ['name'  => 'PENDING', 'color' => 'warning'],
+            ['name'  => 'FINISH', 'color' => 'success'],
+            ['name'  => 'REJECT', 'color' => 'danger'],
         ];
 
         TransactionStatus::insert($transaction_status);

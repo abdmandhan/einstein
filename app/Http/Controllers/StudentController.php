@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Rules\Password;
 use Illuminate\Http\Request;
@@ -22,8 +23,12 @@ class StudentController extends Controller
         $ownedCourses = Auth::user()->course()->pluck('course_id');
         $courses = Course::whereIn('id', $ownedCourses)->with(['course_type', 'grade', 'course_teacher.teacher'])->get();
         return $this->success([
-            'user'      => User::with('user_student.grade')->find(Auth::id()),
-            'courses'   => $courses
+            'user'          => User::with('user_student.grade')->find(Auth::id()),
+            'courses'       => $courses,
+            'transactions'  => Transaction::where('user_id', Auth::id())->with([
+                'transaction_status',
+                'course'
+            ])->get()
         ]);
     }
 

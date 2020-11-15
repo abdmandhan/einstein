@@ -56,16 +56,18 @@ class CourseController extends Controller
             $path = 'storage/' . $request->file('image')->store('transaction', 'public');
         }
 
-        DB::transaction(function () use ($data, $path) {
-            CourseStudent::create([
-                'user_id'       => Auth::id(),
-                'course_id'     => $data->course_id,
-            ]);
+        DB::transaction(function () use ($data, $path, $course) {
+            if (!$course->is_premium) {
+                CourseStudent::create([
+                    'user_id'       => Auth::id(),
+                    'course_id'     => $data->course_id,
+                ]);
+            }
 
             Transaction::create([
                 'user_id'               => Auth::id(),
                 'course_id'             => $data->course_id,
-                'transaction_status_id' => 1,
+                'transaction_status_id' => $course->is_premium ? 1 : 2,
                 'transaction_date'      => now(),
                 'amount'                => Course::find($data->course_id)->price ?? null,
                 'image'                 => $path,

@@ -199,10 +199,10 @@ export default {
           },
         })
         .then((result) => {
-          window.location.href = this.$baseUrl + "/student/course";
           console.log("RESULT", result);
           this.btnLoading = false;
           this.errors = [];
+          window.location.href = this.$baseUrl + "/student/profile";
         })
         .catch((err) => {
           this.errors = err.response.data.errors;

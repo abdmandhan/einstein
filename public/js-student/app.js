@@ -2402,10 +2402,10 @@ __webpack_require__.r(__webpack_exports__);
           "Content-Type": "multipart/form-data"
         }
       }).then(function (result) {
-        window.location.href = _this2.$baseUrl + "/student/course";
         console.log("RESULT", result);
         _this2.btnLoading = false;
         _this2.errors = [];
+        window.location.href = _this2.$baseUrl + "/student/profile";
       })["catch"](function (err) {
         _this2.errors = err.response.data.errors;
         _this2.btnLoading = false;
@@ -2723,6 +2723,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2741,7 +2843,28 @@ __webpack_require__.r(__webpack_exports__);
       errors: [],
       loading: true,
       message: "",
-      courses: []
+      courses: [],
+      headers: [{
+        text: "ID",
+        value: "id"
+      }, {
+        text: "Course",
+        value: "course_id"
+      }, {
+        text: "Status",
+        value: "transaction_status_id"
+      }, {
+        text: "Date",
+        value: "transaction_date"
+      }, {
+        text: "Amount",
+        value: "amount"
+      }, {
+        text: "Action",
+        value: "action"
+      }],
+      transactions: [],
+      dialog: {}
     };
   },
   mounted: function mounted() {
@@ -2750,6 +2873,7 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("".concat(this.$baseUrl, "/api/student")).then(function (result) {
       _this.user = result.data.data.user;
       _this.courses = result.data.data.courses;
+      _this.transactions = result.data.data.transactions;
       console.log("courses", _this.courses);
       _this.loading = false;
     });
@@ -40541,38 +40665,493 @@ var render = function() {
                             [
                               _c(
                                 "v-row",
+                                _vm._l(_vm.courses, function(course, i) {
+                                  return _c(
+                                    "v-col",
+                                    { key: i, attrs: { cols: "12" } },
+                                    [
+                                      _c(
+                                        "v-card",
+                                        { attrs: { elevation: "elevation-2" } },
+                                        [
+                                          _c("v-card-title", [
+                                            _vm._v(_vm._s(course.name))
+                                          ])
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                }),
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-tab-item",
+                [
+                  _c(
+                    "v-card",
+                    { attrs: { flat: "" } },
+                    [
+                      _c(
+                        "v-card-text",
+                        [
+                          _c(
+                            "v-container",
+                            { staticClass: "d-flex flex-wrap" },
+                            [
+                              _c(
+                                "v-row",
                                 [
-                                  _vm._l(12, function(a, i) {
-                                    return _vm.loading
-                                      ? _c(
-                                          "v-col",
-                                          { key: i, attrs: { cols: "4" } },
-                                          [
-                                            _c("v-skeleton-loader", {
-                                              attrs: {
-                                                type: "article, actions"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      : _vm._e()
-                                  }),
-                                  _vm._v(" "),
-                                  _vm._l(_vm.courses, function(course, i) {
-                                    return _c(
-                                      "v-col",
-                                      { key: i, attrs: { cols: "4" } },
-                                      [
-                                        _c("course-card-component", {
-                                          attrs: { course: course }
-                                        })
-                                      ],
-                                      1
-                                    )
+                                  _c("v-data-table", {
+                                    staticClass: "elevation-1",
+                                    attrs: {
+                                      headers: _vm.headers,
+                                      items: _vm.transactions
+                                    },
+                                    scopedSlots: _vm._u([
+                                      {
+                                        key: "item.transaction_status_id",
+                                        fn: function(ref) {
+                                          var item = ref.item
+                                          return [
+                                            _c(
+                                              "v-chip",
+                                              {
+                                                attrs: {
+                                                  color:
+                                                    item.transaction_status
+                                                      .color
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                      " +
+                                                    _vm._s(
+                                                      item.transaction_status
+                                                        .name
+                                                    ) +
+                                                    "\n                    "
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        }
+                                      },
+                                      {
+                                        key: "item.course_id",
+                                        fn: function(ref) {
+                                          var item = ref.item
+                                          return [
+                                            _vm._v(
+                                              "\n                    " +
+                                                _vm._s(item.course.name) +
+                                                "\n                  "
+                                            )
+                                          ]
+                                        }
+                                      },
+                                      {
+                                        key: "item.action",
+                                        fn: function(ref) {
+                                          var item = ref.item
+                                          return [
+                                            _c(
+                                              "v-dialog",
+                                              {
+                                                scopedSlots: _vm._u(
+                                                  [
+                                                    {
+                                                      key: "activator",
+                                                      fn: function(ref) {
+                                                        var on = ref.on
+                                                        var attrs = ref.attrs
+                                                        return [
+                                                          _c(
+                                                            "v-btn",
+                                                            {
+                                                              attrs: {
+                                                                color:
+                                                                  "primary",
+                                                                small: ""
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  $event.stopPropagation()
+                                                                  return _vm.$set(
+                                                                    _vm.dialog,
+                                                                    item.id,
+                                                                    true
+                                                                  )
+                                                                }
+                                                              }
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "\n                          Detail\n                        "
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      }
+                                                    }
+                                                  ],
+                                                  null,
+                                                  true
+                                                ),
+                                                model: {
+                                                  value: _vm.dialog[item.id],
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      _vm.dialog,
+                                                      item.id,
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression: "dialog[item.id]"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(" "),
+                                                _c(
+                                                  "v-card",
+                                                  [
+                                                    _c(
+                                                      "v-card-title",
+                                                      {
+                                                        staticClass:
+                                                          "headline grey lighten-2"
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                          Detail Transaction\n                        "
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-card-text",
+                                                      { staticClass: "mt-5" },
+                                                      [
+                                                        _c("v-simple-table", {
+                                                          scopedSlots: _vm._u(
+                                                            [
+                                                              {
+                                                                key: "default",
+                                                                fn: function() {
+                                                                  return [
+                                                                    _c(
+                                                                      "tbody",
+                                                                      [
+                                                                        _c(
+                                                                          "tr",
+                                                                          [
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  "Course"
+                                                                                )
+                                                                              ]
+                                                                            ),
+                                                                            _vm._v(
+                                                                              " "
+                                                                            ),
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  _vm._s(
+                                                                                    item
+                                                                                      .course
+                                                                                      .name
+                                                                                  )
+                                                                                )
+                                                                              ]
+                                                                            )
+                                                                          ]
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "tr",
+                                                                          [
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  "Status Transaction"
+                                                                                )
+                                                                              ]
+                                                                            ),
+                                                                            _vm._v(
+                                                                              " "
+                                                                            ),
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _c(
+                                                                                  "v-chip",
+                                                                                  {
+                                                                                    attrs: {
+                                                                                      color:
+                                                                                        item
+                                                                                          .transaction_status
+                                                                                          .color
+                                                                                    }
+                                                                                  },
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      "\n                                      " +
+                                                                                        _vm._s(
+                                                                                          item
+                                                                                            .transaction_status
+                                                                                            .name
+                                                                                        ) +
+                                                                                        "\n                                    "
+                                                                                    )
+                                                                                  ]
+                                                                                )
+                                                                              ],
+                                                                              1
+                                                                            )
+                                                                          ]
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "tr",
+                                                                          [
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  "Transaction Date"
+                                                                                )
+                                                                              ]
+                                                                            ),
+                                                                            _vm._v(
+                                                                              " "
+                                                                            ),
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  _vm._s(
+                                                                                    item.transaction_date
+                                                                                  )
+                                                                                )
+                                                                              ]
+                                                                            )
+                                                                          ]
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "tr",
+                                                                          [
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  "Amount"
+                                                                                )
+                                                                              ]
+                                                                            ),
+                                                                            _vm._v(
+                                                                              " "
+                                                                            ),
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  _vm._s(
+                                                                                    item.amount
+                                                                                  )
+                                                                                )
+                                                                              ]
+                                                                            )
+                                                                          ]
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "tr",
+                                                                          [
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  "Transanstion Proof"
+                                                                                )
+                                                                              ]
+                                                                            ),
+                                                                            _vm._v(
+                                                                              " "
+                                                                            ),
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _c(
+                                                                                  "v-img",
+                                                                                  {
+                                                                                    attrs: {
+                                                                                      "max-height":
+                                                                                        "150",
+                                                                                      "max-width":
+                                                                                        "250",
+                                                                                      src: _vm.photo(
+                                                                                        item.image
+                                                                                      )
+                                                                                    }
+                                                                                  }
+                                                                                )
+                                                                              ],
+                                                                              1
+                                                                            )
+                                                                          ]
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "tr",
+                                                                          [
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  "Account Number"
+                                                                                )
+                                                                              ]
+                                                                            ),
+                                                                            _vm._v(
+                                                                              " "
+                                                                            ),
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  _vm._s(
+                                                                                    item.account_no
+                                                                                  )
+                                                                                )
+                                                                              ]
+                                                                            )
+                                                                          ]
+                                                                        ),
+                                                                        _vm._v(
+                                                                          " "
+                                                                        ),
+                                                                        _c(
+                                                                          "tr",
+                                                                          [
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  "Account Name"
+                                                                                )
+                                                                              ]
+                                                                            ),
+                                                                            _vm._v(
+                                                                              " "
+                                                                            ),
+                                                                            _c(
+                                                                              "td",
+                                                                              [
+                                                                                _vm._v(
+                                                                                  _vm._s(
+                                                                                    item.account_name
+                                                                                  )
+                                                                                )
+                                                                              ]
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  ]
+                                                                },
+                                                                proxy: true
+                                                              }
+                                                            ],
+                                                            null,
+                                                            true
+                                                          )
+                                                        })
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c("v-divider"),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-card-actions",
+                                                      [
+                                                        _c("v-spacer"),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-btn",
+                                                          {
+                                                            attrs: {
+                                                              color: "primary",
+                                                              text: ""
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                $event.stopPropagation()
+                                                                return _vm.$set(
+                                                                  _vm.dialog,
+                                                                  item.id,
+                                                                  false
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                            Close\n                          "
+                                                            )
+                                                          ]
+                                                        )
+                                                      ],
+                                                      1
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ])
                                   })
                                 ],
-                                2
+                                1
                               )
                             ],
                             1
