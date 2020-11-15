@@ -225,11 +225,64 @@
                                   <tr>
                                     <td>Transanstion Proof</td>
                                     <td>
-                                      <v-img
-                                        max-height="150"
-                                        max-width="250"
-                                        :src="photo(item.image)"
-                                      ></v-img>
+                                      <v-dialog
+                                        v-model="dialogPreview[item.id]"
+                                      >
+                                        <template
+                                          v-slot:activator="{ on, attrs }"
+                                        >
+                                          <v-img
+                                            max-height="150"
+                                            max-width="250"
+                                            dark
+                                            @click.stop="
+                                              $set(dialogPreview, item.id, true)
+                                            "
+                                            :src="photo(item.image)"
+                                            :lazy-src="
+                                              photo('/storage/other/blur.jpg')
+                                            "
+                                          >
+                                          </v-img>
+                                        </template>
+
+                                        <v-card>
+                                          <v-card-title
+                                            class="headline grey lighten-2"
+                                          >
+                                            Bukti Transfer
+                                          </v-card-title>
+
+                                          <v-card-text>
+                                            <v-img
+                                              dark
+                                              :src="photo(item.image)"
+                                              :lazy-src="
+                                                photo('/storage/other/blur.jpg')
+                                              "
+                                            ></v-img>
+                                          </v-card-text>
+
+                                          <v-divider></v-divider>
+
+                                          <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn
+                                              color="primary"
+                                              text
+                                              @click.stop="
+                                                $set(
+                                                  dialogPreview,
+                                                  item.id,
+                                                  false
+                                                )
+                                              "
+                                            >
+                                              Close
+                                            </v-btn>
+                                          </v-card-actions>
+                                        </v-card>
+                                      </v-dialog>
                                     </td>
                                   </tr>
                                   <tr>
@@ -300,6 +353,7 @@ export default {
     ],
     transactions: [],
     dialog: {},
+    dialogPreview: {},
   }),
   mounted() {
     axios.get(`${this.$baseUrl}/api/student`).then((result) => {

@@ -108,8 +108,22 @@
       </v-dialog>
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <v-btn color="primary" small> Accept </v-btn>
-      <v-btn color="danger" small> Reject </v-btn>
+      <v-btn
+        color="success"
+        small
+        v-if="item.transaction_status_id != 2"
+        @click="updateStatus(item, 2)"
+      >
+        Accept
+      </v-btn>
+      <v-btn
+        color="error"
+        small
+        v-if="item.transaction_status_id != 3"
+        @click="updateStatus(item, 3)"
+      >
+        Reject
+      </v-btn>
       <!-- <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon> -->
     </template>
@@ -229,6 +243,21 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
+    },
+    updateStatus(item, status) {
+      axios
+        .put(`${this.$baseUrl}/api/transaction/${item.id}`, { status: status })
+        .then((response) => {
+          this.initialize();
+          this.close();
+          console.log("Response", response);
+        })
+        .catch((error) => {
+          this.message = error.response.data.message;
+          this.errors = error.response.data.errors;
+          console.log("ERROR", error.response, this.message, this.errors);
+        });
+      console.log("ACCEPT", item, status);
     },
 
     save() {

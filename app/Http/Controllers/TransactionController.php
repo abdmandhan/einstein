@@ -135,7 +135,9 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Transaction::findOrFail($id)->update(['transaction_status_id' => $request->input('status')]);
+
+        return $this->success();
     }
 
     /**
