@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'name'      => 'Teacher 1',
             'email'     => 'teacher@example.com',
+            'phone'     => '012312123123',
+            'photo'     => 'storage/user/2.jpg',
             'password'  => '12341234'
         ]);
         $user->assignRole('teacher');
@@ -38,6 +40,8 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'name'      => 'Student1',
             'email'     => 'student@example.com',
+            'photo'     => 'storage/user/2.jpg',
+            'phone'     => '012312123123',
             'password'  => '12341234'
         ]);
         $user->assignRole('student');

@@ -28,6 +28,18 @@
               <span v-if="loading">Loading..</span>
               <v-container v-else>
                 <v-row>
+                  <v-col cols="12">
+                    <v-avatar class="profile" color="grey" size="164" tile>
+                      <v-img :src="photo(user.photo)"></v-img>
+                    </v-avatar>
+                    <!-- <v-text-field
+                      dense
+                      v-model="user.photo"
+                      label="Photo"
+                      :error-messages="errors.photo"
+                      disabled
+                    ></v-text-field> -->
+                  </v-col>
                   <v-col cols="6">
                     <v-text-field
                       dense
@@ -186,6 +198,9 @@ export default {
     });
   },
   methods: {
+    photo(name) {
+      return `${this.$baseUrl}/${name}`;
+    },
     save() {
       axios
         .post(`${this.$baseUrl}/api/student`, this.user)

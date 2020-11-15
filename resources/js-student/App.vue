@@ -3,7 +3,8 @@
     <v-app-bar app color="white" flat>
       <v-container class="py-0 fill-height">
         <v-avatar class="mr-10" color="grey darken-1" size="32">
-          <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+          <!-- <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img> -->
+          <v-img :src="photo"></v-img>
         </v-avatar>
 
         <v-btn
@@ -29,6 +30,7 @@
 <script>
 export default {
   data: () => ({
+    userPhoto: "storage/user/1.jpg",
     links: [
       {
         title: "Dashboard",
@@ -48,6 +50,16 @@ export default {
       },
     ],
   }),
+  mounted() {
+    axios.get(`${this.$baseUrl}/api/app`).then((result) => {
+      this.userPhoto = result.data.auth.photo;
+    });
+  },
+  computed: {
+    photo() {
+      return `${this.$baseUrl}/${this.userPhoto}`;
+    },
+  },
   methods: {
     logout() {
       axios.post(`${this.$baseUrl}/logout`).then((result) => {

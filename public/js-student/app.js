@@ -2021,9 +2021,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      userPhoto: "storage/user/1.jpg",
       links: [{
         title: "Dashboard",
         name: "dashboard"
@@ -2039,12 +2041,24 @@ __webpack_require__.r(__webpack_exports__);
       }]
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("".concat(this.$baseUrl, "/api/app")).then(function (result) {
+      _this.userPhoto = result.data.auth.photo;
+    });
+  },
+  computed: {
+    photo: function photo() {
+      return "".concat(this.$baseUrl, "/").concat(this.userPhoto);
+    }
+  },
   methods: {
     logout: function logout() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post("".concat(this.$baseUrl, "/logout")).then(function (result) {
-        window.location.href = _this.$baseUrl;
+        window.location.href = _this2.$baseUrl;
       });
     }
   }
@@ -2120,9 +2134,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2132,6 +2143,11 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     course: {
       type: Object
+    }
+  },
+  methods: {
+    photo: function photo(name) {
+      return "".concat(this.$baseUrl, "/").concat(name);
     }
   }
 });
@@ -2695,6 +2711,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2727,6 +2755,9 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    photo: function photo(name) {
+      return "".concat(this.$baseUrl, "/").concat(name);
+    },
     save: function save() {
       var _this2 = this;
 
@@ -2798,15 +2829,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     teacher: {
       type: Object
+    }
+  },
+  computed: {
+    photo: function photo() {
+      return "".concat(this.$baseUrl, "/").concat(this.teacher.photo);
+    },
+    background: function background() {
+      return "".concat(this.$baseUrl, "/storage/other/classroom.jpg");
     }
   }
 });
@@ -39124,13 +39158,7 @@ var render = function() {
                   staticClass: "mr-10",
                   attrs: { color: "grey darken-1", size: "32" }
                 },
-                [
-                  _c("v-img", {
-                    attrs: {
-                      src: "https://randomuser.me/api/portraits/men/85.jpg"
-                    }
-                  })
-                ],
+                [_c("v-img", { attrs: { src: _vm.photo } })],
                 1
               ),
               _vm._v(" "),
@@ -39319,8 +39347,7 @@ var render = function() {
                           _c("v-avatar", { staticClass: "mr-4" }, [
                             _c("img", {
                               attrs: {
-                                src:
-                                  "https://cdn.vuetifyjs.com/images/john.jpg",
+                                src: _vm.photo(teacher.teacher.photo),
                                 alt: "John"
                               }
                             })
@@ -40159,6 +40186,33 @@ var render = function() {
                                     [
                                       _c(
                                         "v-col",
+                                        { attrs: { cols: "12" } },
+                                        [
+                                          _c(
+                                            "v-avatar",
+                                            {
+                                              staticClass: "profile",
+                                              attrs: {
+                                                color: "grey",
+                                                size: "164",
+                                                tile: ""
+                                              }
+                                            },
+                                            [
+                                              _c("v-img", {
+                                                attrs: {
+                                                  src: _vm.photo(_vm.user.photo)
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
                                         { attrs: { cols: "6" } },
                                         [
                                           _c("v-text-field", {
@@ -40570,12 +40624,7 @@ var render = function() {
     [
       _c(
         "v-img",
-        {
-          attrs: {
-            height: "100%",
-            src: "https://cdn.vuetifyjs.com/images/cards/server-room.jpg"
-          }
-        },
+        { attrs: { height: "100%", src: _vm.background } },
         [
           _c(
             "v-row",
@@ -40594,14 +40643,7 @@ var render = function() {
                       staticClass: "profile",
                       attrs: { color: "grey", size: "164", tile: "" }
                     },
-                    [
-                      _c("v-img", {
-                        attrs: {
-                          src:
-                            "https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
-                        }
-                      })
-                    ],
+                    [_c("v-img", { attrs: { src: _vm.photo } })],
                     1
                   )
                 ],

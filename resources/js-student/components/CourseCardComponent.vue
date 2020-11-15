@@ -46,10 +46,7 @@
               class="mb-5"
             >
               <v-avatar class="mr-4">
-                <img
-                  src="https://cdn.vuetifyjs.com/images/john.jpg"
-                  alt="John"
-                />
+                <img :src="photo(teacher.teacher.photo)" alt="John" />
               </v-avatar>
               {{ teacher.teacher.name }}
             </div>
@@ -68,6 +65,11 @@ export default {
   props: {
     course: {
       type: Object,
+    },
+  },
+  methods: {
+    photo(name) {
+      return `${this.$baseUrl}/${name}`;
     },
   },
 };
