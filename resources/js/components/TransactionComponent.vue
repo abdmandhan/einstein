@@ -85,7 +85,11 @@
           </v-card-title>
 
           <v-card-text>
-            <v-img dark :src="photo(item.image)"></v-img>
+            <v-img
+              dark
+              :src="photo(item.image)"
+              :lazy-src="photo('/storage/other/blur.jpg')"
+            ></v-img>
           </v-card-text>
 
           <v-divider></v-divider>
