@@ -74,6 +74,7 @@
             dark
             @click.stop="$set(dialogPreview, item.id, true)"
             :src="photo(item.image)"
+            :lazy-src="photo('/storage/other/blur.jpg')"
           >
           </v-img>
         </template>
