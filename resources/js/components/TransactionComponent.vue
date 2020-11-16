@@ -1,141 +1,145 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="users"
-    class="elevation-1"
-    :loading="loading"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title>Transaction</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-dialog v-model="dialog">
+  <div>
+    <v-alert outlined type="success" text v-if="message">
+      {{ message }}
+    </v-alert>
+    <v-data-table
+      :headers="headers"
+      :items="users"
+      class="elevation-1"
+      :loading="loading"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title>Transaction</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog">
+            <v-card>
+              <v-card-title>
+                <span class="headline">Edit Transaction</span>
+              </v-card-title>
+
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="6">
+                      <v-text-field
+                        dense
+                        v-model="editedItem.id"
+                        label="ID"
+                        :error-messages="errors.id"
+                        disabled
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="close">
+                  Cancel
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="dialogDelete" max-width="500px">
+            <v-card>
+              <v-card-title class="headline"
+                >Are you sure you want to delete this item?</v-card-title
+              >
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDelete"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  >OK</v-btn
+                >
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:[`item.course_id`]="{ item }">
+        {{ item.course.name }}
+      </template>
+      <template v-slot:[`item.transaction_status_id`]="{ item }">
+        <v-chip :color="item.transaction_status.color">
+          {{ item.transaction_status.name }}
+        </v-chip>
+      </template>
+      <template v-slot:[`item.image`]="{ item }">
+        <v-dialog v-model="dialogPreview[item.id]">
+          <template v-slot:activator="{ on, attrs }">
+            <v-img
+              max-height="150"
+              max-width="250"
+              dark
+              @click.stop="$set(dialogPreview, item.id, true)"
+              :src="photo(item.image)"
+              :lazy-src="photo('/storage/other/blur.jpg')"
+            >
+            </v-img>
+          </template>
+
           <v-card>
-            <v-card-title>
-              <span class="headline">Edit Transaction</span>
+            <v-card-title class="headline grey lighten-2">
+              Bukti Transfer
             </v-card-title>
 
             <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="6">
-                    <v-text-field
-                      dense
-                      v-model="editedItem.id"
-                      label="ID"
-                      :error-messages="errors.id"
-                      disabled
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
+              <v-img
+                dark
+                :src="photo(item.image)"
+                :lazy-src="photo('/storage/other/blur.jpg')"
+              ></v-img>
             </v-card-text>
 
+            <v-divider></v-divider>
+
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-              <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+              <v-btn
+                color="primary"
+                text
+                @click.stop="$set(dialogPreview, item.id, false)"
+              >
+                Close
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="headline"
-              >Are you sure you want to delete this item?</v-card-title
-            >
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
-                >Cancel</v-btn
-              >
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                >OK</v-btn
-              >
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-    <template v-slot:[`item.course_id`]="{ item }">
-      {{ item.course.name }}
-    </template>
-    <template v-slot:[`item.transaction_status_id`]="{ item }">
-      <v-chip :color="item.transaction_status.color">
-        {{ item.transaction_status.name }}
-      </v-chip>
-    </template>
-    <template v-slot:[`item.image`]="{ item }">
-      <v-dialog v-model="dialogPreview[item.id]">
-        <template v-slot:activator="{ on, attrs }">
-          <v-img
-            max-height="150"
-            max-width="250"
-            dark
-            @click.stop="$set(dialogPreview, item.id, true)"
-            :src="photo(item.image)"
-            :lazy-src="photo('/storage/other/blur.jpg')"
+      </template>
+      <template v-slot:[`item.actions`]="{ item }">
+        <span v-if="item.transaction_status_id != 2">
+          <v-btn color="success" small @click="updateStatus(item, 2)">
+            Accept
+          </v-btn>
+          <v-btn
+            color="error"
+            small
+            v-if="item.transaction_status_id != 3"
+            @click="updateStatus(item, 3)"
           >
-          </v-img>
-        </template>
-
-        <v-card>
-          <v-card-title class="headline grey lighten-2">
-            Bukti Transfer
-          </v-card-title>
-
-          <v-card-text>
-            <v-img
-              dark
-              :src="photo(item.image)"
-              :lazy-src="photo('/storage/other/blur.jpg')"
-            ></v-img>
-          </v-card-text>
-
-          <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              text
-              @click.stop="$set(dialogPreview, item.id, false)"
-            >
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </template>
-    <template v-slot:[`item.actions`]="{ item }">
-      <v-btn
-        color="success"
-        small
-        v-if="item.transaction_status_id != 2"
-        @click="updateStatus(item, 2)"
-      >
-        Accept
-      </v-btn>
-      <v-btn
-        color="error"
-        small
-        v-if="item.transaction_status_id != 3"
-        @click="updateStatus(item, 3)"
-      >
-        Reject
-      </v-btn>
-      <!-- <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+            Reject
+          </v-btn>
+        </span>
+        <!-- <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon> -->
-    </template>
-    <template v-slot:[`item.is_premium`]="{ item }">
-      <v-chip v-bind:color="item.is_premium ? 'warning' : 'success'">{{
-        item.is_premium ? "Premium" : "Free"
-      }}</v-chip>
-    </template>
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize"> Reset </v-btn>
-    </template>
-  </v-data-table>
+      </template>
+      <template v-slot:[`item.is_premium`]="{ item }">
+        <v-chip v-bind:color="item.is_premium ? 'warning' : 'success'">{{
+          item.is_premium ? "Premium" : "Free"
+        }}</v-chip>
+      </template>
+      <template v-slot:no-data>
+        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
@@ -228,7 +232,7 @@ export default {
     },
 
     close() {
-      this.message = "";
+      // this.message = "";
       this.errors = [];
       this.dialog = false;
       this.$nextTick(() => {
@@ -245,19 +249,22 @@ export default {
       });
     },
     updateStatus(item, status) {
-      axios
-        .put(`${this.$baseUrl}/api/transaction/${item.id}`, { status: status })
-        .then((response) => {
-          this.initialize();
-          this.close();
-          console.log("Response", response);
-        })
-        .catch((error) => {
-          this.message = error.response.data.message;
-          this.errors = error.response.data.errors;
-          console.log("ERROR", error.response, this.message, this.errors);
-        });
-      console.log("ACCEPT", item, status);
+      if (confirm("Are you sure?")) {
+        axios
+          .put(`${this.$baseUrl}/api/transaction/${item.id}`, {
+            status: status,
+          })
+          .then((response) => {
+            this.message = response.data.message;
+            this.initialize();
+            this.close();
+          })
+          .catch((error) => {
+            this.message = error.response.data.message;
+            this.errors = error.response.data.errors;
+          });
+        console.log("ACCEPT", item, status);
+      }
     },
 
     save() {

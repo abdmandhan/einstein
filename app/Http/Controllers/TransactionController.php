@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseStudent;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -135,9 +136,24 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = (object) $request->validate([
+            'status'    => ['required']
+        ]);
+
+        $transaction = Transaction::find($id);
+
+        if ($data->status == 2) {
+            CourseStudent::create([
+                'user_id'       => $transaction->user_id,
+                'course_id'     => $transaction->course_id,
+            ]);
+        }
+
         Transaction::findOrFail($id)->update(['transaction_status_id' => $request->input('status')]);
 
-        return $this->success();
+        $message = $data->status == 2 ? 'Accept' : 'Reject';
+
+        return $this->success([], "Success $message!");
     }
 
     /**
