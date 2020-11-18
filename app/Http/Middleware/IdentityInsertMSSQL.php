@@ -17,7 +17,7 @@ class IdentityInsertMSSQL
      */
     public function handle(Request $request, Closure $next)
     {
-        DB::unprepared('SET IDENTITY_INSERT test_table ON');
+        // DB::unprepared('SET IDENTITY_INSERT test_table ON');
         return $next($request);
     }
 }
