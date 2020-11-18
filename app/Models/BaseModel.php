@@ -21,9 +21,7 @@ class BaseModel extends Model
     protected static function booted()
     {
         static::creating(function ($user) {
-            DB::unprepared('SET IDENTITY_INSERT '.(new static)->getTable().' ON');
+            DB::unprepared('SET IDENTITY_INSERT ' . (new static)->getTable() . ' ON');
         });
     }
-
-    public static function 
 }
