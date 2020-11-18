@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
@@ -94,7 +95,7 @@ class CourseController extends Controller
             'name'              => 'required',
             'course_type_id'    => 'required',
             'is_premium'        => 'required',
-            'price'             => ['nullable', 'numeric'],
+            'price'             => [Rule::requiredIf($request->input('is_premium')), 'nullable', 'numeric'],
             'grade_id'          => 'required'
         ]);
 
