@@ -65,6 +65,7 @@ class TransactionStatusController extends Controller
         if (isset($data['id'])) {
             TransactionStatus::find($data['id'])->update($data);
         } else {
+            unset($data['id']);
             TransactionStatus::create($data);
         }
 

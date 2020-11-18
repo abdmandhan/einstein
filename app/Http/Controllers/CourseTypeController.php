@@ -64,6 +64,7 @@ class CourseTypeController extends Controller
         if (isset($data['id'])) {
             CourseType::find($data['id'])->update($data);
         } else {
+            unset($data['id']);
             CourseType::create($data);
         }
 

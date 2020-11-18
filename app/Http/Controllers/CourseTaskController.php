@@ -75,6 +75,7 @@ class CourseTaskController extends Controller
         if (isset($data['id'])) {
             CourseTask::find($data['id'])->update($data);
         } else {
+            unset($data['id']);
             CourseTask::create($data);
         }
 

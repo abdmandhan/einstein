@@ -102,6 +102,7 @@ class UserController extends Controller
             $user = User::find($data['id'])->update($data->except('role')->toArray());
             $user = User::find($data['id']);
         } else {
+            unset($data['id']);
             $user = User::create($data->except('role')->toArray());
         }
 

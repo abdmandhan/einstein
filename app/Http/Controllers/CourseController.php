@@ -102,6 +102,7 @@ class CourseController extends Controller
         if (isset($data['id'])) {
             Course::find($data['id'])->update($data);
         } else {
+            unset($data['id']);
             Course::create($data);
         }
 

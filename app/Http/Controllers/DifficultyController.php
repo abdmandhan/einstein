@@ -64,6 +64,7 @@ class DifficultyController extends Controller
         if (isset($data['id'])) {
             Difficulty::find($data['id'])->update($data);
         } else {
+            unset($data['id']);
             Difficulty::create($data);
         }
 

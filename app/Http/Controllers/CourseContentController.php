@@ -84,6 +84,7 @@ class CourseContentController extends Controller
         if (isset($data['id'])) {
             CourseContent::find($data['id'])->update($data);
         } else {
+            unset($data['id']);
             CourseContent::create($data);
         }
 

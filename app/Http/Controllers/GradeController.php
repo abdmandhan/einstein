@@ -64,6 +64,7 @@ class GradeController extends Controller
         if (isset($data['id'])) {
             Grade::find($data['id'])->update($data);
         } else {
+            unset($data['id']);
             Grade::create($data);
         }
 

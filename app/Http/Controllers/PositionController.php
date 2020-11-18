@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseType;
 use App\Models\Position;
 use Illuminate\Http\Request;
 
@@ -65,6 +66,7 @@ class PositionController extends Controller
         if (isset($data['id'])) {
             CourseType::find($data['id'])->update($data);
         } else {
+            unset($data['id']);
             CourseType::create($data);
         }
 

@@ -18,10 +18,10 @@ class BaseModel extends Model
         'deleted_at'
     ];
 
-    protected static function booted()
-    {
-        static::creating(function ($user) {
-            DB::unprepared('SET IDENTITY_INSERT ' . (new static)->getTable() . ' ON');
-        });
-    }
+    // protected static function booted()
+    // {
+    //     static::creating(function ($user) {
+    //         DB::unprepared('SET IDENTITY_INSERT ' . (new static)->getTable() . ' ON');
+    //     });
+    // }
 }
