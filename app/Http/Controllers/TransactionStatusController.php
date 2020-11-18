@@ -30,6 +30,10 @@ class TransactionStatusController extends Controller
                     'value' => 'name'
                 ],
                 [
+                    'text'  => 'Color',
+                    'value' => 'color'
+                ],
+                [
                     'text'  => 'Actions',
                     'value' => 'actions'
                 ],

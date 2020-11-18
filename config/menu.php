@@ -70,12 +70,12 @@ return [
         'roles'     => ['admin']
     ],
 
-    [
-        'title'     => 'Position',
-        'icon'      => 'mdi-shield-account',
-        'name'      => 'positions',
-        'roles'     => ['admin']
-    ],
+    // [
+    //     'title'     => 'Position',
+    //     'icon'      => 'mdi-shield-account',
+    //     'name'      => 'positions',
+    //     'roles'     => ['admin']
+    // ],
 
     [
         'title'     => 'Transaction Status',
