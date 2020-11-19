@@ -54,6 +54,13 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::saving(function ($user) {
+            if ($user->password && $user->id) {
+                UserLog::create([
+                    'user_id'   => $user->id,
+                    'action'    => 'CHANGE_PASSWORD',
+                    'payload'   => request()->all()
+                ]);
+            }
             $user->password = Hash::make($user->password);
         });
     }
