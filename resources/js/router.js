@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 
 import Dashboard from './components/DashboardComponent';
 import Users from './components/UsersComponent';
+import Teachers from './components/TeachersComponent';
+import Students from './components/StudentsComponent';
 import Courses from './components/CoursesComponent';
 import CourseTypes from './components/CourseTypesComponent';
 import Grades from './components/GradesComponent';
@@ -24,7 +26,17 @@ const router = new VueRouter({
         {
             path: '/vue/users',
             name: 'users',
-            component: Users
+            component: Users,
+        },
+        {
+            path: '/vue/teachers',
+            name: 'teachers',
+            component: Teachers,
+        },
+        {
+            path: '/vue/students',
+            name: 'students',
+            component: Students,
         },
         {
             path: '/vue/courses',

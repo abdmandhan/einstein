@@ -8,12 +8,12 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Admin</v-toolbar-title>
+          <v-toolbar-title>Teacher</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                New Admin
+                New Teacher
               </v-btn>
             </template>
             <v-card>
@@ -143,7 +143,7 @@
 <script>
 export default {
   data: () => ({
-    selectedUser: "admin",
+    selectedUser: "teacher",
     loading: true,
     dialog: false,
     dialogDelete: false,
@@ -179,7 +179,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Admin" : "Edit Admin";
+      return this.editedIndex === -1 ? "New Teacher" : "Edit Teacher";
     },
   },
 

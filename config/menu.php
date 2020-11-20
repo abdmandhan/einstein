@@ -3,7 +3,7 @@
 return [
     [
         'header'    => 'Menu',
-        'roles'     => ['admin']
+        'roles'     => ['admin', 'teacher', 'student']
     ],
 
     [
@@ -15,9 +15,23 @@ return [
 
     //admin
     [
-        'title'     => 'Users Management',
+        'title'     => 'Users Admin Management',
         'icon'      => 'mdi-account-group-outline',
         'name'      => 'users',
+        'roles'     => ['admin']
+    ],
+
+    [
+        'title'     => 'Users Teacher Management',
+        'icon'      => 'mdi-account-group-outline',
+        'name'      => 'teachers',
+        'roles'     => ['admin']
+    ],
+
+    [
+        'title'     => 'Users Student Management',
+        'icon'      => 'mdi-account-group-outline',
+        'name'      => 'students',
         'roles'     => ['admin']
     ],
 
