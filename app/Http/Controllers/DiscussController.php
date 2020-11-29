@@ -54,6 +54,19 @@ class DiscussController extends Controller
      */
     public function store(Request $request)
     {
+        $data = (object) $request->validate([
+            'text'              => ['required'],
+            'course_type_id'    => ['required']
+        ]);
+
+        Discuss::create([
+            'user_id'           => Auth::id(),
+            'course_type_id'    => $data->course_type_id,
+            'text'              => $data->text,
+        ]);
+
+        return $this->success();
+
         //
     }
 
@@ -88,7 +101,9 @@ class DiscussController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Discuss::find($id)->update(['is_done' => 1]);
+
+        return $this->success();
     }
 
     /**

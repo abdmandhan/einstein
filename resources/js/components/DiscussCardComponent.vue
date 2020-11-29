@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-row justify="space-around">
-      <v-col v-for="(item, index) in discuss" :key="index" cols="4">
-        <v-card width="400">
+      <v-col v-for="(item, index) in discuss" :key="index" cols="6">
+        <v-card>
           <div height="200px">
             <v-card-title>
               <v-avatar size="56">
@@ -50,13 +50,28 @@
               </v-timeline-item>
             </v-timeline>
           </v-card-text>
-          <v-textarea
-            outlined
-            name="input-7-4"
-            label="Reply"
-            v-model="reply[item.id]"
-          ></v-textarea>
-          <v-btn @click="sendReply(item.id, reply[item.id])">Reply</v-btn>
+
+          <v-card-actions>
+            <v-container>
+              <v-row>
+                <v-textarea
+                  outlined
+                  name="input-7-4"
+                  label="Reply"
+                  v-model="reply[item.id]"
+                ></v-textarea>
+              </v-row>
+              <v-row justify="space-between">
+                <v-btn @click="sendReply(item.id, reply[item.id])">Reply</v-btn>
+                <v-btn
+                  v-if="!item.is_done"
+                  color="green"
+                  @click="markAsDone(item.id)"
+                  >Mark As Done</v-btn
+                >
+              </v-row>
+            </v-container>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -87,15 +102,23 @@ export default {
         })
         .then((result) => {
           this.reply[id] = "";
-          this.$parent.init();
-          console.log("RESULT", result);
+          this.$emit("refresh");
+          console.log("RESULT", result, this.$parent);
         });
     },
     removeReply(id) {
       axios
         .delete(`${this.$baseUrl}/api/discuss/replies/${id}`)
         .then((result) => {
-          this.$parent.init();
+          this.$emit("refresh");
+        })
+        .catch((err) => {});
+    },
+    markAsDone(id) {
+      axios
+        .put(`${this.$baseUrl}/api/discuss/${id}`)
+        .then((result) => {
+          this.$emit("refresh");
         })
         .catch((err) => {});
     },

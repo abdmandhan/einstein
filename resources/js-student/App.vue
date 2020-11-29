@@ -52,6 +52,10 @@ export default {
         title: "Transaction",
         name: "transaction",
       },
+      {
+        title: "Discussion",
+        name: "discussion",
+      },
     ],
   }),
   mounted() {

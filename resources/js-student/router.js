@@ -8,6 +8,7 @@ import CourseJoin from './components/CourseJoinComponent';
 import Teacher from './components/TeacherComponent';
 import Payment from './components/PaymentComponent';
 import Transaction from './components/TransactionComponent';
+import Discuss from './components/DiscussComponent';
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,11 @@ const router = new VueRouter({
             path: '/student/transaction',
             name: 'transaction',
             component: Transaction
+        },
+        {
+            path: '/student/discussion',
+            name: 'discussion',
+            component: Discuss
         },
         {
             path: '/student/payment/:id',
