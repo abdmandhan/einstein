@@ -69,11 +69,11 @@ export default {
       },
       status: [
         {
-          id: 1,
+          id: "DONE",
           name: "DONE",
         },
         {
-          id: 2,
+          id: "DOING",
           name: "DOING",
         },
       ],

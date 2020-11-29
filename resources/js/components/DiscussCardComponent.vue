@@ -55,7 +55,6 @@
             name="input-7-4"
             label="Reply"
             v-model="reply[item.id]"
-            :error-messages="getError(item.id)"
           ></v-textarea>
           <v-btn @click="sendReply(item.id, reply[item.id])">Reply</v-btn>
         </v-card>
@@ -74,17 +73,11 @@ export default {
   data() {
     return {
       reply: [],
-      errors: [],
     };
   },
   methods: {
     photo(name) {
       return `${this.$baseUrl}/${name}`;
-    },
-    getError(id) {
-      console.log("ID", id, this.errors[id]);
-      if (!this.errors[id]) return "";
-      else return this.errors[id].text;
     },
     sendReply(id, text) {
       axios
@@ -93,16 +86,10 @@ export default {
           text: text,
         })
         .then((result) => {
-          this.errors = [];
           this.reply[id] = "";
           this.$parent.init();
           console.log("RESULT", result);
-        })
-        .catch((err) => {
-          this.errors[id] = err.response.data.errors;
-          console.log("ERROR", this.errors);
         });
-      console.log("ID", id, text);
     },
     removeReply(id) {
       axios

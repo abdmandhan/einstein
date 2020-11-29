@@ -27,8 +27,8 @@ class DiscussController extends Controller
         }
 
         if ($request->input('status')) {
-            if ($request->input('status') == 2) $data->where('is_done', 0);
-            else $data->where('is_done', $request->input('status'));
+            if ($request->input('status') == "DONE") $data->where('is_done', 1);
+            else $data->where('is_done', 0);
         }
 
         return $this->success(
@@ -104,10 +104,6 @@ class DiscussController extends Controller
 
     public function storeReplies(Request $request)
     {
-        $request->validate([
-            'text'  => ['required']
-        ]);
-
         $discuss = Discuss::find($request->input('id'));
         $discuss->replies()->create([
             'user_id'   => Auth::id(),

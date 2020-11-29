@@ -3,7 +3,6 @@ require('./bootstrap');
 import Vue from 'vue';
 import router from './router';
 import vuetify from './vuetify' // path to vuetify export
-
 import App from './App.vue'
 
 const files = require.context('./', true, /\.vue$/i)

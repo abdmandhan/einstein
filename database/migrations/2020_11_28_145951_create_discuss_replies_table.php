@@ -17,7 +17,7 @@ class CreateDiscussRepliesTable extends Migration
             $table->id();
             $table->foreignId('discuss_id');
             $table->foreignId('user_id');
-            $table->longText('text');
+            $table->longText('text')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
