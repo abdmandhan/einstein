@@ -126,4 +126,11 @@ class CourseController extends Controller
     {
         //
     }
+
+    public function payment($id)
+    {
+        $transaction = Transaction::where('user_id', Auth::id())->where('id', $id)->with(['course'])->firstOrFail();
+
+        return $this->success($transaction);
+    }
 }

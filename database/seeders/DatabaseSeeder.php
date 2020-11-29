@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'name'      => 'Abdurrahman Ramadhan',
             'email'     => 'abdmandhan@gmail.com',
+            'photo'     => 'storage/user/2.jpg',
+            'phone'     => '012312123123',
+            'address'   => 'asdfasdfasdf',
             'password'  => '12341234'
         ]);
         $user->assignRole('admin');
@@ -33,6 +36,7 @@ class DatabaseSeeder extends Seeder
             'email'     => 'teacher@example.com',
             'phone'     => '012312123123',
             'photo'     => 'storage/user/2.jpg',
+            'address'   => 'asdfasdfasdf',
             'password'  => '12341234'
         ]);
         $user->assignRole('teacher');
@@ -42,6 +46,7 @@ class DatabaseSeeder extends Seeder
             'email'     => 'student@example.com',
             'photo'     => 'storage/user/2.jpg',
             'phone'     => '012312123123',
+            'address'   => 'asdfasdfasdf',
             'password'  => '12341234'
         ]);
         $user->assignRole('student');
@@ -85,5 +90,10 @@ class DatabaseSeeder extends Seeder
         ];
 
         TransactionStatus::insert($transaction_status);
+
+        //discuss
+        $this->call([
+            DiscussSeeder::class
+        ]);
     }
 }

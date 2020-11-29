@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseType;
 use App\Models\Difficulty;
+use App\Models\Discuss;
 use App\Models\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class AppController extends Controller
 {
     //
 
-    public function index(Request $request)
+    public function index()
     {
         $menuConfig = config('menu');
 
@@ -23,10 +25,42 @@ class AppController extends Controller
             if (in_array(Auth::user()->getRoleNames()[0], $value['roles'])) $menu[] = $value;
         }
 
-        return response()->json([
-            'auth'          => $request->user(),
+        return $this->success([
+            'auth'          => Auth::user(),
             'menu'          => $menu,
             'app_name'      => config('app.name'),
+        ]);
+    }
+
+    public function dashboard()
+    {
+        return $this->success([
+            'cards' => [
+                [
+                    'title'     => 'Student',
+                    'count'     => User::role('student')->count(),
+                    'color'     => '#6200ea',
+                    'icon'      => 'mdi-account'
+                ],
+                [
+                    'title'     => 'Teacher',
+                    'count'     => User::role('teacher')->count(),
+                    'color'     => '#6200ea',
+                    'icon'      => 'mdi-account-circle-outline'
+                ],
+                [
+                    'title'     => 'Course',
+                    'count'     => Course::count(),
+                    'color'     => '#6200ea',
+                    'icon'      => 'mdi-book'
+                ],
+                [
+                    'title'     => 'Discussion',
+                    'count'     => Discuss::count(),
+                    'color'     => '#6200ea',
+                    'icon'      => 'mdi-book'
+                ],
+            ]
         ]);
     }
 

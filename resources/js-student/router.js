@@ -5,7 +5,9 @@ import Dashboard from './components/DashboardComponent';
 import Profile from './components/ProfileComponent';
 import Course from './components/CourseComponent';
 import CourseJoin from './components/CourseJoinComponent';
-import Teacer from './components/TeacherComponent';
+import Teacher from './components/TeacherComponent';
+import Payment from './components/PaymentComponent';
+import Transaction from './components/TransactionComponent';
 
 Vue.use(VueRouter);
 
@@ -30,7 +32,7 @@ const router = new VueRouter({
         {
             path: '/student/teacher',
             name: 'teacher',
-            component: Teacer
+            component: Teacher
         },
         {
             path: '/student/course/:id',
@@ -41,6 +43,16 @@ const router = new VueRouter({
             path: '/student/tryout',
             name: 'tryout',
             component: Dashboard
+        },
+        {
+            path: '/student/transaction',
+            name: 'transaction',
+            component: Transaction
+        },
+        {
+            path: '/student/payment/:id',
+            name: 'payment',
+            component: Payment
         },
         {
             path: "*",

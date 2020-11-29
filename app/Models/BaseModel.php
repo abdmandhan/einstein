@@ -18,6 +18,12 @@ class BaseModel extends Model
         'deleted_at'
     ];
 
+    protected $casts = [
+        'created_at'  => 'date:Y-m-d H:i:s',
+    ];
+
+
+
     // protected static function booted()
     // {
     //     static::creating(function ($user) {

@@ -10,26 +10,26 @@ return [
         'title'     => 'Dashboard',
         'icon'      => 'mdi-view-dashboard',
         'name'      => 'dashboard',
-        'roles'     => ['admin']
+        'roles'     => ['admin', 'teacher']
     ],
 
     //admin
     [
-        'title'     => 'Users Admin Management',
-        'icon'      => 'mdi-account-group-outline',
+        'title'     => 'Admin Management',
+        'icon'      => 'mdi-account',
         'name'      => 'users',
         'roles'     => ['admin']
     ],
 
     [
-        'title'     => 'Users Teacher Management',
-        'icon'      => 'mdi-account-group-outline',
+        'title'     => 'Teacher Management',
+        'icon'      => 'mdi-account-circle-outline',
         'name'      => 'teachers',
         'roles'     => ['admin']
     ],
 
     [
-        'title'     => 'Users Student Management',
+        'title'     => 'Student Management',
         'icon'      => 'mdi-account-group-outline',
         'name'      => 'students',
         'roles'     => ['admin']
@@ -57,6 +57,15 @@ return [
         'roles'     => ['admin', 'teacher']
     ],
 
+    [
+        'title'     => 'Discussion',
+        'icon'      => 'mdi-clipboard-outline',
+        'name'      => 'discuss',
+        'roles'     => ['admin', 'teacher']
+    ],
+
+
+    //cms
     [
         'header'    => 'Content Management',
         'roles'     => ['admin']

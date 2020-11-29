@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseTaskController;
 use App\Http\Controllers\CourseTypeController;
 use App\Http\Controllers\DifficultyController;
+use App\Http\Controllers\DiscussController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\Student\CourseController as StudentCourseController;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([], function () {
     Route::get('app', [AppController::class, 'index']);
+    Route::get('dashboard', [AppController::class, 'dashboard']);
     Route::get('options', [AppController::class, 'options']);
 
     //admin
@@ -43,11 +45,17 @@ Route::group([], function () {
     Route::resource('difficulty', DifficultyController::class)->only(['index', 'store', 'destroy']);
     Route::resource('position', PositionController::class)->only(['index', 'store', 'destroy']);
     Route::resource('transaction-status', TransactionStatusController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('discuss', DiscussController::class);
+
+    //reply
+    Route::post('discuss/replies', [DiscussController::class, 'storeReplies']);
+    Route::delete('discuss/replies/{id}', [DiscussController::class, 'destroyReplies']);
 
     //student
     Route::resource('student', StudentController::class);
     Route::group(['prefix' => 's'], function () {
         Route::resource('course', StudentCourseController::class);
         Route::resource('teacher', TeacherController::class);
+        Route::get('payment/{id}', [StudentCourseController::class, 'payment']);
     });
 });

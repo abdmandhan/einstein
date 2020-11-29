@@ -17,10 +17,10 @@
           <v-icon left> mdi-book-check </v-icon>
           Your Courses
         </v-tab>
-        <v-tab>
+        <!-- <v-tab>
           <v-icon left> mdi-cart </v-icon>
           Your Transaction
-        </v-tab>
+        </v-tab> -->
 
         <v-tab-item>
           <v-card flat :loading="loading">
@@ -147,178 +147,11 @@
           </v-card>
         </v-tab-item>
         <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-container class="d-flex flex-wrap">
-                <v-row>
-                  <v-col v-for="(course, i) in courses" :key="i" cols="12">
-                    <v-card elevation="elevation-2">
-                      <v-card-title>{{ course.name }}</v-card-title>
-                    </v-card>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-          </v-card>
+          <student-course-card-component :courses="courses" />
         </v-tab-item>
-        <v-tab-item>
-          <v-card flat>
-            <v-card-text>
-              <v-container class="d-flex flex-wrap">
-                <v-row>
-                  <v-data-table
-                    :headers="headers"
-                    :items="transactions"
-                    class="elevation-1"
-                  >
-                    <template v-slot:item.transaction_status_id="{ item }">
-                      <v-chip :color="item.transaction_status.color">
-                        {{ item.transaction_status.name }}
-                      </v-chip>
-                    </template>
-                    <template v-slot:item.course_id="{ item }">
-                      {{ item.course.name }}
-                    </template>
-                    <template v-slot:item.action="{ item }">
-                      <v-dialog v-model="dialog[item.id]">
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn
-                            color="primary"
-                            small
-                            @click.stop="$set(dialog, item.id, true)"
-                          >
-                            Detail
-                          </v-btn>
-                        </template>
-
-                        <v-card>
-                          <v-card-title class="headline grey lighten-2">
-                            Detail Transaction
-                          </v-card-title>
-
-                          <v-card-text class="mt-5">
-                            <v-simple-table>
-                              <template v-slot:default>
-                                <tbody>
-                                  <tr>
-                                    <td>Course</td>
-                                    <td>{{ item.course.name }}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Status Transaction</td>
-                                    <td>
-                                      <v-chip
-                                        :color="item.transaction_status.color"
-                                      >
-                                        {{ item.transaction_status.name }}
-                                      </v-chip>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>Transaction Date</td>
-                                    <td>{{ item.transaction_date }}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Amount</td>
-                                    <td>{{ item.amount }}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Transanstion Proof</td>
-                                    <td>
-                                      <v-dialog
-                                        v-model="dialogPreview[item.id]"
-                                      >
-                                        <template
-                                          v-slot:activator="{ on, attrs }"
-                                        >
-                                          <v-img
-                                            max-height="150"
-                                            max-width="250"
-                                            dark
-                                            @click.stop="
-                                              $set(dialogPreview, item.id, true)
-                                            "
-                                            :src="photo(item.image)"
-                                            :lazy-src="
-                                              photo('/storage/other/blur.jpg')
-                                            "
-                                          >
-                                          </v-img>
-                                        </template>
-
-                                        <v-card>
-                                          <v-card-title
-                                            class="headline grey lighten-2"
-                                          >
-                                            Bukti Transfer
-                                          </v-card-title>
-
-                                          <v-card-text>
-                                            <v-img
-                                              dark
-                                              :src="photo(item.image)"
-                                              :lazy-src="
-                                                photo('/storage/other/blur.jpg')
-                                              "
-                                            ></v-img>
-                                          </v-card-text>
-
-                                          <v-divider></v-divider>
-
-                                          <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn
-                                              color="primary"
-                                              text
-                                              @click.stop="
-                                                $set(
-                                                  dialogPreview,
-                                                  item.id,
-                                                  false
-                                                )
-                                              "
-                                            >
-                                              Close
-                                            </v-btn>
-                                          </v-card-actions>
-                                        </v-card>
-                                      </v-dialog>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>Account Number</td>
-                                    <td>{{ item.account_no }}</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Account Name</td>
-                                    <td>{{ item.account_name }}</td>
-                                  </tr>
-                                </tbody>
-                              </template>
-                            </v-simple-table>
-                          </v-card-text>
-
-                          <v-divider></v-divider>
-
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="primary"
-                              text
-                              @click.stop="$set(dialog, item.id, false)"
-                            >
-                              Close
-                            </v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </template>
-                  </v-data-table>
-                </v-row>
-              </v-container>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
+        <!-- <v-tab-item>
+          <transaction-component :transactions="transactions" />
+        </v-tab-item> -->
       </v-tabs>
     </v-sheet>
   </v-container>
@@ -353,7 +186,6 @@ export default {
     ],
     transactions: [],
     dialog: {},
-    dialogPreview: {},
   }),
   mounted() {
     axios.get(`${this.$baseUrl}/api/student`).then((result) => {

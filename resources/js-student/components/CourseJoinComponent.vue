@@ -87,28 +87,6 @@
               </v-simple-table>
             </v-card-text>
           </v-card>
-
-          <!-- <v-card class="mb-5">
-            <v-card-title> Course Content </v-card-title>
-            <v-card-text>
-              <v-row justify="center">
-                <v-expansion-panels accordion>
-                  <v-expansion-panel
-                    v-for="(content, i) in course.course_content"
-                    :key="i"
-                  >
-                    <v-expansion-panel-header>
-                      {{ content.name }}
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                      <h5>{{ content.desc }}</h5>
-                      <h6>{{ content.content }}</h6>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </v-row>
-            </v-card-text>
-          </v-card> -->
         </v-col>
         <v-col cols="6">
           <v-card class="mx-auto">

@@ -48,6 +48,10 @@ export default {
         title: "Try Out",
         name: "tryout",
       },
+      {
+        title: "Transaction",
+        name: "transaction",
+      },
     ],
   }),
   mounted() {

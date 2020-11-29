@@ -69,10 +69,11 @@
 export default {
   mounted() {
     axios.get(`${this.$baseUrl}/api/app`).then((response) => {
-      this.auth.name = response.data.auth.name;
-      this.auth.role = response.data.auth.roles[0].name;
-      this.items = response.data.menu;
-      this.appName = response.data.app_name;
+      console.log("RESPONSE", response);
+      this.auth.name = response.data.data.auth.name;
+      this.auth.role = response.data.data.auth.roles[0].name;
+      this.items = response.data.data.menu;
+      this.appName = response.data.data.app_name;
     });
   },
   data() {
