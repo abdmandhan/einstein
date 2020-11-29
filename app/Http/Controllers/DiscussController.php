@@ -32,7 +32,7 @@ class DiscussController extends Controller
         }
 
         return $this->success(
-            $data->orderBy('created_at', $request->input('order', 'asc'))->paginate(5, ['*'], 'page', $request->input('page', 1))
+            $data->orderBy('created_at', $request->input('order', 'asc'))->paginate(6, ['*'], 'page', $request->input('page', 1))
         );
     }
 
@@ -114,7 +114,9 @@ class DiscussController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Discuss::find($id)->delete();
+
+        return $this->success();
     }
 
     public function storeReplies(Request $request)

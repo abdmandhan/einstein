@@ -12,7 +12,9 @@
                 {{ item.user.name }}
 
                 <br />
-                <v-chip color="green" small v-if="item.is_done"> DONE </v-chip>
+                <v-chip small v-if="item.is_done">
+                  <v-icon color="green">mdi-check-bold</v-icon>
+                </v-chip>
               </p>
             </v-card-title>
           </div>
@@ -63,12 +65,39 @@
               </v-row>
               <v-row justify="space-between">
                 <v-btn @click="sendReply(item.id, reply[item.id])">Reply</v-btn>
-                <v-btn
-                  v-if="!item.is_done"
-                  color="green"
-                  @click="markAsDone(item.id)"
-                  >Mark As Done</v-btn
-                >
+                <div>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        icon
+                        v-if="!item.is_done"
+                        color="green"
+                        @click="markAsDone(item.id)"
+                      >
+                        <v-icon>mdi-check-bold</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Mark as Done</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        icon
+                        v-if="!item.is_done"
+                        color="red"
+                        @click="removeDiscuss(item.id)"
+                      >
+                        <v-icon>mdi-trash-can</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Delete this Discuss</span>
+                  </v-tooltip>
+                </div>
               </v-row>
             </v-container>
           </v-card-actions>
@@ -109,6 +138,14 @@ export default {
     removeReply(id) {
       axios
         .delete(`${this.$baseUrl}/api/discuss/replies/${id}`)
+        .then((result) => {
+          this.$emit("refresh");
+        })
+        .catch((err) => {});
+    },
+    removeDiscuss(id) {
+      axios
+        .delete(`${this.$baseUrl}/api/discuss/${id}`)
         .then((result) => {
           this.$emit("refresh");
         })
