@@ -180,7 +180,7 @@ export default {
           console.log("RESULT", result);
           this.btnLoading = false;
           this.errors = [];
-          window.location.href = this.$baseUrl + "/student/profile";
+          window.location.href = this.$baseUrl + "/student/transaction";
         })
         .catch((err) => {
           this.errors = err.response.data.errors;

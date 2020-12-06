@@ -20,7 +20,7 @@
     <v-card-actions>
       <v-btn
         color="primary lighten-2"
-        :to="{ name: 'course-join', params: { id: course.id } }"
+        :to="{ name: 'dashboard.course-join', params: { id: course.id } }"
       >
         Join this Course
       </v-btn>

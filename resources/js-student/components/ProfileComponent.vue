@@ -13,14 +13,6 @@
           <v-icon left> mdi-lock </v-icon>
           Change Password
         </v-tab>
-        <v-tab>
-          <v-icon left> mdi-book-check </v-icon>
-          Your Courses
-        </v-tab>
-        <!-- <v-tab>
-          <v-icon left> mdi-cart </v-icon>
-          Your Transaction
-        </v-tab> -->
 
         <v-tab-item>
           <v-card flat :loading="loading">
@@ -149,9 +141,6 @@
         <v-tab-item>
           <student-course-card-component :courses="courses" />
         </v-tab-item>
-        <!-- <v-tab-item>
-          <transaction-component :transactions="transactions" />
-        </v-tab-item> -->
       </v-tabs>
     </v-sheet>
   </v-container>

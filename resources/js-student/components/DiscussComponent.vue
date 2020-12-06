@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-container class="d-flex flex-wrap">
     <skeleton-loader-component v-if="loading" :count="6" />
-    <v-sheet v-else>
+    <v-container v-else>
       <v-container>
         <v-row>
           <v-col cols="12">
@@ -102,9 +102,10 @@
         v-model="filter.page"
         :length="length"
         circle
+        :total-visible="10"
       ></v-pagination>
-    </v-sheet>
-  </div>
+    </v-container>
+  </v-container>
 </template>
 
 <script>

@@ -9,6 +9,7 @@ import Teacher from './components/TeacherComponent';
 import Payment from './components/PaymentComponent';
 import Transaction from './components/TransactionComponent';
 import Discuss from './components/DiscussComponent';
+import TryOut from './components/TryOutComponent';
 
 Vue.use(VueRouter);
 
@@ -18,12 +19,49 @@ const router = new VueRouter({
         {
             path: '/student/profile',
             name: 'profile',
-            component: Profile
+            component: Profile,
         },
         {
             path: '/student/dashboard',
             name: 'dashboard',
-            component: Dashboard
+            component: Dashboard,
+            children:[
+                {
+                    path: '/student/dashboard/course',
+                    name: 'dashboard.course',
+                    components:{
+                        sub: Course
+                    }
+                },
+                {
+                    path: '/student/dashboard/course/:id',
+                    name: 'dashboard.course-join',
+                    components:{
+                        sub: CourseJoin
+                    }
+                },
+                {
+                    path: '/student/dashboard/teacher',
+                    name: 'dashboard.teacher',
+                    components:{
+                        sub: Teacher
+                    }
+                },
+                {
+                    path: '/student/dashboard/transaction',
+                    name: 'dashboard.transaction',
+                    components:{
+                        sub: Transaction
+                    }
+                },
+                {
+                    path: '/student/dashboard/discussion',
+                    name: 'dashboard.discussion',
+                    components:{
+                        sub: Discuss
+                    }
+                },
+            ]
         },
         {
             path: '/student/course',
