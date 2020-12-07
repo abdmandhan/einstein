@@ -17,7 +17,11 @@ class TeacherController extends Controller
     {
         //
         return $this->success([
-            'teachers'  => User::role('teacher')->get()
+            'teachers'  => User::role('teacher')->with([
+                'user_teacher.position',
+                'user_teacher.golongan',
+                'user_teacher.education',
+            ])->get()
         ]);
     }
 

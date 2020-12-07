@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Dashboard from './components/DashboardComponent';
+import DashboardCard from './components/DashboardCardComponent';
 import Profile from './components/ProfileComponent';
 import Course from './components/CourseComponent';
 import CourseJoin from './components/CourseJoinComponent';
@@ -27,6 +28,13 @@ const router = new VueRouter({
             component: Dashboard,
             children:[
                 {
+                    path: '/student/dashboard',
+                    // name: 'dashboard',
+                    components:{
+                        sub: DashboardCard
+                    }
+                },
+                {
                     path: '/student/dashboard/course',
                     name: 'dashboard.course',
                     components:{
@@ -48,6 +56,13 @@ const router = new VueRouter({
                     }
                 },
                 {
+                    path: '/student/dashboard/tryout',
+                    name: 'dashboard.tryout',
+                    components:{
+                        sub: TryOut
+                    }
+                },
+                {
                     path: '/student/dashboard/transaction',
                     name: 'dashboard.transaction',
                     components:{
@@ -62,36 +77,6 @@ const router = new VueRouter({
                     }
                 },
             ]
-        },
-        {
-            path: '/student/course',
-            name: 'course',
-            component: Course
-        },
-        {
-            path: '/student/teacher',
-            name: 'teacher',
-            component: Teacher
-        },
-        {
-            path: '/student/course/:id',
-            name: 'course-join',
-            component: CourseJoin
-        },
-        {
-            path: '/student/tryout',
-            name: 'tryout',
-            component: Dashboard
-        },
-        {
-            path: '/student/transaction',
-            name: 'transaction',
-            component: Transaction
-        },
-        {
-            path: '/student/discussion',
-            name: 'discussion',
-            component: Discuss
         },
         {
             path: '/student/payment/:id',

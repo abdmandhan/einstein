@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Models\Course;
 use App\Models\CourseType;
 use App\Models\Difficulty;
@@ -75,5 +76,12 @@ class AppController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function announcement()
+    {
+        return $this->success(
+            Announcement::all()
+        );
     }
 }

@@ -17,6 +17,8 @@ class CreateUserTeachersTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('position_id');
+            $table->foreignId('education_id');
+            $table->foreignId('golongan_id');
             $table->timestamps();
             $table->softDeletes();
         });

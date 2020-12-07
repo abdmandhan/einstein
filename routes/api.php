@@ -33,6 +33,7 @@ Route::group([], function () {
     Route::get('app', [AppController::class, 'index']);
     Route::get('dashboard', [AppController::class, 'dashboard']);
     Route::get('options', [AppController::class, 'options']);
+    Route::get('announcement', [AppController::class, 'announcement']);
 
     //admin
     Route::resource('user', UserController::class)->only(['index', 'store', 'destroy']);

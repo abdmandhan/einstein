@@ -42,7 +42,7 @@ export default {
       },
       {
         title: "Try Out",
-        name: "tryout",
+        name: "dashboard.tryout",
       },
       {
         title: "Transaction",

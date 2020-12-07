@@ -9,9 +9,9 @@
 
         <v-btn
           v-for="link in links"
-          :key="link.name"
+          :key="link.path"
           text
-          :to="{ name: link.name }"
+          :to="{ path: link.path }"
         >
           {{ link.title }}
         </v-btn>
@@ -34,33 +34,13 @@ export default {
     links: [
       {
         title: "Dashboard",
-        name: "dashboard",
-      },
-      {
-        title: "Course",
-        name: "course",
-      },
-      {
-        title: "Teacher",
-        name: "teacher",
-      },
-      {
-        title: "Try Out",
-        name: "tryout",
-      },
-      {
-        title: "Transaction",
-        name: "transaction",
-      },
-      {
-        title: "Discussion",
-        name: "discussion",
+        path: "/student/dashboard",
       },
     ],
   }),
   mounted() {
     axios.get(`${this.$baseUrl}/api/app`).then((result) => {
-      this.userPhoto = result.data.auth.photo;
+      this.userPhoto = result.data.data.auth.photo;
     });
   },
   computed: {
