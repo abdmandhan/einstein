@@ -11,12 +11,14 @@ import Payment from './components/PaymentComponent';
 import Transaction from './components/TransactionComponent';
 import Discuss from './components/DiscussComponent';
 import TryOut from './components/TryOutComponent';
+import Learning from './components/LearningComponent';
+import LearningShow from './components/LearningShowComponent';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     mode: 'history',
-    routes:[
+    routes: [
         {
             path: '/student/profile',
             name: 'profile',
@@ -26,53 +28,74 @@ const router = new VueRouter({
             path: '/student/dashboard',
             name: 'dashboard',
             component: Dashboard,
-            children:[
+            children: [
                 {
                     path: '/student/dashboard',
                     // name: 'dashboard',
-                    components:{
+                    components: {
                         sub: DashboardCard
+                    }
+                },
+                {
+                    path: '/student/dashboard/learning',
+                    name: 'dashboard.learning',
+                    components: {
+                        sub: Learning
+                    }
+                },
+                {
+                    path: '/student/dashboard/learning/:id',
+                    name: 'dashboard.learning.show',
+                    components: {
+                        sub: LearningShow
                     }
                 },
                 {
                     path: '/student/dashboard/course',
                     name: 'dashboard.course',
-                    components:{
+                    components: {
                         sub: Course
                     }
                 },
                 {
                     path: '/student/dashboard/course/:id',
                     name: 'dashboard.course-join',
-                    components:{
+                    components: {
                         sub: CourseJoin
+                    }
+                },
+                {
+                    path: '/student/dashboard/payment/:id',
+                    name: 'dashboard.payment',
+                    components: {
+                        sub: Payment
                     }
                 },
                 {
                     path: '/student/dashboard/teacher',
                     name: 'dashboard.teacher',
-                    components:{
+                    components: {
                         sub: Teacher
                     }
                 },
                 {
                     path: '/student/dashboard/tryout',
                     name: 'dashboard.tryout',
-                    components:{
+                    components: {
                         sub: TryOut
                     }
                 },
                 {
                     path: '/student/dashboard/transaction',
                     name: 'dashboard.transaction',
-                    components:{
+                    components: {
                         sub: Transaction
                     }
                 },
                 {
                     path: '/student/dashboard/discussion',
                     name: 'dashboard.discussion',
-                    components:{
+                    components: {
                         sub: Discuss
                     }
                 },

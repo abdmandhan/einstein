@@ -33,6 +33,10 @@ export default {
   data: () => ({
     links: [
       {
+        title: "Learning",
+        name: "dashboard.learning",
+      },
+      {
         title: "Course",
         name: "dashboard.course",
       },

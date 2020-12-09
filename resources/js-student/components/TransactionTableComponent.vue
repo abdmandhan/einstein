@@ -6,6 +6,7 @@
           :headers="headers"
           :items="transactions"
           class="elevation-1"
+          :loading="loading"
         >
           <template v-slot:item.transaction_status_id="{ item }">
             <v-chip :color="item.transaction_status.color">
@@ -24,6 +25,15 @@
                   @click.stop="$set(dialog, item.id, true)"
                 >
                   Detail
+                </v-btn>
+                <v-btn
+                  color="warning"
+                  small
+                  class="ml-2"
+                  :to="{ name: 'dashboard.payment', params: { id: item.id } }"
+                  v-if="item.transaction_status_id != 2"
+                >
+                  Payment
                 </v-btn>
               </template>
 
@@ -146,10 +156,12 @@ export default {
     transactions: {
       type: Array,
     },
+    loading: {
+      default: true,
+    },
   },
   data: () => ({
     errors: [],
-    loading: true,
     message: "",
     courses: [],
     headers: [

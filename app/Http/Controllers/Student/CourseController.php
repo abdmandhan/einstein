@@ -89,8 +89,9 @@ class CourseController extends Controller
     public function show($id)
     {
         //
+        if (CourseStudent::where('user_id', Auth::id())->where('course_id', $id)->first()) return $this->failed([], 'udah punya course ini boy');
         return $this->success([
-            'data'  => Course::with(['course_type', 'grade', 'course_teacher.teacher', 'course_content'])->find($id)
+            'data'  => Course::with(['course_type', 'grade', 'course_teacher.teacher', 'course_content'])->findOrFail($id)
         ]);
     }
 
@@ -129,7 +130,12 @@ class CourseController extends Controller
 
     public function payment($id)
     {
-        $transaction = Transaction::where('user_id', Auth::id())->where('id', $id)->with(['course'])->firstOrFail();
+        $transaction = Transaction::where('user_id', Auth::id())
+            ->where('id', $id)
+            ->with([
+                'course.course_type',
+                'transaction_status'
+            ])->firstOrFail();
 
         return $this->success($transaction);
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transaction-table-component :transactions="transactions" />
+    <transaction-table-component :transactions="transactions" :loading="loading"/>
   </div>
 </template>
 
@@ -9,6 +9,7 @@ export default {
   data() {
     return {
       transactions: [],
+      loading:true,
     };
   },
   mounted() {

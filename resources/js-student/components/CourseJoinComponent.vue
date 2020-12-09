@@ -61,30 +61,29 @@
           <v-card class="mb-5">
             <v-card-title> Teacher </v-card-title>
             <v-card-text>
-              <v-simple-table dense>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Phone</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(teacher, i) in course.course_teacher" :key="i">
-                      <td>
+              <v-sheet
+                rounded="lg"
+                elevation="2"
+                v-for="(teacher, i) in course.course_teacher"
+                :key="i"
+              >
+                <v-container class="my-5 mx-1">
+                  <v-row>
+                    <v-col cols="2">
+                      <v-avatar>
+                        <img :src="photo(teacher.teacher.photo)" alt="John" />
+                      </v-avatar>
+                    </v-col>
+                    <v-col cols="10">
+                      <span>
                         {{ teacher.teacher.name }}
-                      </td>
-                      <td>
+                        <br />
                         {{ teacher.teacher.email }}
-                      </td>
-                      <td>
-                        {{ teacher.teacher.phone }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
+                      </span>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-sheet>
             </v-card-text>
           </v-card>
         </v-col>
@@ -152,13 +151,22 @@ export default {
     axios
       .get(`${this.$baseUrl}/api/s/course/${this.$route.params.id}`)
       .then((result) => {
-        this.course = result.data.data.data;
-        this.loading = false;
-        console.log("result", this.course);
+        console.log("result", result.data.status);
+        if (result.data.status) {
+          this.course = result.data.data.data;
+          this.loading = false;
+        } else {
+          this.$router.push({ name: "dashboard.course" });
+        }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        this.$router.push({ name: "dashboard.course" });
+      });
   },
   methods: {
+    photo(name) {
+      return `${this.$baseUrl}/${name}`;
+    },
     buy() {
       this.btnLoading = true;
       let formData = new FormData();
@@ -180,7 +188,10 @@ export default {
           console.log("RESULT", result);
           this.btnLoading = false;
           this.errors = [];
-          window.location.href = this.$baseUrl + "/student/transaction";
+          this.$router.push({
+            name: "dashboard.payment",
+            params: { id: this.course.id },
+          });
         })
         .catch((err) => {
           this.errors = err.response.data.errors;

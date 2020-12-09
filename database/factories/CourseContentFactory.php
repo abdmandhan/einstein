@@ -24,8 +24,8 @@ class CourseContentFactory extends Factory
         return [
             'desc'          => $this->faker->paragraphs()[0],
             'content'       => $this->faker->paragraphs()[0],
-            'file'          => $this->faker->imageUrl(),
-            'image'         => $this->faker->imageUrl(),
+            'file'          => 'storage/other/sample.pdf',
+            'url_youtube'   => 'https://www.youtube.com/embed/jQG1q03OaaQ',
         ];
     }
 }

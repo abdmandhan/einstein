@@ -20,7 +20,7 @@ class CreateCourseContentsTable extends Migration
             $table->text('desc')->nullable();
             $table->longText('content')->nullable();
             $table->string('file')->nullable();
-            $table->string('image')->nullable();
+            $table->string('url_youtube')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
