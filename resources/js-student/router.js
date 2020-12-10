@@ -4,15 +4,15 @@ import VueRouter from 'vue-router';
 import Dashboard from './components/DashboardComponent';
 import DashboardCard from './components/DashboardCardComponent';
 import Profile from './components/ProfileComponent';
-import Course from './components/CourseComponent';
-import CourseJoin from './components/CourseJoinComponent';
-import Teacher from './components/TeacherComponent';
+import Course from './components/Course/CourseComponent';
+import CourseJoin from './components/Course/CourseJoinComponent';
+import Teacher from './components/Teacher/TeacherComponent';
 import Payment from './components/PaymentComponent';
 import Transaction from './components/TransactionComponent';
 import Discuss from './components/DiscussComponent';
 import TryOut from './components/TryOutComponent';
-import Learning from './components/LearningComponent';
-import LearningShow from './components/LearningShowComponent';
+import Learning from './components/Learning/LearningComponent';
+import LearningShow from './components/Learning/LearningShowComponent';
 
 Vue.use(VueRouter);
 

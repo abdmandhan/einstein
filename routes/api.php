@@ -30,7 +30,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([], function () {
+Route::group([
+    // 'middleware'    => ['testing']
+], function () {
     Route::get('app', [AppController::class, 'index']);
     Route::get('dashboard', [AppController::class, 'dashboard']);
     Route::get('options', [AppController::class, 'options']);
