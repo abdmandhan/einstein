@@ -56,7 +56,7 @@ class LearningController extends Controller
         $data = CourseStudent::with([
             'course.course_type',
             'course.course_content',
-            'course.course_task.difficulty'
+            'course.course_task_student.course_task.difficulty'
         ])->findOrFail($id);
 
         return $this->success($data);

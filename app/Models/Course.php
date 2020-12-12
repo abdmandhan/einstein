@@ -46,4 +46,9 @@ class Course extends BaseModel
     {
         return $this->hasMany(CourseTeacher::class, 'course_id');
     }
+
+    public function course_task_student()
+    {
+        return $this->hasMany(CourseTaskStudent::class, 'course_id');
+    }
 }

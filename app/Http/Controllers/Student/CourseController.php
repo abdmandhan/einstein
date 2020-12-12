@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseStudent;
+use App\Models\CourseTaskStudent;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -62,6 +63,17 @@ class CourseController extends Controller
                     'user_id'       => Auth::id(),
                     'course_id'     => $data->course_id,
                 ]);
+
+                $course = Course::findOrFail($data->course_id);
+
+                $course_task = $course->course_task()->get();
+                foreach ($course_task as $key => $value) {
+                    CourseTaskStudent::create([
+                        'user_id'           => Auth::id(),
+                        'course_id'         => $data->course_id,
+                        'course_task_id'    => $value->id,
+                    ]);
+                }
             }
 
             Transaction::create([
