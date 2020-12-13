@@ -68,15 +68,12 @@ class CourseSeeder extends Seeder
                         ]);
                     }
                 }
-                // CourseTaskQuestion::factory(10)->create([
-                //     'course_task_id'    => $courseTask->id
-                // ])->each(function ($courseTaskQuestion) {
-                //     // $isTrue = $k == 0 ? true : false;
-                //     CourseTaskAnswer::factory(4)->create([
-                //         'course_task_question_id'   => $courseTaskQuestion->id,
-                //         // 'is_true'                   => $isTrue
-                //     ]);
-                // });
+                //pertanyaan ESSAY
+                $courseTaskQuestion = CourseTaskQUestion::create([
+                    'course_task_id'    => $courseTask->id,
+                    'question'          => $faker->paragraph(),
+                    'question_type_id'  => 2 //ESSAY
+                ]);
             });
         });
     }

@@ -13,7 +13,10 @@
       >
         <v-card-title>{{ i + 1 }}. {{ item.question }}</v-card-title>
         <v-card-text>
-          <v-radio-group v-model="answer[item.id]">
+          <v-radio-group
+            v-model="answer[item.id]"
+            v-if="item.question_type_id == 1"
+          >
             <v-radio
               v-for="(ans, j) in item.course_task_answer"
               :key="j"
@@ -22,10 +25,11 @@
               color="success"
             ></v-radio>
           </v-radio-group>
+          <v-textarea v-else v-model="answer[item.id]"> </v-textarea>
         </v-card-text>
       </v-card>
     </v-row>
-    <v-row>
+    <v-row v-if="!loading">
       <v-col cols="12" class="text-right">
         <v-dialog v-model="dialog" persistent max-width="500">
           <template v-slot:activator="{ on, attrs }">
@@ -90,18 +94,18 @@ export default {
       dialog: false,
       btnLoading: false,
       message: false,
+      loading: true,
     };
   },
   mounted() {
     axios
       .get(`${this.$baseUrl}/api/s/learning-task/${this.$route.params.id}`)
       .then((result) => {
+        this.loading = false;
         this.task = result.data.data;
         this.task.course_task_question.forEach((element) => {
           this.answer[element.id] = null;
         });
-        console.log("element", this.answer);
-        console.log("result", result, this.task);
       })
       .catch((err) => {});
   },

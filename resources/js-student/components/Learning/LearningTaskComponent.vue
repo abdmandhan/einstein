@@ -98,7 +98,10 @@
                                 >
                                   <td>{{ b + 1 }}</td>
                                   <td>{{ a.question.question }}</td>
-                                  <td>{{ a.answer.answer }}</td>
+                                  <td v-if="a.question.question_type_id == 1">
+                                    {{ a.answer.answer }}
+                                  </td>
+                                  <td v-else>{{ a.answer_essay }}</td>
                                 </tr>
                               </tbody>
                             </template>

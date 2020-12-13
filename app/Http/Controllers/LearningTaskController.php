@@ -42,27 +42,32 @@ class LearningTaskController extends Controller
         $answer = (object) $request->input('answer');
         $task = (object) $request->input('task');
 
-        $nilai = 0;
         foreach ($answer as $key => $value) {
+            if (is_integer($value)) {
+                $data = [
+                    'user_id'       => Auth::id(),
+                    'task_id'       => $task->id,
+                    'question_id'   => $key,
+                    'answer_id'     => $value,
+                ];
+            } else {
+                $data = [
+                    'user_id'       => Auth::id(),
+                    'task_id'       => $task->id,
+                    'question_id'   => $key,
+                    'answer_essay'  => $value,
+                ];
+            }
+
             CourseTaskStudentAnswer::updateOrCreate([
                 'user_id'       => Auth::id(),
                 'task_id'       => $task->id,
                 'question_id'   => $key,
-                'answer_id'     => $value,
-            ], [
-                'user_id'       => Auth::id(),
-                'task_id'       => $task->id,
-                'question_id'   => $key,
-            ]);
-            $course_task_question = CourseTaskQuestion::find($key);
-            if ($course_task_question->true_answer->id == $value) $nilai++;
+            ], $data);
         }
-
-        $score = $nilai / count($request->input('answer')) * 100;
 
         $course_task_student = CourseTaskStudent::where('user_id', Auth::id())->where('course_task_id', $task->id);
         $course_task_student->update([
-            'score'         => $score,
             'finish_date'   => now()
         ]);
 
