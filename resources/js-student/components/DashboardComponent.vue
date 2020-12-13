@@ -18,7 +18,7 @@
           </v-sheet>
         </v-col>
 
-        <v-col>
+        <v-col cols="10">
           <v-sheet rounded="lg">
             <router-view name="sub"></router-view>
           </v-sheet>

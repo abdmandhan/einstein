@@ -23,7 +23,8 @@ class CourseTaskQuestionFactory extends Factory
     {
         return [
             //
-            'question'  => $this->faker->paragraphs()[0]
+            'question'          => $this->faker->paragraph(),
+            // 'question_type_id'  =>1
         ];
     }
 }

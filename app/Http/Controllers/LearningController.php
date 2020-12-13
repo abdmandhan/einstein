@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CourseStudent;
+use App\Models\CourseTaskStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,7 +43,14 @@ class LearningController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = (object)$request->input();
+
+        $course_task_student = CourseTaskStudent::find($data->id);
+        $course_task_student->update([
+            'start_date'    => now()
+        ]);
+
+        return $this->success();
     }
 
     /**
@@ -56,7 +64,9 @@ class LearningController extends Controller
         $data = CourseStudent::with([
             'course.course_type',
             'course.course_content',
-            'course.course_task_student.course_task.difficulty'
+            'course.course_task_student.course_task.difficulty',
+            'course.course_task_student.course_task.course_task_student_answer.question',
+            'course.course_task_student.course_task.course_task_student_answer.answer'
         ])->findOrFail($id);
 
         return $this->success($data);

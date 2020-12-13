@@ -21,8 +21,9 @@ class CourseTaskAnswerFactory extends Factory
      */
     public function definition()
     {
+        de($this->count);
         return [
-            'answer'    => $this->faker->paragraph()[0],
+            'answer'    => $this->faker->paragraph(),
             'is_true'   => $this->faker->numberBetween(0, 1)
         ];
     }

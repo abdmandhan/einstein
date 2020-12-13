@@ -18,7 +18,7 @@ class CreateCourseTasksTable extends Migration
             $table->string('name');
             $table->integer('course_id');
             $table->integer('difficulty_id');
-            $table->time('time');
+            // $table->time('time');
             $table->timestamps();
             $table->softDeletes();
         });

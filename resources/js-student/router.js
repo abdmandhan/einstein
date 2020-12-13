@@ -13,6 +13,7 @@ import Discuss from './components/DiscussComponent';
 import TryOut from './components/TryOutComponent';
 import Learning from './components/Learning/LearningComponent';
 import LearningShow from './components/Learning/LearningShowComponent';
+import LearningTaskShow from './components/Learning/LearningTaskShowComponent';
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,13 @@ const router = new VueRouter({
                     name: 'dashboard.learning.show',
                     components: {
                         sub: LearningShow
+                    }
+                },
+                {
+                    path: '/student/dashboard/learning/task/:id',
+                    name: 'dashboard.learning.task.show',
+                    components: {
+                        sub: LearningTaskShow
                     }
                 },
                 {
@@ -100,11 +108,6 @@ const router = new VueRouter({
                     }
                 },
             ]
-        },
-        {
-            path: '/student/payment/:id',
-            name: 'payment',
-            component: Payment
         },
         {
             path: "*",

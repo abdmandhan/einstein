@@ -26,7 +26,7 @@ class CourseTaskFactory extends Factory
             //
             'name'              => 'Latihan' . $this->faker->numberBetween(1, 100),
             'difficulty_id'     => Difficulty::all()->random()->id,
-            'time'              => $this->faker->time()
+            // 'time'              => $this->faker->time()
         ];
     }
 }

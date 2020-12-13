@@ -19,9 +19,9 @@ class CreateCourseTaskStudentsTable extends Migration
             $table->foreignId('course_id');
             $table->foreignId('course_task_id');
             $table->integer('score')->nullable();
-            $table->time('time')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('finish_date')->nullable();
+            // $table->time('time')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('finish_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

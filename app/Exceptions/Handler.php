@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
             if ($e instanceof \Illuminate\Auth\AuthenticationException) {
                 return $this->failed([], 'Unauthorized', 401);
             } else if ($e instanceof \Illuminate\Database\QueryException) {
-                return $this->failed([], 'QueryException');
+                return $this->failed($e, 'QueryException');
             } else if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
                 return $this->failed([], 'Data tidak ditemukan');
             }

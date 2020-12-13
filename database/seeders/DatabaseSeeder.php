@@ -7,6 +7,7 @@ use App\Models\Education;
 use App\Models\Golongan;
 use App\Models\Grade;
 use App\Models\Position;
+use App\Models\QuestionType;
 use App\Models\TransactionStatus;
 use App\Models\User;
 use App\Models\UserStudent;
@@ -119,6 +120,14 @@ class DatabaseSeeder extends Seeder
         ];
 
         Grade::insert($data);
+
+        //question type
+        $data = [
+            ['name' => 'PG'],
+            ['name' => 'ESSAY'],
+        ];
+
+        QuestionType::insert($data);
 
         //course
         $this->call([

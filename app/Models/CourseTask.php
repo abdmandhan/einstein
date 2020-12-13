@@ -18,4 +18,9 @@ class CourseTask extends BaseModel
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function course_task_student_answer()
+    {
+        return $this->hasMany(CourseTaskStudentAnswer::class, 'task_id');
+    }
 }
