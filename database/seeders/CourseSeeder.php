@@ -27,9 +27,9 @@ class CourseSeeder extends Seeder
         ]);
 
         Difficulty::insert([
-            ['name' => 'Easy'],
-            ['name' => 'Medium'],
-            ['name' => 'Hard'],
+            ['name' => 'Easy', 'color' => 'green'],
+            ['name' => 'Medium', 'color' => 'yellow'],
+            ['name' => 'Hard', 'color' => 'red'],
         ]);
 
         $teacher = collect(User::role('teacher')->get());

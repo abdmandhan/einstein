@@ -10,7 +10,8 @@ import Teacher from './components/Teacher/TeacherComponent';
 import Payment from './components/PaymentComponent';
 import Transaction from './components/TransactionComponent';
 import Discuss from './components/DiscussComponent';
-import TryOut from './components/TryOutComponent';
+import TryOut from './components/TryOut/TryOutComponent';
+import TryOutShow from './components/TryOut/TryOutShowComponent';
 import Learning from './components/Learning/LearningComponent';
 import LearningShow from './components/Learning/LearningShowComponent';
 import LearningTaskShow from './components/Learning/LearningTaskShowComponent';
@@ -91,6 +92,13 @@ const router = new VueRouter({
                     name: 'dashboard.tryout',
                     components: {
                         sub: TryOut
+                    }
+                },
+                {
+                    path: '/student/dashboard/tryout/:id',
+                    name: 'dashboard.tryout.show',
+                    components: {
+                        sub: TryOutShow
                     }
                 },
                 {

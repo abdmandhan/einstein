@@ -150,5 +150,10 @@ class DatabaseSeeder extends Seeder
 
         //announcement
         Announcement::factory(10)->create();
+
+        //tryout!
+        $this->call([
+            TryOutSeeder::class
+        ]);
     }
 }

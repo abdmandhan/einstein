@@ -17,9 +17,12 @@ class CreateTryOutStudentsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('try_out_id');
-            $table->integer('score');
-            $table->time('time');
+            $table->integer('score')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('finish_date')->nullable();
             $table->timestamps();
+
+            $table->unique(['user_id', 'try_out_id']);
         });
     }
 
