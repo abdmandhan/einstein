@@ -21,6 +21,7 @@ class CreateTryOutStudentsTable extends Migration
             $table->dateTime('start_date')->nullable();
             $table->dateTime('finish_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unique(['user_id', 'try_out_id']);
         });

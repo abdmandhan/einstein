@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TryOut;
 use Illuminate\Http\Request;
 use App\Models\TryOutStudent;
+use App\Models\TryOutStudentAnswer;
 use Illuminate\Support\Facades\Auth;
 
 class TryOutController extends Controller
@@ -18,7 +19,7 @@ class TryOutController extends Controller
     public function index()
     {
         //
-        $data = TryOut::with(['difficulty'])->get();
+        $data = TryOut::with(['difficulty'])->get()->append(['student_assign']);
         return $this->success(
             $data
         );
@@ -91,8 +92,39 @@ class TryOutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        de($id);
+        $answer = (object) $request->input('answer');
+        $tryout = (object) $request->input('tryout');
+
+        foreach ($answer as $key => $value) {
+            if (is_integer($value)) {
+                $data = [
+                    'user_id'       => Auth::id(),
+                    'try_out_id'       => $tryout->id,
+                    'question_id'   => $key,
+                    'answer_id'     => $value,
+                ];
+            } else {
+                $data = [
+                    'user_id'       => Auth::id(),
+                    'try_out_id'       => $tryout->id,
+                    'question_id'   => $key,
+                    'answer_essay'  => $value,
+                ];
+            }
+
+            TryOutStudentAnswer::updateOrCreate([
+                'user_id'       => Auth::id(),
+                'try_out_id'       => $tryout->id,
+                'question_id'   => $key,
+            ], $data);
+        }
+
+        $course_task_student = TryOutStudent::where('user_id', Auth::id())->where('try_out_id', $tryout->id);
+        $course_task_student->update([
+            'finish_date'   => now()
+        ]);
+
+        return $this->success();
     }
 
     /**

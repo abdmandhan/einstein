@@ -9,31 +9,163 @@
               {{ item.difficulty.name }}
             </v-chip>
           </v-card-subtitle>
-          <v-card-text>
-            <v-simple-table>
+          <v-card-text v-if="item.student_assign">
+            <v-simple-table dense>
               <template v-slot:default>
                 <tbody>
                   <tr>
                     <td>Start Date</td>
-                    <td>{{ item.date_start }}</td>
+                    <td>{{ item.student_assign.start_date }}</td>
                   </tr>
                   <tr>
                     <td>Finish Date</td>
-                    <td>{{ item.date_finish }}</td>
+                    <td>{{ item.student_assign.finish_date }}</td>
                   </tr>
                   <tr>
-                    <td>Waktu Mengerjakan</td>
-                    <td>{{ item.time }}</td>
-                  </tr>
-                  <tr>
-                    <td>Jumlah Soal</td>
-                    <td>{{ item.question_count }}</td>
+                    <td>Score</td>
+                    <td v-if="item.student_assign.score">
+                      {{ item.student_assign.score }}
+                    </td>
+                    <td v-else>
+                      <v-chip small>Menunggu dinilai oleh guru.</v-chip>
+                    </td>
                   </tr>
                 </tbody>
               </template>
             </v-simple-table>
           </v-card-text>
-          <v-card-actions>
+          <v-card-actions v-if="item.student_assign">
+            <v-spacer></v-spacer>
+            <v-dialog
+              v-model="dialogReview[item.id]"
+              persistent
+              v-if="item.student_assign.finish_date"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="green" dark v-bind="attrs" v-on="on">
+                  Review
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title class="headline">
+                  {{ item.name }}
+                </v-card-title>
+                <v-card-text>
+                  <v-simple-table>
+                    <template v-slot:default>
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Question</th>
+                          <th>Your Answer</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          v-for="(a, b) in item.student_assign
+                            .tryout_student_answer"
+                          :key="b"
+                        >
+                          <td>{{ b + 1 }}</td>
+                          <td>{{ a.question.question }}</td>
+                          <td
+                            v-if="a.answer_id == null && a.answer_essay == null"
+                          >
+                            <v-chip color="red" small>Tidak Dijawab</v-chip>
+                          </td>
+                          <td v-else>
+                            <span v-if="a.question.question_type_id == 1">
+                              {{ a.answer.answer }}
+                            </span>
+                            <span v-else>
+                              {{ a.answer_essay }}
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="red darken-1"
+                    text
+                    @click="dialogReview[item.id] = false"
+                  >
+                    Cancel
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <v-dialog
+              v-model="dialog[item.id]"
+              persistent
+              max-width="500"
+              v-if="!item.student_assign.finish_date"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                  Lanjutkan
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title class="headline">
+                  {{ item.name }}
+                </v-card-title>
+                <v-card-text>
+                  <v-simple-table>
+                    <template v-slot:default>
+                      <tbody>
+                        <tr>
+                          <td>Start Date</td>
+                          <td>:</td>
+                          <td>{{ item.date_start }}</td>
+                        </tr>
+                        <tr>
+                          <td>Finish Date</td>
+                          <td>:</td>
+                          <td>{{ item.date_finish }}</td>
+                        </tr>
+                        <tr>
+                          <td>Waktu Mengerjakan</td>
+                          <td>:</td>
+                          <td>{{ item.time }}</td>
+                        </tr>
+                        <tr>
+                          <td>Jumlah Soal</td>
+                          <td>:</td>
+                          <td>{{ item.question_count }}</td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="red darken-1"
+                    text
+                    @click="dialog[item.id] = false"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    color="green darken-1"
+                    text
+                    :to="{
+                      name: 'dashboard.tryout.show',
+                      params: { id: item.id },
+                    }"
+                    :loading="btnLoading"
+                  >
+                    Lanjutkan
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-card-actions>
+          <v-card-actions v-else>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog[item.id]" persistent max-width="500">
               <template v-slot:activator="{ on, attrs }">
@@ -105,6 +237,7 @@ export default {
     return {
       tryouts: [],
       dialog: {},
+      dialogReview: {},
       btnLoading: false,
     };
   },

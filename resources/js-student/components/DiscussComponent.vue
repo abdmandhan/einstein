@@ -99,6 +99,7 @@
       </v-container>
       <discuss-card-component :discuss="discuss" @refresh="init()" />
       <v-pagination
+        color="red"
         v-model="filter.page"
         :length="length"
         circle

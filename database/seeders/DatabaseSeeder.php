@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Absensi;
 use App\Models\Announcement;
 use App\Models\Education;
 use App\Models\Golongan;
@@ -155,5 +156,17 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TryOutSeeder::class
         ]);
+
+        //absesnsi
+        $users = User::all();
+        foreach ($users as $key => $value) {
+            for ($i = 1; $i <= 5; $i++) {
+                $date = date_create("2020-12-$i");
+                Absensi::create([
+                    'user_id'   => $value->id,
+                    'date'      => $date
+                ]);
+            }
+        }
     }
 }

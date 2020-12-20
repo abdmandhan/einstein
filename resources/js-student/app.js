@@ -5,6 +5,9 @@ import router from './router';
 import vuetify from './vuetify' // path to vuetify export
 
 import App from './App.vue'
+import vueAwesomeCountdown from 'vue-awesome-countdown'
+
+Vue.use(vueAwesomeCountdown, 'vac')
 
 const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
@@ -17,5 +20,5 @@ new Vue({
     router,
     vuetify,
     el: '#app',
-    render: h=> h(App)
+    render: h => h(App)
 })

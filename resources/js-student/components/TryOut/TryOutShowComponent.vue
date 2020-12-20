@@ -1,8 +1,14 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" class="text-center mb-2">
+      <v-col cols="12" class="text-center mb-2" v-if="tryout">
         <h2>{{ tryout.name }}</h2>
+        <vac :end-time="endtime" v-if="endtime" @finish="finish()">
+          <span slot="process" slot-scope="{ timeObj }">{{
+            `Waktu: ${timeObj.h}:${timeObj.m}:${timeObj.s}`
+          }}</span>
+          <span slot="finish">Done!</span>
+        </vac>
       </v-col>
     </v-row>
     <v-row>
@@ -95,6 +101,8 @@ export default {
       btnLoading: false,
       message: false,
       loading: true,
+      endtime: null,
+      is_finish: false,
     };
   },
   mounted() {
@@ -103,6 +111,7 @@ export default {
       .then((result) => {
         this.loading = false;
         this.tryout = result.data.data;
+        this.endtime = new Date().getTime() + this.tryout.timestamp;
         this.tryout.try_out_question.forEach((element) => {
           this.answer[element.id] = null;
         });
@@ -110,17 +119,23 @@ export default {
       .catch((err) => {});
   },
   methods: {
+    finish() {
+      this.is_finish = true;
+      this.postTryout();
+    },
     openDialog() {
       this.dialog = true;
       this.message = false;
     },
     postTryout() {
-      //validasi answer harus dijawab semua
-      this.message = false;
-      for (const key in this.answer) {
-        if (!this.answer[key]) {
-          this.message = true;
-          return;
+      if (!this.is_finish) {
+        //validasi answer harus dijawab semua
+        this.message = false;
+        for (const key in this.answer) {
+          if (!this.answer[key]) {
+            this.message = true;
+            return;
+          }
         }
       }
 
@@ -133,7 +148,7 @@ export default {
         .then((result) => {
           this.btnLoading = false;
           console.log("resultss", result);
-          //   this.$router.back();
+          this.$router.back();
         })
         .catch((err) => {});
     },

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
+
 class CourseTask extends BaseModel
 {
     public function course_task_question()
@@ -21,6 +23,6 @@ class CourseTask extends BaseModel
 
     public function course_task_student_answer()
     {
-        return $this->hasMany(CourseTaskStudentAnswer::class, 'task_id');
+        return $this->hasMany(CourseTaskStudentAnswer::class, 'task_id')->where('user_id', Auth::id());
     }
 }
