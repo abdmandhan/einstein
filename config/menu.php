@@ -16,7 +16,7 @@ return [
     //admin
     [
         'title'     => 'Admin Management',
-        'icon'      => 'mdi-account',
+        'icon'      => 'mdi-account-cog',
         'name'      => 'users',
         'roles'     => ['admin']
     ],

@@ -20,7 +20,13 @@
         <div v-for="item in items" :key="item.title">
           <v-subheader v-if="item.header">{{ item.header }}</v-subheader>
 
-          <v-list-item link :to="{ name: item.name }" v-else>
+          <v-list-item
+            link
+            :to="{ name: item.name }"
+            v-else
+            style="text-decoration: none"
+            class="my-2"
+          >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -61,7 +67,7 @@
       </v-container>
     </v-main>
 
-    <v-footer app> &copy; Abdurrahman Ramadhan 2020 </v-footer>
+    <v-footer app> &copy; Islamia 2020 </v-footer>
   </v-app>
 </template>
 

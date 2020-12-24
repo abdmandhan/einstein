@@ -5,7 +5,8 @@ import Dashboard from './components/DashboardComponent';
 import Users from './components/UsersComponent';
 import Teachers from './components/TeachersComponent';
 import Students from './components/StudentsComponent';
-import Courses from './components/CoursesComponent';
+import Courses from './components/course/CoursesComponent';
+import CourseShow from './components/course/CourseShowComponent';
 import CourseTypes from './components/CourseTypesComponent';
 import Grades from './components/GradesComponent';
 import Difficulties from './components/DifficultiesComponent';
@@ -18,7 +19,7 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     mode: 'history',
-    routes:[
+    routes: [
         {
             path: '/vue/dashboard',
             name: 'dashboard',
@@ -43,6 +44,11 @@ const router = new VueRouter({
             path: '/vue/courses',
             name: 'courses',
             component: Courses
+        },
+        {
+            path: '/vue/courses/:course_id',
+            name: 'courses.show',
+            component: CourseShow
         },
         {
             path: '/vue/coursetypes',
