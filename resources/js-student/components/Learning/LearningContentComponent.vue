@@ -25,7 +25,7 @@
                         icon
                         v-bind="attrs"
                         v-on="on"
-                        :href="photo(item.file)"
+                        :href="photo(item.file.name)"
                       >
                         <v-icon color="red">mdi-file-pdf</v-icon>
                       </v-btn>

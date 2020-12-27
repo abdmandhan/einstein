@@ -59,7 +59,7 @@ class CourseSeeder extends Seeder
                         'question_type_id'  => 1 //PG
                     ]);
 
-                    for ($j = 0; $j < 4; $j++) {
+                    for ($j = 0; $j < 5; $j++) {
                         $isTrue = (($j == 0) ? true : false);
                         CourseTaskAnswer::create([
                             'course_task_question_id'   => $courseTaskQuestion->id,

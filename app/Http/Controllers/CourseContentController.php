@@ -3,10 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\CourseContent;
+use App\Rules\Youtube;
 use Illuminate\Http\Request;
 
 class CourseContentController extends Controller
 {
+    public $headers = [
+        [
+            'text'  => 'ID',
+            'value' => 'id',
+            'disabled'  => true,
+            'component' => 'v-text-field',
+        ],
+        [
+            'text'  => 'Name',
+            'value' => 'name',
+            'component' => 'v-text-field',
+        ],
+        [
+            'text'  => 'Description',
+            'value' => 'desc',
+            'component' => 'v-textarea',
+        ],
+        [
+            'text'  => 'Content',
+            'value' => 'content',
+            'component' => 'v-textarea',
+        ],
+        [
+            'text'  => 'File',
+            'value' => 'file',
+            'component' => 'v-file-input',
+            'slot'  => 'item.file',
+            'type'  => 'file',
+        ],
+        [
+            'text'  => 'Url Youtube',
+            'value' => 'url_youtube',
+            'component' => 'v-text-field',
+            'slot'  => 'item.url_youtube',
+            'type'  => 'youtube'
+        ],
+
+        [
+            'text'  => 'Actions',
+            'value' => 'actions',
+        ],
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -16,39 +59,7 @@ class CourseContentController extends Controller
     {
         return $this->success([
             'data'      => [],
-            'header'    => [
-                [
-                    'text'  => 'ID',
-                    'value' => 'id',
-                    'disabled'  => true,
-                ],
-                [
-                    'text'  => 'Name',
-                    'value' => 'name'
-                ],
-                [
-                    'text'  => 'Description',
-                    'value' => 'desc'
-                ],
-                [
-                    'text'  => 'Content',
-                    'value' => 'content'
-                ],
-                [
-                    'text'  => 'File',
-                    'value' => 'file'
-                ],
-                [
-                    'text'  => 'Image',
-                    'value' => 'image'
-                ],
-
-                [
-                    'text'  => 'Actions',
-                    'value' => 'actions'
-                ],
-
-            ]
+            'header'    => $this->headers
         ]);
     }
 
@@ -70,25 +81,65 @@ class CourseContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $data = $request->validate([
-            'id'                => 'nullable',
-            'course_id' => 'required',
-            'name'      => 'required',
-            'desc'      => 'required',
-            'content'   => 'required',
-            'file'      => 'required',
-            'image'     => 'required'
-        ]);
+        if ($id = $request->input('id')) {
+            //update
+            //jika file nya beda
+            if ($request->file('file')) {
+                $data = $request->validate([
+                    'id'        => 'required',
+                    'course_id' => 'required',
+                    'name'      => 'required',
+                    'desc'      => 'required',
+                    'content'   => 'required',
+                    'file'      => ['required', 'file', 'mimes:pdf'],
+                    'url_youtube'     => ['required', new Youtube()]
+                ]);
 
-        if (isset($data['id'])) {
+                $path = "";
+
+                if ($request->file('file')) {
+                    $path = 'storage/' . $request->file('file')->store('course/file', 'public');
+                }
+
+                $data['file'] = $path;
+            } else {
+                $data = $request->validate([
+                    'id'        => 'required',
+                    'course_id' => 'required',
+                    'name'      => 'required',
+                    'desc'      => 'required',
+                    'content'   => 'required',
+                    'url_youtube'     => ['required', new Youtube()]
+                ]);
+            }
+
             CourseContent::find($data['id'])->update($data);
-        } else {
-            unset($data['id']);
-            CourseContent::create($data);
-        }
 
-        return $this->success();
+            return $this->success();
+        } else {
+            //create
+
+            $data = $request->validate([
+                'course_id' => 'required',
+                'name'      => 'required',
+                'desc'      => 'required',
+                'content'   => 'required',
+                'file'      => ['required', 'file', 'mimes:pdf'],
+                'url_youtube'     => ['required', new Youtube()]
+            ]);
+
+            $path = "";
+
+            if ($request->file('file')) {
+                $path = 'storage/' . $request->file('file')->store('course/file', 'public');
+            }
+
+            $data['file'] = $path;
+
+            CourseContent::create($data);
+
+            return $this->success();
+        }
     }
 
     /**
@@ -108,41 +159,9 @@ class CourseContentController extends Controller
                 'desc',
                 'content',
                 'file',
-                'image'
+                'url_youtube'
             ]),
-            'header'    => [
-                [
-                    'text'  => 'ID',
-                    'value' => 'id',
-                    'disabled'  => true,
-                ],
-                [
-                    'text'  => 'Name',
-                    'value' => 'name'
-                ],
-                [
-                    'text'  => 'Description',
-                    'value' => 'desc'
-                ],
-                [
-                    'text'  => 'Content',
-                    'value' => 'content'
-                ],
-                [
-                    'text'  => 'File',
-                    'value' => 'file'
-                ],
-                [
-                    'text'  => 'Image',
-                    'value' => 'image'
-                ],
-
-                [
-                    'text'  => 'Actions',
-                    'value' => 'actions'
-                ],
-
-            ]
+            'header'    => $this->headers
         ]);
     }
 

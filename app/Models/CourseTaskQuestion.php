@@ -16,6 +16,11 @@ class CourseTaskQuestion extends BaseModel
         return $this->course_task_answer()->where('is_true', '1')->first();
     }
 
+    public function question_type()
+    {
+        return $this->belongsTo(QuestionType::class);
+    }
+
     protected $appends = [
         'true_answer'
     ];

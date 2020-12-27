@@ -10,6 +10,7 @@ use App\Models\CourseType;
 use App\Models\Difficulty;
 use App\Models\Discuss;
 use App\Models\Grade;
+use App\Models\QuestionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -76,7 +77,8 @@ class AppController extends Controller
             'grades'        => Grade::all(['id', 'name']),
             'course_types'  => CourseType::all(['id', 'name']),
             'courses'       => Course::all(['id', 'name']),
-            'difficulties'  => Difficulty::all(['id', 'name'])
+            'difficulties'  => Difficulty::all(['id', 'name']),
+            'question_types'  => QuestionType::all(['id', 'name']),
         ];
 
         return response()->json($data);

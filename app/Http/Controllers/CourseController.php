@@ -80,6 +80,13 @@ class CourseController extends Controller
     public function create()
     {
         //
+        return $this->success([
+            'relation_key'   => 'course_id',
+            'api'           => [
+                'course_content'    => route('course-content.index'),
+                'course_task'       => route('course-task.index'),
+            ]
+        ]);
     }
 
     /**
@@ -91,22 +98,17 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'id'                => 'nullable',
             'name'              => 'required',
+            'desc'              => 'required',
             'course_type_id'    => 'required',
             'is_premium'        => 'required',
             'price'             => [Rule::requiredIf($request->input('is_premium')), 'nullable', 'numeric'],
             'grade_id'          => 'required'
         ]);
 
-        if (isset($data['id'])) {
-            Course::find($data['id'])->update($data);
-        } else {
-            unset($data['id']);
-            Course::create($data);
-        }
+        $course = Course::create($data);
 
-        return $this->success();
+        return $this->success($course);
     }
 
     /**
@@ -128,7 +130,19 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $course = Course::with([
+            'course_content',
+            'course_task'
+        ])->findOrFail($id);
+
+        return $this->success([
+            'course'    => $course,
+            'relation_key'   => 'course_id',
+            'api'           => [
+                'course_content'    => route('course-content.index'),
+                'course_task'       => route('course-task.index'),
+            ]
+        ]);
     }
 
     /**

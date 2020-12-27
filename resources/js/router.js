@@ -6,7 +6,9 @@ import Users from './components/UsersComponent';
 import Teachers from './components/TeachersComponent';
 import Students from './components/StudentsComponent';
 import Courses from './components/course/CoursesComponent';
-import CourseShow from './components/course/CourseShowComponent';
+import CourseTask from './components/course/CourseTaskComponent';
+import CourseEdit from './components/course/CourseEditComponent';
+import CourseCreate from './components/course/CourseCreateComponent';
 import CourseTypes from './components/CourseTypesComponent';
 import Grades from './components/GradesComponent';
 import Difficulties from './components/DifficultiesComponent';
@@ -46,9 +48,19 @@ const router = new VueRouter({
             component: Courses
         },
         {
-            path: '/vue/courses/:course_id',
-            name: 'courses.show',
-            component: CourseShow
+            path: '/vue/course-task/:id',
+            name: 'course-task',
+            component: CourseTask
+        },
+        {
+            path: '/vue/course/create',
+            name: 'course.create',
+            component: CourseCreate
+        },
+        {
+            path: '/vue/course/:course_id',
+            name: 'course.edit',
+            component: CourseEdit
         },
         {
             path: '/vue/coursetypes',
